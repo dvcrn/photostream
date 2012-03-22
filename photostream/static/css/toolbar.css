@@ -1,0 +1,9 @@
+#toolbar {
+	height: 47px;
+	clear: both;
+	width: 100%;
+	position: fixed;
+	bottom: 0px;
+	background: url('../img/toolbar-bg.png');
+	border-top: 1px solid;
+}

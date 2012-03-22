@@ -1,0 +1,3 @@
+photostream/media/*
+*.pyc
+run.sh

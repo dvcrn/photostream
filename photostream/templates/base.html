@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PhotoStream :: {% block title %}Home{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'css/reset-min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+	<link rel="stylesheet" href="{% static 'css/toolbar.css' %}">
+	<script src="{% static 'js/jquery-1.7.1.min.js' %}" type="text/javascript"></script>
+	<script src="{% static 'js/jquery-ui-1.8.18.custom.min.js' %}" type="text/javascript"></script>
+	<script src="{% static 'js/jquery.multipleDraggables.js' %}" type="text/javascript"></script>
+	<script src="{% static 'js/library.js' %}?bust=4" type="text/javascript"></script>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="sidebar">
+			{% include "sidebar.html" %}
+		</div>
+		<div id="main">
+			<div class="title">
+				<h1>{% block main_title %}Photos{% endblock %}</h1>
+			</div>
+			{% block main_content %}
+			{% endblock %}
+		</div>
+		<div id="toolbar">
+
+		</div>
+	</div>
+</body>
+</html>

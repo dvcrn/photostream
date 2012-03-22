@@ -1,0 +1,50 @@
+body {
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+}
+
+#wrapper {
+	overflow: hidden;
+	background: #e8eaf0;
+}
+
+#main {
+	position: relative;
+	margin-left: 255px;
+	border-left: 1px solid;
+	background: #676767;
+	text-align: center;
+}
+
+#library {
+	height: 100%;
+	padding-top: 10px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#main .title {
+	background: url('../img/titlebar-bg.png');
+	height: 36px;
+}
+
+#main .title h1 {
+	position: relative;
+	color: white;
+	font-size: 20px;
+	top: 5px;
+}
+
+.photo {
+	padding: 10px;
+}
+
+.photo:hover {
+
+
+}
+
+.selected {
+	margin: -2px;
+	border: solid 2px orange;
+	border-radius: 1.0em;
+}

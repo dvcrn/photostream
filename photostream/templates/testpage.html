@@ -1,0 +1,58 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="{% static 'css/reset-min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+	<link rel="stylesheet" href="{% static 'css/toolbar.css' %}">
+</head>
+<body>
+	<div id="wrapper">
+		<div id="sidebar">
+			<div class="section">
+				<h1>Library</h1>
+				<ul id="" class="albums">
+					<li class=""><a href="{% url library.views.testpage %}" title="">Photos</a></li>
+					<li><a href="" title="">Recently Added</a></li>
+					<li><a href="" title="">Share</a></li>
+				</ul>
+			</div>
+			<div class="section">
+				<h1>Albums</h1>
+				<ul id="" class="albums">
+					{% for album in albums %}
+						{% if current_album == album %}
+							<li class="current"><a href="{% url library.views.album id=album.id %}" title="">{{ album }}</a></li>
+						{% else %}
+							<li class=""><a href="{% url library.views.album id=album.id %}" title="">{{ album }}</a></li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="section">
+				<h1>Services</h1>
+				<ul id="" class="albums">
+					<li class=""><a href="" title="">Facebook</a></li>
+					<li><a href="" title="">Flickr</a></li>
+					<li><a href="" title="">Imgur</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="main">
+			<div class="title">
+				<h1>{% block title_main %}Photos{% endblock %}</h1>
+			</div>
+			<div id="library">
+				{% for photo in photos %}
+					<img class="photo" src="{{ MEDIA_URL }}thumbs/thumb_{{ photo.photo }}" alt="" />
+				{% endfor %}
+			</div>
+		</div>
+		<div id="toolbar">
+
+		</div>
+	</div>
+</body>
+</html>

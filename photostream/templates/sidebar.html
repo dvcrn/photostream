@@ -1,8 +1,8 @@
 <div class="section">
 	<h1>Library</h1>
 	<ul id="" class="">
-		<li class="{% if module.name = "library_photos" %}current{% endif %}"><a href="{% url library.views.library %}" title="">Photos</a></li>
-		<li class="{% if module.name = "library_recent" %}current{% endif %}"><a href="{% url library.views.recent %}" title="">Recently Added</a></li>
+		<li class="{% if module.name = "library_photos" %}current{% endif %}"><a ajax="{% url api.views.photos_all %}" href="{% url library.views.library %}" title="">Photos</a></li>
+		<li class="{% if module.name = "library_recent" %}current{% endif %}"><a ajax="{% url api.views.photos_recent %}" href="{% url library.views.recent %}" title="">Recently Added</a></li>
 		<li class="{% if module.name = "library_share" %}current{% endif %}"><a href="" title="">Share</a></li>
 	</ul>
 </div>
@@ -11,9 +11,9 @@
 	<ul id="albums">
 		{% for album in albums %}
 			{% if module.name == album.name %}
-				<li id="{{ album.id }}" class="album current"><a href="{% url library.views.album id=album.id %}" title="">{{ album }}</a></li>
+				<li id="{{ album.id }}" class="album current"><a ajax="{% url api.views.album id=album.id %}" href="{% url library.views.album id=album.id %}" title="">{{ album }}</a></li>
 			{% else %}
-				<li id="{{ album.id }}" class="album"><a href="{% url library.views.album id=album.id %}" title="">{{ album }}</a></li>
+				<li id="{{ album.id }}" class="album"><a ajax="{% url api.views.album id=album.id %}" href="{% url library.views.album id=album.id %}" title="">{{ album }}</a></li>
 			{% endif %}
 		{% endfor %}
 		<li id="album_create" class="option"><a href="#" title="">Create new</a></li>

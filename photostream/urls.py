@@ -22,6 +22,9 @@ urlpatterns += patterns('library.views',
 urlpatterns += patterns('api.views',
     url(r'^api/album/add/$', 'album_photo_add'),
     url(r'^api/add/album/$', 'add_album'),
+    url(r'^api/album/(?P<id>\d+)/$', 'album'),
+    url(r'^api/photos/all/$', 'photos_all'),
+    url(r'^api/photos/recent/$', 'photos_recent'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

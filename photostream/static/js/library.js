@@ -66,6 +66,13 @@ $(document).ready(function() {
 		//photo.css("width", getLibraryWidth() - 30);
 	}
 
+	var loadPage = function(url, container) {
+		$.get(url,
+			function(data) {
+				container.html(data);
+			});
+	}
+
 	$(window).resize(resize);
 	resize();
 
@@ -78,7 +85,7 @@ $(document).ready(function() {
 		//$(this).addClass("selected");
 	});
 
-	$("#library .photo").dblclick(function() {
+	$("#library .photo").live("dblclick", function() {
 		showPhoto($(this));
 	});
 
@@ -113,6 +120,13 @@ $(document).ready(function() {
 	$("#albums .album").dblclick(function(e) {
 		e.preventDefault();
 	});
+
+	$("#sidebar a").click(function(e) {
+		e.preventDefault();
+		var ajax = $(this).attr("ajax");
+		if (ajax !== undefined)
+			var data = loadPage(ajax, $("#library"));
+	})
 
 	var add_album = function(caller) {
 		var name = caller.val();

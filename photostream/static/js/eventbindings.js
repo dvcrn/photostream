@@ -16,8 +16,35 @@ $("#library .photo").live("dblclick", function() {
 });
 
 $("#albums .album").dblclick(function(e) {
+	// Function for renaming an album
 	e.preventDefault();
 	console.info("DBL CLICK");
+	console.info($(this));
+
+	var title = $(this).children().html();
+	var aid = $(this).attr("id");
+	var oldhtml = $(this).html();
+
+	$(this).html('<input class="stextbox" type="text" name="" value="" placeholder="">');
+	$(".stextbox").focus().val(title);
+	$(".stextbox").blur(function(e) {
+		$(this).parent().html(oldhtml);
+	});
+
+	$(".stextbox").keydown(function(e) {
+		if (e.keyCode == 13) {
+			// This part is tricky.
+			// When pressing enter, send an AJAX request to backend. If rename_album returns true, put in the old content, just with different html
+			// This is possible because we don't change anything but the name
+
+			var newtitle = $(this).val();
+			if (rename_album(aid, newtitle)) {
+				$(this).parent().html($(oldhtml).html(newtitle));
+			}
+		}
+	});
+
+	console.info(title);
 });
 
 $("#sidebar .album").live("click", function(e) {

@@ -26,6 +26,10 @@ $("#sidebar .album").click(function(e) {
 	loadModule(url, id, "album");
 })
 
+$("#sidebar a").click(function(e) {
+	e.preventDefault();
+})
+
 $("#album_create").click(function() {
 	//var name = prompt("Please type in a name for your album!");
 	$("#albums").prepend('<li id="album_create" class="album"><a href="#" title=""><input class="stextbox" type="text" name="" value="" placeholder=""></a></li>');

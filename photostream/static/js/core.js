@@ -60,6 +60,9 @@ var loadModule = function(url, id, section) {
 				library.html(json.html);
 				changeTitle(json.title);
 
+				$("#sidebar .current").removeClass("current");
+				$("#"+id).addClass("current");
+
 				store.section = section;
 				store.current = id;
 			} else {

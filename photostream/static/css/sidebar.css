@@ -35,6 +35,10 @@
 	background: url('../img/current-bg.png');
 }
 
+.section .hover {
+	background: url('../img/hover-bg.png');
+}
+
 .current a {
 	color: white;
 }

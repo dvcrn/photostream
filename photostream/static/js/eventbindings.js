@@ -19,15 +19,24 @@ $("#albums .album").dblclick(function(e) {
 	e.preventDefault();
 });
 
-$("#sidebar .album").click(function(e) {
+$("#sidebar .album").live("click", function(e) {
+	console.info($(this));
 	e.preventDefault();
 	var id = $(this).attr("id");
+	console.info("ID: " + id);
 	var url = $(this).contents().filter("a").attr("ajax");
 	loadModule(url, id, "album");
 })
 
 $("#sidebar a").click(function(e) {
 	e.preventDefault();
+})
+
+$("#sidebar .library").click(function(e) {
+	e.preventDefault();
+	var id = $(this).attr("id");
+	var url = $(this).contents().filter("a").attr("ajax");
+	loadModule(url, id, "library");
 })
 
 $("#album_create").click(function() {

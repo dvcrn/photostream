@@ -13,9 +13,12 @@ def photos_all(request):
 		user = request.user
 		photos = Photo.objects.filter(owner=user)
 
-		return render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request))
+		html = render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request)).content
+		json = {"success": True, "html": html, "title": "Library"}
 	else:
-		raise Exception("Sorry, only logged in works atm")
+		json = {"success": False, "msg": "Only logged in works at the moment."}
+
+	return render_to_response("api/json.html", {"json": simplejson.dumps(json)})
 
 
 def photos_recent(request):
@@ -23,9 +26,12 @@ def photos_recent(request):
 		user = request.user
 		photos = Photo.objects.filter(owner=user)[:30]
 
-		return render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request))
+		html = render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request)).content
+		json = {"success": True, "html": html, "title": "Recently Added"}
 	else:
-		raise Exception("Sorry, only logged in works atm")
+		json = {"success": False, "msg": "Only logged in works at the moment."}
+
+	return render_to_response("api/json.html", {"json": simplejson.dumps(json)})
 
 
 def album(request, id):
@@ -82,7 +88,7 @@ def add_album(request):
 
 			album = Album.objects.create(name=name, owner=user);
 
-			json = {"success": True, "url": reverse("library.views.album", kwargs={'id': album.id})}
+			json = {"success": True, "url": reverse("library.views.album", kwargs={'id': album.id}), "id": album.id, "ajax": reverse("api.views.album", kwargs={'id': album.id})}
 		except Exception:
 			json = {"success": False}
 

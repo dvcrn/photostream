@@ -1,9 +1,9 @@
 <div class="section">
 	<h1>Library</h1>
 	<ul id="" class="">
-		<li class="{% if module.name = "library_photos" %}current{% endif %}"><a ajax="{% url api.views.photos_all %}" href="{% url library.views.library %}" title="">Photos</a></li>
-		<li class="{% if module.name = "library_recent" %}current{% endif %}"><a ajax="{% url api.views.photos_recent %}" href="{% url library.views.recent %}" title="">Recently Added</a></li>
-		<li class="{% if module.name = "library_share" %}current{% endif %}"><a href="" title="">Share</a></li>
+		<li id="library_photos" class="library {% if module.name = "library_photos" %}current{% endif %}"><a ajax="{% url api.views.photos_all %}" href="{% url library.views.library %}" title="">Photos</a></li>
+		<li id="library_recent" class="library {% if module.name = "library_recent" %}current{% endif %}"><a ajax="{% url api.views.photos_recent %}" href="{% url library.views.recent %}" title="">Recently Added</a></li>
+		<li id="library_share" class="{% if module.name = "library_share" %}current{% endif %}"><a href="" title="">Share</a></li>
 	</ul>
 </div>
 <div class="section">

@@ -1,29 +1,32 @@
 // Photo Drag & Drop action
-$(".draggable").draggable({
+$(".draggable").liveDraggable({
 	helper: 'clone',
 	appendTo: 'body',
 	//scroll: false,
 	//liveMode: true
 });
 
-$("#albums .album").droppable({
-	hoverClass: "current",
-	tolerance: "pointer",
-	accept: "#library .photo",
-	drop: function(event, ui) {
-		var photo = $(ui.draggable);
-		var pid = photo.prop("id");
-		var aid = $(this).prop("id");
+var bindDroppable = function() {
+	$("#albums .album").droppable({
+		hoverClass: "hover",
+		tolerance: "pointer",
+		accept: "#library .photo",
+		drop: function(event, ui) {
+			var photo = $(ui.draggable);
+			var pid = photo.prop("id");
+			var aid = $(this).prop("id");
 
-		$.post("/api/album/add/", { albumid: aid, photoid: pid },
-			function(json) {
-		    	var json = $.parseJSON(json);
-		    	if (!json.success) {
-		    		alert("Something very bad happened...");
-		    	}
-			});
-	}
-});
+			$.post("/api/album/add/", { albumid: aid, photoid: pid },
+				function(json) {
+			    	var json = $.parseJSON(json);
+			    	if (!json.success) {
+			    		alert("Something very bad happened...");
+			    	}
+				});
+		}
+	});
+}
+bindDroppable();
 
 
 var add_album = function(caller) {
@@ -35,8 +38,11 @@ var add_album = function(caller) {
 	    	if (!json.success) {
 	    		alert("Something very bad happened...");
 	    	} else {
+	    		caller.parent().parent().attr("id", json.id);
 	    		caller.parent().attr("href", json.url);
+	    		caller.parent().attr("ajax", json.ajax);	    		
 	    		caller.parent().html(name);
+	    		bindDroppable();
 	    	}
 		});
 }

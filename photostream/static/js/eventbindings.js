@@ -1,4 +1,6 @@
-$(window).resize(resize);
+$(window).resize(function() {
+	resize();
+});
 
 $("#library").bind("contextmenu", function(e) {
     e.preventDefault();
@@ -21,7 +23,7 @@ $("#sidebar .album").click(function(e) {
 	e.preventDefault();
 	var id = $(this).attr("id");
 	var url = $(this).contents().filter("a").attr("ajax");
-	loadModule(url);
+	loadModule(url, id, "album");
 })
 
 $("#album_create").click(function() {

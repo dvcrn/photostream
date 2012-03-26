@@ -4,6 +4,7 @@ var main = $("#main");
 var sidebar = $("#sidebar");
 var library = $("#library");
 var titlebar = $("#main .title")
+var store = new Store();
 
 // Zum adden des CSRF Tokens an ajax requests
 $('html').ajaxSend(function(event, xhr, settings) {
@@ -48,19 +49,24 @@ var changeTitle = function(title) {
 	titlebar.html("<h1>"+title+"</h1>");
 }
 
-var loadModule = function(url) {
-	console.info("Loading Module " + url);
-	$.get(url, function(json){
-		var json = $.parseJSON(json);
-		console.info(json);
+var loadModule = function(url, id, section) {
+	if (store.section != section || store.current != id) 
+	{
+		console.info("Loading Module " + section + ": " + id + " ("+url+")");
+		$.get(url, function(json){
+			var json = $.parseJSON(json);
 
-		if (json.success) {
-			library.html(json.html);
-			changeTitle(json.title);
-		} else {
-			createPopup(json.msg);
-		}
-	});
+			if (json.success) {
+				library.html(json.html);
+				changeTitle(json.title);
+
+				store.section = section;
+				store.current = id;
+			} else {
+				createPopup(json.msg);
+			}
+		});
+	}
 }
 
 var showPhoto = function(photo) {

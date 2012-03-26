@@ -1,0 +1,52 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PhotoStream :: {% block title %}Home{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'css/login.css' %}">
+	<script src="{% static 'js/jquery-1.7.1.min.js' %}" type="text/javascript"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			var login = $("#login");
+			var height = $(window).height();
+			login.css("top", height / 2 - login.height());
+
+			$("#loginbutton").click(function() {
+				$(this).parent().parent().submit();
+			});
+
+		    $('input').keypress(function(e) {
+		        if(e.which == 13) {
+		            $(this).blur();
+		            $('#loginbutton').click();
+		        }
+		    });
+		});
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="login">
+			<div class="titlebar">
+				<p>Photostream DEV</p>
+			</div>
+			<div class="form">
+				<div class="error">
+					{% if error %}
+						<p>{{ error }}</p>
+					{% endif %}
+				</div>
+				<form action="/login/" method="post" accept-charset="utf-8">
+					{% csrf_token %}
+					<p><label>E-Mail:</label><input type="text" name="email" value="" placeholder=""></p>
+					<p><label>Password:</label><input type="password" name="password" value="" placeholder=""></p>
+					<div class="btncontainer">
+						<a href="#" class="button">New Account</a>
+						<a href="#" class="button" id="loginbutton">LogIn</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

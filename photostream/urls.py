@@ -13,6 +13,11 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
+urlpatterns += patterns('account.views',
+    url(r'^login/$', 'custom_login'),
+    url(r'^logout/$', 'custom_logout'),
+)
+
 urlpatterns += patterns('library.views',
 	url(r'^$', 'library'),
     url(r'^album/(?P<id>\d+)/$', 'album'),

@@ -2,6 +2,9 @@ from django.shortcuts import render_to_response
 from library.models import Photo, User, Album
 from django.template import RequestContext
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+
 
 # Create your views here.
 def library(request):
@@ -21,7 +24,7 @@ def library(request):
 				'module': module
 			}, context_instance=RequestContext(request))
 	else:
-		raise Exception("Sorry, only logged in works atm")
+		return HttpResponseRedirect(reverse("account.views.custom_login"))
 
 def recent(request):
 	if request.user.is_authenticated():
@@ -40,7 +43,7 @@ def recent(request):
 				'module': module
 			}, context_instance=RequestContext(request))
 	else:
-		raise Exception("Sorry, only logged in works atm")
+		return HttpResponseRedirect(reverse("account.views.custom_login"))
 
 def album(request, id):
 	if request.user.is_authenticated():
@@ -62,4 +65,4 @@ def album(request, id):
 				'module': module
 			}, context_instance=RequestContext(request))
 	else:
-		raise Exception("Sorry, only logged in works atm")
+		return HttpResponseRedirect(reverse("account.views.custom_login"))

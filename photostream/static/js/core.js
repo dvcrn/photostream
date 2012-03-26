@@ -78,27 +78,22 @@ var changeTitle = function(title) {
 }
 
 var loadModule = function(url, id, section) {
-	console.info(url);
-	if (store.section != section || store.current != id) 
-	{
-		console.info("Loading Module " + section + ": " + id + " ("+url+")");
-		$.get(url, function(json){
-			var json = $.parseJSON(json);
+	$.get(url, function(json){
+		var json = $.parseJSON(json);
 
-			if (json.success) {
-				library.html(json.html);
-				changeTitle(json.title);
+		if (json.success) {
+			library.html(json.html);
+			changeTitle(json.title);
 
-				$("#sidebar .current").removeClass("current");
-				$("#"+id).addClass("current");
+			$("#sidebar .current").removeClass("current");
+			$("#"+id).addClass("current");
 
-				store.section = section;
-				store.current = id;
-			} else {
-				createPopup(json.msg);
-			}
-		});
-	}
+			store.section = section;
+			store.current = id;
+		} else {
+			createPopup(json.msg);
+		}
+	});
 }
 
 var showPhoto = function(photo) {

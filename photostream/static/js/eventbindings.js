@@ -17,15 +17,18 @@ $("#library .photo").live("dblclick", function() {
 
 $("#albums .album").dblclick(function(e) {
 	e.preventDefault();
+	console.info("DBL CLICK");
 });
 
 $("#sidebar .album").live("click", function(e) {
-	console.info($(this));
 	e.preventDefault();
 	var id = $(this).attr("id");
-	console.info("ID: " + id);
 	var url = $(this).contents().filter("a").attr("ajax");
-	loadModule(url, id, "album");
+
+	if (store.section != "album" || store.current != id) 
+	{
+		loadModule(url, id, "album");
+	}
 })
 
 $("#sidebar a").click(function(e) {

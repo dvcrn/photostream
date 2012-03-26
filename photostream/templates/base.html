@@ -10,7 +10,14 @@
 	<script src="{% static 'js/jquery-1.7.1.min.js' %}" type="text/javascript"></script>
 	<script src="{% static 'js/jquery-ui-1.8.18.custom.min.js' %}" type="text/javascript"></script>
 	<script src="{% static 'js/jquery.multipleDraggables.js' %}" type="text/javascript"></script>
-	<script src="{% static 'js/library.js' %}?bust=4" type="text/javascript"></script>
+
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			$.getScript("{% static 'js/core.js' %}");
+			$.getScript("{% static 'js/eventbindings.js' %}");
+			$.getScript("{% static 'js/library.js' %}");
+		});
+	</script>
 </head>
 <body>
 	<div id="wrapper">

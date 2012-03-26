@@ -34,9 +34,13 @@ def album(request, id):
 		album = Album.objects.get(id=id, owner=user)
 		photos = Photo.objects.filter(album=album, owner=user)
 
-		return render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request))
+		html = render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request)).content
+
+		json = {"success": True, "html": html, "title": album.name}
 	else:
-		raise Exception("Sorry, only logged in works atm")
+		json = {"success": False, "msg": "Only logged in works at the moment."}
+
+	return render_to_response("api/json.html", {"json": simplejson.dumps(json)})
 
 # Post
 

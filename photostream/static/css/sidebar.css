@@ -4,6 +4,7 @@
 	background: #e8eaf0;
 	font-size: 13px;
 	position: fixed;
+	overflow-y: auto;
 }
 
 .section {

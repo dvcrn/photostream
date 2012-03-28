@@ -47,20 +47,16 @@ var add_album = function(caller) {
 		});
 }
 
-var rename_album = function(id, newname) {
+var rename_album = function(promise, id, newname) {
 	$.post("/api/rename/album/", { id: id, name: newname },
 		function(json) {
 	    	var json = $.parseJSON(json);
 	    	console.info(json.success);
 	    	if (!json.success) {
 	    		alert("Something very bad happened...");
+	    		promise.reject();
 	    	} else {
-	    		/*
-	    		 *
-	    		 * TODO: Does not work!
-	    		 *
-	    		 */
-	    		return true;
+	    		promise.resolve();
 	    	}
 		});
 }

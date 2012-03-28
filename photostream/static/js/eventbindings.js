@@ -80,7 +80,25 @@ $("#album_create").click(function() {
 	$(".stextbox").focus();
 	$(".stextbox").keydown(function(e) {
 		if (e.keyCode == 13) {
-			add_album($(this));
+			var _this = $(this);
+			var promise = $.Deferred();
+			add_album(promise, _this.);
+
+
+			/*
+				TODO: namen an add_album übergeben
+				promise done funktion mit unteren befüllen
+			*/
+
+			/*
+
+
+	    		caller.parent().parent().attr("id", json.id);
+	    		caller.parent().attr("href", json.url);
+	    		caller.parent().attr("ajax", json.ajax);	    		
+	    		caller.parent().html(name);
+
+	    	*/
 		}
 	});
 

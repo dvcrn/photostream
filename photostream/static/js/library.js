@@ -29,7 +29,7 @@ var bindDroppable = function() {
 bindDroppable();
 
 
-var add_album = function(caller) {
+var add_album = function(promise, name, caller) {
 	var name = caller.val();
 
 	$.post("/api/add/album/", { name: name },
@@ -37,11 +37,11 @@ var add_album = function(caller) {
 	    	var json = $.parseJSON(json);
 	    	if (!json.success) {
 	    		alert("Something very bad happened...");
+	    		promise.reject();
 	    	} else {
-	    		caller.parent().parent().attr("id", json.id);
-	    		caller.parent().attr("href", json.url);
-	    		caller.parent().attr("ajax", json.ajax);	    		
-	    		caller.parent().html(name);
+	    		promise.data = json;
+	    		promise.resolve();
+
 	    		bindDroppable();
 	    	}
 		});

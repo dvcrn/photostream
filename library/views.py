@@ -66,3 +66,15 @@ def album(request, id):
 			}, context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect(reverse("account.views.custom_login"))
+
+def test(request):
+	#curl -X POST -F fileupload=@bildchen.png 127.0.0.1:8000/test/ > muh.html
+	if request.method == 'POST':
+		myfile = request.FILES['fileupload']
+		destination = open('/Users/David/Developer/photostream/photostream/media/tmp/%s' % myfile.name, "wb+")
+		for chunk in myfile.chunks():
+			destination.write(chunk)
+
+		destination.close()
+
+	assert False

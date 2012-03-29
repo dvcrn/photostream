@@ -15,7 +15,7 @@ $("#library .photo").live("dblclick", function() {
 	showPhoto($(this));
 });
 
-$("#albums .album").dblclick(function(e) {
+$("#albums .album").live("dblclick", function(e) {
 	// Function for renaming an album
 	e.preventDefault();
 

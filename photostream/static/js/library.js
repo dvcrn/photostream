@@ -29,8 +29,7 @@ var bindDroppable = function() {
 bindDroppable();
 
 
-var add_album = function(promise, name, caller) {
-	var name = caller.val();
+var add_album = function(promise, name) {
 
 	$.post("/api/add/album/", { name: name },
 		function(json) {
@@ -41,8 +40,6 @@ var add_album = function(promise, name, caller) {
 	    	} else {
 	    		promise.data = json;
 	    		promise.resolve();
-
-	    		bindDroppable();
 	    	}
 		});
 }

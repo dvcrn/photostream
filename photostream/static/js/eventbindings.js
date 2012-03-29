@@ -82,23 +82,21 @@ $("#album_create").click(function() {
 		if (e.keyCode == 13) {
 			var _this = $(this);
 			var promise = $.Deferred();
-			add_album(promise, _this.);
+			var name = _this.val();
 
+			promise.done(function() {
+				var json = promise.data;
+				console.info(json);
 
-			/*
-				TODO: namen an add_album übergeben
-				promise done funktion mit unteren befüllen
-			*/
+	    		_this.parent().parent().attr("id", json.id);
+	    		_this.parent().attr("href", json.url);
+	    		_this.parent().attr("ajax", json.ajax);	    		
+	    		_this.parent().html(name);
 
-			/*
+				bindDroppable();
+			});
 
-
-	    		caller.parent().parent().attr("id", json.id);
-	    		caller.parent().attr("href", json.url);
-	    		caller.parent().attr("ajax", json.ajax);	    		
-	    		caller.parent().html(name);
-
-	    	*/
+			add_album(promise, name);
 		}
 	});
 

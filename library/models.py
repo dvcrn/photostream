@@ -8,6 +8,7 @@ class Album(models.Model):
     class Meta:
         verbose_name = ('Album')
         verbose_name_plural = ('Albums')
+        ordering = ['-created']
 
     def __unicode__(self):
         return self.name

@@ -18,8 +18,6 @@ $("#library .photo").live("dblclick", function() {
 $("#albums .album").dblclick(function(e) {
 	// Function for renaming an album
 	e.preventDefault();
-	console.info("DBL CLICK");
-	console.info($(this));
 
 	var title = $(this).children().html();
 	var aid = $(this).attr("id");
@@ -75,7 +73,6 @@ $("#sidebar .library").click(function(e) {
 })
 
 $("#album_create").click(function() {
-	//var name = prompt("Please type in a name for your album!");
 	$("#albums").prepend('<li id="album_create" class="album"><a href="#" title=""><input class="stextbox" type="text" name="" value="" placeholder=""></a></li>');
 	$(".stextbox").focus();
 	$(".stextbox").keydown(function(e) {
@@ -86,7 +83,6 @@ $("#album_create").click(function() {
 
 			promise.done(function() {
 				var json = promise.data;
-				console.info(json);
 
 	    		_this.parent().parent().attr("id", json.id);
 	    		_this.parent().attr("href", json.url);

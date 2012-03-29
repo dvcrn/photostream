@@ -19,7 +19,7 @@ $("#albums .album").live("dblclick", function(e) {
 	// Function for renaming an album
 	e.preventDefault();
 
-	var title = $(this).children().html();
+	var title = $(this).children().filter("a").html();
 	var aid = $(this).attr("id");
 	var oldhtml = $(this).html();
 
@@ -47,8 +47,6 @@ $("#albums .album").live("dblclick", function(e) {
 			rename_album(promise, aid, newtitle);
 		}
 	});
-
-	console.info(title);
 });
 
 $("#sidebar .album").live("click", function(e) {

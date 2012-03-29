@@ -41,6 +41,7 @@ $("#albums .album").live("dblclick", function(e) {
 			
 			promise.done(function() {
 				_this.parent().html($(oldhtml).html(newtitle));
+				changeTitle(newtitle);
 			});
 
 			rename_album(promise, aid, newtitle);

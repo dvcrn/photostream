@@ -73,7 +73,7 @@ $("#sidebar .library").click(function(e) {
 })
 
 $("#album_create").click(function() {
-	$("#albums").prepend('<li id="album_create" class="album"><a href="#" title=""><input class="stextbox" type="text" name="" value="" placeholder=""></a></li>');
+	$("#albums").prepend('<li id="album_create" class="album"><img class="icon" src="/static/img/album-icon.png"> <a href="#" title=""><input class="stextbox" type="text" name="" value="" placeholder=""></a></li>');
 	$(".stextbox").focus();
 	$(".stextbox").keydown(function(e) {
 		if (e.keyCode == 13) {

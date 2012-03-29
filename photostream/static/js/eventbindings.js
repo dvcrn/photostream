@@ -23,7 +23,7 @@ $("#albums .album").dblclick(function(e) {
 	var aid = $(this).attr("id");
 	var oldhtml = $(this).html();
 
-	$(this).html('<input class="stextbox" type="text" name="" value="" placeholder="">');
+	$(this).html('<img class="icon" src="/static/img/album-icon.png"> <input class="stextbox" type="text" name="" value="" placeholder="">');
 	$(".stextbox").focus().val(title);
 	$(".stextbox").blur(function(e) {
 		$(this).parent().html(oldhtml);

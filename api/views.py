@@ -1,11 +1,19 @@
 from django.shortcuts import render_to_response
-from library.models import Photo, User, Album
 from django.template import RequestContext
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from django.http import Http404
 from django.core.urlresolvers import reverse
 
+from library.models import Photo, User, Album
+from api.models import Token
+
+from photostream import settings
+
 import simplejson
+import hashlib
+import time
+import datetime
 
 # Get
 def photos_all(request):
@@ -121,3 +129,57 @@ def rename_album(request):
 
 	else:
 		raise Exception("Sorry, only logged in works atm")
+
+def auth(request):
+	email = request.GET.get("email")
+	password = request.GET.get("password")
+
+	# exceptions auf obersten level behandeln
+	try: 
+		try:
+			user = User.objects.get(email=email)
+			user = authenticate(username=user.username, password=password)
+
+			if user is None:
+				raise UserWarning("Wrong username / password combination")
+
+			if not user.is_active:
+				raise UserWarning("This account is not active or propably banned.")
+
+			token_time = datetime.datetime.now()
+			token_expires = token_time + datetime.timedelta(minutes=60)
+
+			lib = hashlib.sha1()
+			lib.update(settings.API_SECRET)
+			lib.update(user.username)
+			lib.update("%s " % token_time)
+
+			formated_expires = time.strftime("%Y-%m-%d %H:%M", token_expires.timetuple())
+
+			token_entry = Token.objects.get_or_create(user=user)[0]
+			token_entry.token = lib.hexdigest()
+			token_entry.expires = formated_expires
+			token_entry.save()
+
+			data = {
+				"success": True,
+				"token": lib.hexdigest(),
+				"expires": time.mktime(token_expires.timetuple())
+			}
+
+		except User.DoesNotExist:
+			raise UserWarning("This user does not exist.")
+
+	except UserWarning, e:
+		data = {
+			"success": False,
+			"msg": str(e)
+		}
+
+	json = simplejson.dumps(data)
+	return render_to_response("api/json.html", {'json': json})
+
+
+
+
+

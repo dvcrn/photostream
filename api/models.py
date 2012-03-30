@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Token(models.Model):
 	user = models.ForeignKey(User, unique=True)
-	token = models.CharField(max_length=40)
+	token = models.CharField(max_length=40, unique=True)
 	expires = models.DateTimeField()
 	created = models.DateTimeField(auto_now=True)
 	class Meta:

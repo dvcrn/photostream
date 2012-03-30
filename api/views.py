@@ -180,6 +180,47 @@ def auth(request):
 	return render_to_response("api/json.html", {'json': json})
 
 
+def upload(request):
+	try:
+		if request.method == 'POST':
+			token = request.POST.get("token", None)
+			if token is None:
+				raise UserWarning("No Usertoken given.")
 
+			try:
+				tokenobj = Token.objects.get(token=token)
+			except Token.DoesNotExist:
+				raise UserWarning("This token is invalid.")
+
+			if tokenobj.user.is_active:
+				myfile = request.FILES['fileupload']
+				path1 = '/Users/David/Developer/photostream/photostream/media/photos/%s' % myfile.name
+				path2 = '/Users/David/Developer/photostream/photostream/media/thumbs/%s' % myfile.name
+				
+				destination = open(path1, "wb+")
+				destination2 = open(path2, "wb+")
+				
+				for chunk in myfile.chunks():
+					destination.write(chunk)
+					destination2.write(chunk)
+
+				destination.close()
+				destination2.close()
+
+				Photo.objects.create(owner=tokenobj.user, name=myfile.name, photo=myfile.name)
+
+				data = { "success": True }
+			else:
+				raise UserWarning("Invalid User")
+
+
+	except UserWarning, e:
+		data = {
+			"success": False,
+			"msg": str(e)
+		}
+
+	json = simplejson.dumps(data)
+	return render_to_response("api/json.html", {'json': json})
 
 

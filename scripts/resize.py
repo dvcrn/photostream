@@ -7,7 +7,13 @@ destination = "/Users/David/tmp/wallpaper/thumb/"
 source = "/Users/David/tmp/wallpaper/"
 
 path = 'wallpaper/'
-listing = os.listdir(path)
+#listing = os.listdir(path)
+
+image = Image.open("/Users/David/Developer/photostream/photostream/media/photos/bildchen2.jpg")
+
+sys.exit(1)
+
+
 for infile in listing:
     if (infile.startswith('.')):
     	continue

@@ -2,7 +2,7 @@
 {% block main_content %}
 <div id="library">
 	{% for photo in photos %}
-		<img class="photo draggable" id="{{ photo.id }}" bigger="{{ MEDIA_URL }}photos/{{ photo.photo }}" src="{{ MEDIA_URL }}thumbs/thumb_{{ photo.photo }}" alt="" />
+		<img class="photo draggable" id="{{ photo.id }}" bigger="{{ MEDIA_URL }}photos/{{ photo.photo }}" src="{{ MEDIA_URL }}thumbs/{{ photo.name }}" alt="" />
 	{% endfor %}
 </div>
 {% endblock %}

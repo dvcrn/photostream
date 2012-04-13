@@ -131,11 +131,16 @@ def rename_album(request):
 		raise Exception("Sorry, only logged in works atm")
 
 def auth(request):
-	email = request.GET.get("email")
-	password = request.GET.get("password")
+	
 
 	# exceptions auf obersten level behandeln
 	try: 
+		if request.method != "POST":
+			raise UserWarning("Only POST works. Sorry, man!")
+
+		email = request.POST.get("email")
+		password = request.POST.get("password")
+
 		try:
 			user = User.objects.get(email=email)
 			user = authenticate(username=user.username, password=password)
@@ -164,7 +169,7 @@ def auth(request):
 			data = {
 				"success": True,
 				"token": lib.hexdigest(),
-				"expires": time.mktime(token_expires.timetuple())
+				"expires": int(time.mktime(token_expires.timetuple()))
 			}
 
 		except User.DoesNotExist:
@@ -190,24 +195,21 @@ def upload(request):
 			try:
 				tokenobj = Token.objects.get(token=token)
 			except Token.DoesNotExist:
-				raise UserWarning("This token is invalid.")
+				raise UserWarning("The token >>> %s <<< is invalid." % token)
 
 			if tokenobj.user.is_active:
 				myfile = request.FILES['fileupload']
-				path1 = '/Users/David/Developer/photostream/photostream/media/photos/%s' % myfile.name
-				path2 = '/Users/David/Developer/photostream/photostream/media/thumbs/%s' % myfile.name
+				relativepath = 'photos/%s' % myfile.name
+				destinationpath = '%s%s' % (settings.MEDIA_ROOT, relativepath)
 				
-				destination = open(path1, "wb+")
-				destination2 = open(path2, "wb+")
+				destination = open(destinationpath, "wb+")
 				
 				for chunk in myfile.chunks():
 					destination.write(chunk)
-					destination2.write(chunk)
 
 				destination.close()
-				destination2.close()
 
-				Photo.objects.create(owner=tokenobj.user, name=myfile.name, photo=myfile.name)
+				Photo.objects.create(owner=tokenobj.user, name=myfile.name, photo=relativepath)
 
 				data = { "success": True }
 			else:

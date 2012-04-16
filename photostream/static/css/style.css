@@ -16,10 +16,29 @@ body {
 }
 
 #library {
+	position: relative;
+	z-index: 1;
 	height: 100%;
 	padding-top: 10px;
 	overflow-y: auto;
 	overflow-x: hidden;
+}
+
+#library-overlay {
+	display: none;
+	top: 0;
+	z-index: 2;
+	width: 100px;
+	height: 100%;
+	position: absolute;
+	background: url('../img/overlay-bg.png');
+}
+
+.overlay-body {
+	top: 50%;
+	font-weight: bolder;
+	font-size: 20px;
+	position: relative;
 }
 
 #main .title {

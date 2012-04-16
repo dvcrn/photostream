@@ -15,39 +15,50 @@ $("#library .photo").live("dblclick", function() {
 	showPhoto($(this));
 });
 
-$("#albums .album").live("dblclick", function(e) {
-	// Function for renaming an album
-	e.preventDefault();
+var rebindAlbumDoubleclick = function() {
+	$("#albums .album").unbind("dblclick");
 
-	var title = $(this).children().filter("a").html();
-	var aid = $(this).attr("id");
-	var oldhtml = $(this).html();
+	$("#albums .album").bind("dblclick", function(e) {
+		// Function for renaming an album
+		e.preventDefault();
 
-	$(this).html('<img class="icon" src="/static/img/album-icon.png"> <input class="stextbox" type="text" name="" value="" placeholder="">');
-	$(".stextbox").focus().val(title);
-	$(".stextbox").blur(function(e) {
-		$(this).parent().html(oldhtml);
-	});
+		var title = $(this).children().filter("a").html();
+		var aid = $(this).attr("id");
+		var oldhtml = $(this).html() + "";
 
-	$(".stextbox").keydown(function(e) {
-		if (e.keyCode == 13) {
-			var _this = $(this);
-			// This part is tricky.
-			// When pressing enter, send an AJAX request to backend. If rename_album returns true, put in the old content, just with different html
-			// This is possible because we don't change anything but the name
+		var id = new Date().getTime();
 
-			var newtitle = _this.val();
-			var promise = $.Deferred();
-			
-			promise.done(function() {
-				_this.parent().html($(oldhtml).html(newtitle));
-				changeTitle(newtitle);
-			});
+		$(this).html('<img class="icon" src="/static/img/album-icon.png"> <input class="stextbox" id="'+id+'" type="text" name="" value="" placeholder="">');
+		$("#"+id).focus().val(title);
+		$("#"+id).blur(function(e) {
+			$(this).parent().html(oldhtml);
 
-			rename_album(promise, aid, newtitle);
-		}
-	});
-});
+			rebindAlbumDoubleclick();
+		});
+
+		$("#"+id).keydown(function(e) {
+			if (e.keyCode == 13) {
+				var _this = $(this);
+				// This part is tricky.
+				// When pressing enter, send an AJAX request to backend. If rename_album returns true, put in the old content, just with different html
+				// This is possible because we don't change anything but the name
+
+				var newtitle = _this.val();
+				var promise = $.Deferred();
+				
+				promise.done(function() {
+					_this.parent().html($(oldhtml).html(newtitle));
+					changeTitle(newtitle);
+
+					rebindAlbumDoubleclick();
+				});
+
+				rename_album(promise, aid, newtitle);
+			}
+		});
+	});	
+}
+rebindAlbumDoubleclick();
 
 $("#sidebar .album").live("click", function(e) {
 	e.preventDefault();

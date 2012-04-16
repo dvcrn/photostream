@@ -5,6 +5,7 @@ var sidebar = $("#sidebar");
 var library = $("#library");
 var titlebar = $("#main .title")
 var store = new Store();
+var overlay = $("#library-overlay");
 
 // Zum adden des CSRF Tokens an ajax requests
 $('html').ajaxSend(function(event, xhr, settings) {
@@ -67,6 +68,17 @@ var getGlobalHeight = function() {
 var resize = function() {
 	library.css("height", getLibraryHeight() + "px");	
 	sidebar.css("height", getGlobalHeight() + "px");	
+
+  overlay.css("height", (window.innerHeight - toolbar.height()) + "px"); 
+  overlay.css("width", getLibraryWidth() + "px"); 
+}
+
+var showOverlay = function() {
+  overlay.show();
+}
+
+var hideOverlay = function() {
+  overlay.hide();
 }
 
 var createPopup = function(msg) {
@@ -78,15 +90,18 @@ var changeTitle = function(title) {
 }
 
 var loadModule = function(url, id, section) {
+  $("#sidebar .current").removeClass("current");
+  $("#"+id).addClass("current");
+  showOverlay();
+
 	$.get(url, function(json){
 		var json = $.parseJSON(json);
 
 		if (json.success) {
+      hideOverlay();
+
 			library.html(json.html);
 			changeTitle(json.title);
-
-			$("#sidebar .current").removeClass("current");
-			$("#"+id).addClass("current");
 
 			store.section = section;
 			store.current = id;

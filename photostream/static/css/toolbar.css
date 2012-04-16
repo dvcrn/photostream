@@ -6,4 +6,5 @@
 	bottom: 0px;
 	background: url('../img/toolbar-bg.png');
 	border-top: 1px solid;
+	z-index: 5;
 }

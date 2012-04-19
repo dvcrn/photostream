@@ -14,6 +14,7 @@ import simplejson
 import hashlib
 import time
 import datetime
+import os
 
 # Get
 def photos_all(request):
@@ -199,17 +200,29 @@ def upload(request):
 
 			if tokenobj.user.is_active:
 				myfile = request.FILES['fileupload']
-				relativepath = 'photos/%s' % myfile.name
-				destinationpath = '%s%s' % (settings.MEDIA_ROOT, relativepath)
-				
-				destination = open(destinationpath, "wb+")
+				extension = os.path.splitext(myfile.name)[1]
+				photocount = Photo.objects.filter(owner=tokenobj.user).count() + 1
+
+				filename = photocount
+				filename_full = "%s%s" % (filename, extension)
+
+				relative_userpath = 'photos/%s/' % tokenobj.user.id
+				absolute_userpath = '%s%s' % (settings.MEDIA_ROOT, relative_userpath)
+
+				relative_filepath = '%s%s' % (relative_userpath, filename_full)
+				absolute_filepath = '%s%s' % (absolute_userpath, filename_full)
+
+				if not os.path.exists(absolute_userpath):
+					os.makedirs(absolute_userpath)
+
+				destination = open(absolute_filepath, "wb+")
 				
 				for chunk in myfile.chunks():
 					destination.write(chunk)
 
 				destination.close()
 
-				Photo.objects.create(owner=tokenobj.user, name=myfile.name, photo=relativepath)
+				Photo.objects.create(owner=tokenobj.user, name=filename, extension=extension, photo=relative_filepath)
 
 				data = { "success": True }
 			else:

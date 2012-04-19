@@ -24,18 +24,28 @@ def process(photoid):
 							 charset = "utf8",
 							 db="photostream")
 		cursor = db.cursor()
-		cursor.execute("""SELECT photo, name FROM library_photo WHERE id = %s""" % (photoid))
-		photopath, photoname = cursor.fetchone()
-
-		fullpath = "%s%s" % (mediapath, photopath)
-
-		#print "Creating thumb:"
-		#print "Path: %s" % photopath
-		#print "Name: %s" % photoname
-		#print "Fullpath: %s" % (fullpath)
+		cursor.execute("""SELECT owner_id, photo, name, extension FROM library_photo WHERE id = %s""" % (photoid))
+		userid, relative_filepath, photoname, extension = cursor.fetchone()
+		
+		absolute_filepath = "%s%s" % (mediapath, relative_filepath)
+		relative_userpath = "photos/%s/" % (userid)
+		absolute_userpath = "%s%s/" % (mediapath, relative_userpath)
 
 
-		image = Image.open(fullpath)
+		'''
+		print "Creating thumb:"
+		print "User: %s" % userid
+		print "Relative Userath: %s" % relative_userpath
+		print "Absolute Userath: %s" % absolute_userpath
+
+		print "Relative Path: %s" % relative_filepath
+		print "Absolute Path: %s" % absolute_filepath
+
+		print "Name: %s" % photoname
+		print "Extension: %s" % (extension)
+		'''
+
+		image = Image.open(absolute_filepath)
 		w = image.size[0]
 		h = image.size[1]
 		ratio = round((float(w)/float(h)),3)
@@ -43,9 +53,11 @@ def process(photoid):
 		height = round(float(180) / ratio)
 		thumb = image.resize((180, int(height)), Image.ANTIALIAS)   
 
-		thumb.save("%s%s/%s" % (mediapath, thumbdestination, photoname))
+		thumb.save("%s%s_180h%s" % (absolute_userpath, photoname, extension))
 
-		cursor.execute("""UPDATE library_photo SET processed = 1 WHERE id = %s""" % (photoid))
+		sql =  "UPDATE library_photo SET processed = 1 WHERE id = %d" % (int(photoid))
+		cursor.execute(sql)
+		print sql
 
 	except MySQLdb.Error, e:
 		print MySQLdb.Error, e

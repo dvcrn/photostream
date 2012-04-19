@@ -18,6 +18,8 @@ class Album(models.Model):
 
 class Photo(models.Model):
     name = models.CharField(max_length=50)
+    caption = models.TextField(max_length=200, blank=True)
+    extension = models.CharField(max_length=5)
     owner = models.ForeignKey(User)
     photo = models.FileField(upload_to="photos")
     album = models.ManyToManyField(Album, blank=True)

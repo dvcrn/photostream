@@ -24,8 +24,14 @@
 				load: [
 					"{% static 'js/eventbindings.js' %}",
 					"{% static 'js/library.js' %}"
-				]
+				],
+				complete: function() {
+					{% block js_yepnope_complete %}
+					{% endblock %}
+				}
 			}]);
+
+
 		});
 	</script>
 </head>

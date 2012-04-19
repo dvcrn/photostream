@@ -57,3 +57,12 @@ var rename_album = function(promise, id, newname) {
 	    	}
 		});
 }
+
+var initLibrary = function() {
+	var element = $("#library_photos");
+
+	var id = element.attr("id");
+	var url = element.find("a").attr("ajax");
+
+	loadModule(url, id, "library");
+}

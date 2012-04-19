@@ -11,7 +11,7 @@ def library(request):
 	if request.user.is_authenticated():
 		user = request.user
 
-		photos = Photo.objects.filter(owner=user)
+		#photos = Photo.objects.filter(owner=user)
 		albums = Album.objects.filter(owner=user)
 
 		module = {}
@@ -19,7 +19,7 @@ def library(request):
 		module['name'] = "library_photos"
 
 		return render_to_response("library.html", {
-				'photos': photos,
+				#'photos': photos,
 				'albums': albums,
 				'module': module
 			}, context_instance=RequestContext(request))

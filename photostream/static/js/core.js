@@ -112,16 +112,16 @@ var loadModule = function(url, id, section) {
 }
 
 var showPhoto = function(photo) {
-	var url = photo.attr("bigger");
-	console.info(url);
+  var url = photo.attr("bigger");
+  console.info(url);
 
-	// Replace photo with bigger version
-	photo.nextAll().hide();
-	photo.prevAll().hide();
+  // Replace photo with bigger version
+  photo.nextAll().hide();
+  photo.prevAll().hide();
 
-	photo.css("height", getLibraryHeight() - 30);
-	photo.attr("src", url);
-	photo.css("width", "");
+  photo.css("height", getLibraryHeight() - 30);
+  photo.attr("src", url);
+  photo.css("width", "");
 }
 
 resize();

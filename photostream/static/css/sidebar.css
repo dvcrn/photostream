@@ -38,6 +38,10 @@
 
 	padding: 1px 0 5px 20px;
 	height: 19px;
+	width: 235px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .section li .icon {
@@ -47,6 +51,7 @@
 
 .section .current {
 	background: url('../img/current-bg.png');
+	color: white;
 }
 
 .section .hover {

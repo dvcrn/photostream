@@ -22,6 +22,8 @@ var rebindAlbumDoubleclick = function() {
 		// Function for renaming an album
 		e.preventDefault();
 
+		$(this).unbind("dblclick");
+
 		var title = $(this).children().filter("a").html();
 		var aid = $(this).attr("id");
 		var oldhtml = $(this).html() + "";

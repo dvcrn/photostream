@@ -131,6 +131,7 @@ $("#album_create").click(function() {
 	    		_this.parent().html(name);
 
 				bindDroppable();
+				bindAlbumContextMenu();
 			});
 
 			add_album(promise, name);

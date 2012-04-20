@@ -118,8 +118,30 @@ def rename_album(request):
 			id = request.POST.get("id", 0)
 
 			album = Album.objects.get(id=id)
-			album.name = name
+			album.name = name[0:50]
 			album.save()
+
+			json = {"success": True}
+		except Exception:
+			json = {"success": False}
+
+		json = simplejson.dumps(json)
+		return render_to_response("api/json.html", {'json': json})
+
+	else:
+		raise Exception("Sorry, only logged in works atm")
+
+def delete_album(request):
+	if request.user.is_authenticated():
+		if request.method == "GET":
+			raise Http404
+
+		try:
+			user = request.user
+			id = request.POST.get("id", 0)
+
+			album = Album.objects.get(id=id, owner=user)
+			album.delete()
 
 			json = {"success": True}
 		except Exception:

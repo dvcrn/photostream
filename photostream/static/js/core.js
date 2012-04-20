@@ -85,6 +85,12 @@ var createPopup = function(msg) {
 	alert(msg);
 }
 
+var createConfirm = function(msg, callback) {
+  if (confirm(msg)) {
+    callback();
+  }
+}
+
 var changeTitle = function(title) {
 	titlebar.html("<h1>"+title+"</h1>");
 }

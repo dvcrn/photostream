@@ -45,16 +45,28 @@ var add_album = function(promise, name) {
 		});
 }
 
-var rename_album = function(promise, id, newname) {
+var rename_album = function(id, newname, callback) {
 	$.post("/api/rename/album/", { id: id, name: newname },
 		function(json) {
 	    	var json = $.parseJSON(json);
 	    	console.info(json.success);
 	    	if (!json.success) {
-	    		alert("Something very bad happened...");
-	    		promise.reject();
+	    		createPopup("Something very bad happened...");
 	    	} else {
-	    		promise.resolve();
+	    		callback();
+	    	}
+		});
+}
+
+var delete_album = function(id, callback) {
+	$.post("/api/delete/album/", { id: id },
+		function(json) {
+	    	var json = $.parseJSON(json);
+	    	console.info(json.success);
+	    	if (!json.success) {
+	    		createPopup("Something very bad happened...");
+	    	} else {
+	    		callback();
 	    	}
 		});
 }

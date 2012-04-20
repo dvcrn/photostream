@@ -2,36 +2,6 @@ $(window).resize(function() {
 	resize();
 });
 
-
-var bindPhotoContextMenu = function() {
-	$("#library .photo").contextMenu({
-        menu: 'photo-context-menu'
-    },
-        function(action, el, pos) {
-        console.info(
-            'Action: ' + action + '\n\n' +
-            'Element ID: ' + $(el).attr('id') + '\n\n' +
-            'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' +
-            'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
-            );
-    });
-}
-
-var bindAlbumContextMenu = function() {
-	$("#albums .album").contextMenu({
-        menu: 'album-context-menu',
-        childClass: 'hover'
-    },
-        function(action, el, pos) {
-        console.info(
-            'Action: ' + action + '\n\n' +
-            'Element ID: ' + $(el).attr('id') + '\n\n' +
-            'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' +
-            'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
-            );
-    });
-}
-
 $("#library").bind("contextmenu", function(e) {
 	e.preventDefault();
 });
@@ -40,7 +10,7 @@ $("#library .photo").live("dblclick", function() {
 	showPhoto($(this));
 });
 
-$("#albums").bind("contextmenu", function(e) {
+$("#sidebar").bind("contextmenu", function(e) {
 	e.preventDefault();
 });
 
@@ -75,16 +45,13 @@ var rebindAlbumDoubleclick = function() {
 				// This is possible because we don't change anything but the name
 
 				var newtitle = _this.val();
-				var promise = $.Deferred();
-				
-				promise.done(function() {
+
+				rename_album(aid, newtitle, function() {
 					_this.parent().html($(oldhtml).html(newtitle));
 					changeTitle(newtitle);
 
 					rebindAlbumDoubleclick();
 				});
-
-				rename_album(promise, aid, newtitle);
 			}
 		});
 	});	

@@ -2,6 +2,7 @@
 $(".draggable").liveDraggable({
 	helper: 'clone',
 	appendTo: 'body',
+	zIndex: 5
 	//scroll: false,
 	//liveMode: true
 });

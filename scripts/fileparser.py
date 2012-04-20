@@ -9,7 +9,7 @@ import zipfile
 import sys
 import shutil
 
-sys.path.append("/Users/David/Developer/photostream/photostream/")
+sys.path.append("/home/ubuntu/photostream/photostream/")
 import settings as settings
 
 mediapath = settings.MEDIA_ROOT
@@ -19,8 +19,8 @@ def process(photoid):
 	# connect to mysql
 	try:
 		db = MySQLdb.connect(host="localhost",
-							 user="root",
-							 passwd="",
+							 user="photostream",
+							 passwd="ph0t0",
 							 charset = "utf8",
 							 db="photostream")
 		cursor = db.cursor()
@@ -55,7 +55,7 @@ def process(photoid):
 
 		thumb.save("%s%s_180h%s" % (absolute_userpath, photoname, extension))
 
-		sql =  "UPDATE library_photo SET processed = 1 WHERE id = %d" % (int(photoid))
+		sql =  "UPDATE library_photo SET processed = 1 WHERE id = %s" % (photoid)
 		cursor.execute(sql)
 		print sql
 

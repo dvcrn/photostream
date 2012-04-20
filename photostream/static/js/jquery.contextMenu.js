@@ -1,17 +1,15 @@
 // jQuery Context Menu Plugin
 //
-// Version 1.01
+// Version 1.02 MOD
 //
-// Cory S.N. LaViska
-// A Beautiful Site (http://abeautifulsite.net/)
-//
-// More info: http://abeautifulsite.net/2008/09/jquery-context-menu-plugin/
+// Orginal by Cory S.N. LaViska (A Beautiful Site (http://abeautifulsite.net/)
+// Modified by David Mohl (http://dave.cx)
 //
 // Terms of Use
 //
 // This plugin is dual-licensed under the GNU General Public License
 //   and the MIT License and is copyright A Beautiful Site, LLC.
-//
+
 if(jQuery)( function() {
 	$.extend($.fn, {
 		
@@ -23,6 +21,8 @@ if(jQuery)( function() {
 			// 0 needs to be -1 for expected results (no fade)
 			if( o.inSpeed == 0 ) o.inSpeed = -1;
 			if( o.outSpeed == 0 ) o.outSpeed = -1;
+			// Custom class for applying to clicked element
+			if ( o.childClass == undefined ) o.childClass = "contextMenu-child";
 			// Loop each context menu
 			$(this).each( function() {
 				var el = $(this);
@@ -35,11 +35,24 @@ if(jQuery)( function() {
 					evt.stopPropagation();
 					$(this).mouseup( function(e) {
 						e.stopPropagation();
-						var srcElement = $(this);
+
+
 						$(this).unbind('mouseup');
 						if( evt.button == 2 ) {
 							// Hide context menus that may be showing
+							if (o.srcElement != undefined)
+								o.srcElement.removeClass(o.childClass);
+
+							var srcElement = $(this);
+							o.srcElement = srcElement;
+							$('#' + o.menu).find('A').unbind('click');
+							$('#' + o.menu).find('li').unbind('click');
+
+							// Added functionality for adding a specific class on rightclick
+							srcElement.addClass(o.childClass);	
+							
 							$(".contextMenu").hide();
+
 							// Get this context menu
 							var menu = $('#' + o.menu);
 							
@@ -68,7 +81,6 @@ if(jQuery)( function() {
 							(e.pageY) ? y = e.pageY : y = e.clientY + d.scrollTop;
 							
 							// Show the menu
-							$(document).unbind('click');
 							$(menu).css({ top: y, left: x }).fadeIn(o.inSpeed);
 							// Hover events
 							$(menu).find('A').mouseover( function() {
@@ -78,49 +90,29 @@ if(jQuery)( function() {
 								$(menu).find('LI.hover').removeClass('hover');
 							});
 							
-							// Keyboard
-							$(document).keypress( function(e) {
-								switch( e.keyCode ) {
-									case 38: // up
-										if( $(menu).find('LI.hover').size() == 0 ) {
-											$(menu).find('LI:last').addClass('hover');
-										} else {
-											$(menu).find('LI.hover').removeClass('hover').prevAll('LI:not(.disabled)').eq(0).addClass('hover');
-											if( $(menu).find('LI.hover').size() == 0 ) $(menu).find('LI:last').addClass('hover');
-										}
-									break;
-									case 40: // down
-										if( $(menu).find('LI.hover').size() == 0 ) {
-											$(menu).find('LI:first').addClass('hover');
-										} else {
-											$(menu).find('LI.hover').removeClass('hover').nextAll('LI:not(.disabled)').eq(0).addClass('hover');
-											if( $(menu).find('LI.hover').size() == 0 ) $(menu).find('LI:first').addClass('hover');
-										}
-									break;
-									case 13: // enter
-										$(menu).find('LI.hover A').trigger('click');
-									break;
-									case 27: // esc
-										$(document).trigger('click');
-									break
-								}
-							});
-							
 							// When items are selected
 							$('#' + o.menu).find('A').unbind('click');
-							$('#' + o.menu).find('LI:not(.disabled) A').click( function() {
-								$(document).unbind('click').unbind('keypress');
+							$('#' + o.menu).find('LI:not(.disabled)').click( function() {
+								
+								$('#' + o.menu).find('A').unbind('click');
+								$('#' + o.menu).find('li').unbind('click');
+
 								$(".contextMenu").hide();
+								o.srcElement.removeClass(o.childClass);
+								var action = $(this).find("a").attr("href").substring(1);
 								// Callback
-								if( callback ) callback( $(this).attr('href').substr(1), $(srcElement), {x: x - offset.left, y: y - offset.top, docX: x, docY: y} );
+								if( callback ) callback( action, $(srcElement), {x: x - offset.left, y: y - offset.top, docX: x, docY: y} );
 								return false;
 							});
 							
 							// Hide bindings
 							setTimeout( function() { // Delay for Mozilla
 								$(document).click( function() {
-									$(document).unbind('click').unbind('keypress');
+									$('#' + o.menu).find('A').unbind('click');
+									$('#' + o.menu).find('li').unbind('click');
+
 									$(menu).fadeOut(o.outSpeed);
+									o.srcElement.removeClass(o.childClass);
 									return false;
 								});
 							}, 0);

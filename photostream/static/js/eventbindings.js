@@ -3,7 +3,8 @@ $(window).resize(function() {
 });
 
 
-$("#library").contextMenu({
+var bindPhotoContextMenu = function() {
+	$("#library .photo").contextMenu({
         menu: 'photo-context-menu'
     },
         function(action, el, pos) {
@@ -14,13 +15,33 @@ $("#library").contextMenu({
             'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
             );
     });
+}
 
-$("#library").bind("rightclick", function(e) {
+var bindAlbumContextMenu = function() {
+	$("#albums .album").contextMenu({
+        menu: 'album-context-menu',
+        childClass: 'hover'
+    },
+        function(action, el, pos) {
+        console.info(
+            'Action: ' + action + '\n\n' +
+            'Element ID: ' + $(el).attr('id') + '\n\n' +
+            'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' +
+            'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
+            );
+    });
+}
+
+$("#library").bind("contextmenu", function(e) {
 	e.preventDefault();
 });
 
 $("#library .photo").live("dblclick", function() {
 	showPhoto($(this));
+});
+
+$("#albums").bind("contextmenu", function(e) {
+	e.preventDefault();
 });
 
 var rebindAlbumDoubleclick = function() {

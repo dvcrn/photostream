@@ -1,5 +1,7 @@
 {% load photo_urls %}
 
 {% for photo in photos %}
-	<img class="photo draggable" id="{{ photo.id }}" bigger="{{ MEDIA_URL }}photos/{{ photo|photourl }}" src="{{ photo|thumburl }}" alt="" />
+
+		<img class="photo draggable" id="{{ photo.id }}" bigger="{{ photo|photourl }}" src="{{ photo|thumburl }}" alt="" />
+
 {% endfor %}

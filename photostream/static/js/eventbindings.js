@@ -2,13 +2,21 @@ $(window).resize(function() {
 	resize();
 });
 
-$("#library").bind("contextmenu", function(e) {
-    e.preventDefault();
-    console.info("Rightclick disabled, sorry!");
-});
 
-$("#library .photo").click(function() {
-	//$(this).addClass("selected");
+$("#library").contextMenu({
+        menu: 'photo-context-menu'
+    },
+        function(action, el, pos) {
+        console.info(
+            'Action: ' + action + '\n\n' +
+            'Element ID: ' + $(el).attr('id') + '\n\n' +
+            'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' +
+            'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
+            );
+    });
+
+$("#library").bind("rightclick", function(e) {
+	e.preventDefault();
 });
 
 $("#library .photo").live("dblclick", function() {

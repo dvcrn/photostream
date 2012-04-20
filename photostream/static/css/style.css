@@ -77,3 +77,50 @@ body {
 	border: solid 2px orange;
 	border-radius: 1.0em;
 }
+
+.context-menu {
+	-webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow:    1px 1px 6px rgba(0, 0, 0, 0.75);
+	box-shadow:         1px 1px 6px rgba(0, 0, 0, 0.75);
+
+	top: 0;
+	display: none;
+	position: fixed;
+	z-index: 10;
+	background: url('../img/cmenu-bg.png');
+	color: white;
+	width: 150px;
+	border-radius: 0.2em;
+
+	padding: 10px 0;
+	padding-bottom: -5px;
+	border: solid 2px grey;
+	text-align: center;
+}
+
+.context-menu hr {
+	margin: 5px auto;
+	width: 80%;
+	color: grey;
+	background: grey;
+}
+
+.context-menu a {
+	color: #cecece;
+	text-decoration: none;
+	line-height: 28px;
+}
+
+.context-menu li {
+	padding-left: 20px;
+	text-align: left;
+	cursor: pointer;
+}
+
+.context-menu li:hover {
+	background: url('../img/cmenu-current-bg.png');
+}
+
+.context-menu li:hover a {
+	color: #d5dbe6;
+}

@@ -7,6 +7,7 @@ class Album(models.Model):
     name = models.CharField(max_length=50)
     owner = models.ForeignKey(User)
     created = models.DateTimeField(auto_now=True)
+    is_public = models.BooleanField(default=False)
     class Meta:
         verbose_name = ('Album')
         verbose_name_plural = ('Albums')
@@ -39,7 +40,7 @@ def resizePhoto(sender, instance, created, **kwargs):
     post_save.disconnect(resizePhoto, sender=Photo)
         
     if instance.processed is False:
-        cmd = "python /Users/David/Developer/photostream/scripts/fileparser.py %s &" % (instance.id)
+        cmd = "python /home/ubuntu/photostream/scripts/fileparser.py %s &" % (instance.id)
         os.system(cmd)
 
     post_save.connect(resizePhoto, sender=Photo)

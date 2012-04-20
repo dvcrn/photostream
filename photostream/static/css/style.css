@@ -126,3 +126,26 @@ body {
 .context-menu li:hover a {
 	color: #d5dbe6;
 }
+
+
+.test2 {
+	border: solid 3px yellow;
+	border-radius: 0.4em;
+	margin: 7px;
+}
+
+.test3 {
+	border: solid 3px yellow;
+	border-radius: 0.4em;
+	margin: 7px;
+}
+
+
+.selection {
+	position: absolute;
+	border: 1px solid #89B;
+	background: #BCE;
+	background-color: #BEC;
+	border-color: #8B9;
+	z-index: 15;
+	}

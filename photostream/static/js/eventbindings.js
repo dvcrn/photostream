@@ -6,8 +6,18 @@ $("#library").bind("contextmenu", function(e) {
 	e.preventDefault();
 });
 
+$("#library").not(".photo").bind("click", function(e) {
+	//console.info("Removing all");
+	//deselectAll();
+});
+
 $("#library .photo").live("dblclick", function() {
-	showPhoto($(this));
+	//showPhoto($(this));
+});
+
+$("#library .photo").live("click", function() {
+	deselectAll();
+	selectPhoto($(this));
 });
 
 $("#sidebar").bind("contextmenu", function(e) {

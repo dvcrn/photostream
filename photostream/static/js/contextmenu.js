@@ -41,20 +41,19 @@ var bindPhotoContextMenu = function() {
 
     $("#library .photo")
         .drop("start",function(){
+            deselectAll();
             $( this ).addClass("test2");
+            //selectPhoto($(this));
         })
+
         .drop(function( ev, dd ){
-            $( this ).toggleClass("test3");
+            //$( this ).toggleClass("test3");
+            selectPhoto($(this));
         })
         .drop("end",function(){
             $( this ).removeClass("test2");
         });
     $.drop({ multi: true });
-
-
-
-
-
 }
 
 var bindAlbumContextMenu = function() {

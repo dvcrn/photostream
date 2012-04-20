@@ -99,6 +99,7 @@ var loadModule = function(url, id, section) {
   $("#sidebar .current").removeClass("current");
   $("#"+id).addClass("current");
   showOverlay();
+  deselectAll();
 
 	$.get(url, function(json){
 		var json = $.parseJSON(json);
@@ -130,6 +131,28 @@ var showPhoto = function(photo) {
   photo.css("height", getLibraryHeight() - 30);
   photo.attr("src", url);
   photo.css("width", "");
+}
+
+var selectPhoto = function(photo) {
+  var id = photo.attr("id");
+  if (store.selection[id] === undefined) {
+    store.selection[id] = photo;
+    photo.addClass("selected");
+    console.info(store.selection);
+  }
+}
+
+var deselectPhoto = function(photo) {
+  var id = photo.attr("id");
+  delete store.selection[id]; 
+  photo.removeClass("selected");
+  console.info(store.selection);
+}
+
+var deselectAll = function() {
+  store.selection = {};
+  console.info(store.selection);
+  $(".selected").removeClass("selected");
 }
 
 resize();

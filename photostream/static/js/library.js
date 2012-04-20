@@ -1,4 +1,5 @@
 // Photo Drag & Drop action
+/*
 $(".draggable").liveDraggable({
 	helper: 'clone',
 	appendTo: 'body',
@@ -6,6 +7,7 @@ $(".draggable").liveDraggable({
 	//scroll: false,
 	//liveMode: true
 });
+*/
 
 var bindDroppable = function() {
 	$("#albums .album").droppable({

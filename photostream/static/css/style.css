@@ -134,6 +134,12 @@ body {
 	margin: 7px;
 }
 
+.selection-action {
+	border: solid 3px pink;
+	border-radius: 0.4em;
+	margin: 7px;
+}
+
 .selected {
 	border: solid 3px yellow;
 	border-radius: 0.4em;

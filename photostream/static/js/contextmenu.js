@@ -71,6 +71,8 @@ var bindPhotoContextMenu = function() {
 
     $("#library .photo")
         .drag("start",function( ev, dd ){
+            $(".selected").addClass("selection-action");
+            //console.info($(".selected"));
             // Append the photosummary to document.body
             return $("#photodrag").show().appendTo( document.body );
         })
@@ -83,6 +85,7 @@ var bindPhotoContextMenu = function() {
         })
         .drag("end",function( ev, dd ){
             // On End, fade the element out
+            $(".selected").removeClass("selection-action");
             $( dd.proxy ).fadeOut(100, function() {
                 // $( dd.proxy ).remove();
             });

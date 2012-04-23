@@ -2,6 +2,8 @@
 
 {% for photo in photos %}
 
-		<img class="photo draggable" id="{{ photo.id }}" bigger="{{ photo|photourl }}" src="{{ photo|thumburl }}" alt="" />
+		<img class="photo muh" id="{{ photo.id }}" bigger="{{ photo|photourl }}" src="{{ photo|thumburl }}" alt="" />
 
 {% endfor %}
+
+<img id="photodrag" class="photo" src="http://127.0.0.1:8000/media/photos/1/110_180h.jpg" alt="" />

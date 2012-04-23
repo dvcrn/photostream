@@ -16,7 +16,9 @@ var bindPhotoContextMenu = function() {
 
 
 
-
+    /*
+     *  Area Drag function. Creates an selection and removed it on drop
+     */
 
     $( library )
     .drag("start",function( ev, dd ){
@@ -34,26 +36,57 @@ var bindPhotoContextMenu = function() {
     })
     .drag("end",function( ev, dd ){
         $( dd.proxy ).fadeOut(100, function() {
-
-        $( dd.proxy ).remove();
+            $( dd.proxy ).remove();
         });
     });
 
+    /*
+     *  "Drop" the selection on photos to add them to selection
+     */
+
     $("#library .photo")
-        .drop("start",function(){
-            deselectAll();
-            $( this ).addClass("test2");
-            //selectPhoto($(this));
+        .drop("start",function(ev, dd){
+            if ($(dd.proxy).hasClass("selection")) 
+            {
+                deselectAll();
+                $( this ).addClass("selection-hover");
+            }
         })
 
         .drop(function( ev, dd ){
-            //$( this ).toggleClass("test3");
-            selectPhoto($(this));
+            if ($(dd.proxy).hasClass("selection")) 
+            {
+                selectPhoto($(this));
+            }
         })
         .drop("end",function(){
-            $( this ).removeClass("test2");
+            $( this ).removeClass("selection-hover");
         });
+
     $.drop({ multi: true });
+
+    /*
+     *  Drag Function for photos
+     */
+
+    $("#library .photo")
+        .drag("start",function( ev, dd ){
+            // Append the photosummary to document.body
+            return $("#photodrag").show().appendTo( document.body );
+        })
+        .drag(function( ev, dd ){
+            // On move, set the position to mouse position. (To follow the mouse)
+            $( dd.proxy ).css({
+                top: dd.offsetY,
+                left: dd.offsetX
+            });
+        })
+        .drag("end",function( ev, dd ){
+            // On End, fade the element out
+            $( dd.proxy ).fadeOut(100, function() {
+                // $( dd.proxy ).remove();
+            });
+        });
 }
 
 var bindAlbumContextMenu = function() {

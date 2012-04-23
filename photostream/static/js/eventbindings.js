@@ -16,8 +16,8 @@ $("#library .photo").live("dblclick", function() {
 });
 
 $("#library .photo").live("click", function() {
-	deselectAll();
-	selectPhoto($(this));
+	//deselectAll();
+	//selectPhoto($(this));
 });
 
 $("#sidebar").bind("contextmenu", function(e) {

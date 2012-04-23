@@ -151,7 +151,6 @@ var deselectPhoto = function(photo) {
 
 var deselectAll = function() {
   store.selection = {};
-  console.info(store.selection);
   $(".selected").removeClass("selected");
 }
 

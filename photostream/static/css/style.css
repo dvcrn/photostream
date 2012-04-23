@@ -128,7 +128,7 @@ body {
 }
 
 
-.test2 {
+.selection-hover {
 	border: solid 3px yellow;
 	border-radius: 0.4em;
 	margin: 7px;
@@ -148,4 +148,13 @@ body {
 	background-color: #BEC;
 	border-color: #8B9;
 	z-index: 15;
-	}
+}
+
+#photodrag {
+	position: absolute;
+	border: 1px solid #89B;
+	background: #BCE;
+	background-color: #BEC;
+	border-color: #8B9;
+	z-index: 15;
+}

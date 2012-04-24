@@ -22,6 +22,12 @@ var bindPhotoContextMenu = function() {
 
     $( library )
     .drag("start",function( ev, dd ){
+
+        $.drop({ 
+            multi: true,
+            mode: "overlap",
+        });
+
         return $('<div class="selection" />')
             .css('opacity', .65 )
             .appendTo( document.body );
@@ -44,6 +50,8 @@ var bindPhotoContextMenu = function() {
      *  "Drop" the selection on photos to add them to selection
      */
 
+    //console.info(multidrop);
+
     $("#library .photo")
         .drop("start",function(ev, dd){
             if ($(dd.proxy).hasClass("selection")) 
@@ -63,8 +71,6 @@ var bindPhotoContextMenu = function() {
             $( this ).removeClass("selection-hover");
         });
 
-    $.drop({ multi: true });
-
     /*
      *  Drag Function for photos
      */
@@ -72,6 +78,12 @@ var bindPhotoContextMenu = function() {
     $("#library .photo")
         .drag("start",function( ev, dd ){
             $(".selected").addClass("selection-action");
+
+            $.drop({ 
+                multi: false,
+                mode: true,
+            });
+
             //console.info($(".selected"));
             // Append the photosummary to document.body
             return $("#photodrag").show().appendTo( document.body );
@@ -90,6 +102,31 @@ var bindPhotoContextMenu = function() {
                 // $( dd.proxy ).remove();
             });
         });
+
+    /*
+     *  Drop for albums
+     */ 
+
+    $("#albums .album")
+        .drop("start", function(ev, dd) {
+            if ($(dd.proxy).hasClass("photodrag"))
+            {
+                //console.info(ev);
+                $("#albums .album").removeClass("hover");
+                $(this).addClass("hover");
+            } 
+        })
+        .drop(function(ev, dd) {
+            if ($(dd.proxy).hasClass("photodrag"))
+            {
+                //console.info("ev");
+                //console.info($(this));
+            }
+        })
+        .drop("end", function() {
+            $(this).removeClass("hover");
+        });
+
 }
 
 var bindAlbumContextMenu = function() {
@@ -101,8 +138,8 @@ var bindAlbumContextMenu = function() {
 
         var el = $(el);
 
-        console.info("Action " + action);
-        console.info(el.attr("id"));
+        //console.info("Action " + action);
+        //console.info(el.attr("id"));
         switch(action) 
         {
             case "context-album-makepublic":

@@ -96,19 +96,17 @@ $("#album_create").click(function() {
 			var promise = $.Deferred();
 			var name = _this.val();
 
-			promise.done(function() {
-				var json = promise.data;
+			add_album(name, function(data) {
+				var json = data;
 
 	    		_this.parent().parent().attr("id", json.id);
 	    		_this.parent().attr("href", json.url);
 	    		_this.parent().attr("ajax", json.ajax);	    		
 	    		_this.parent().html(name);
 
-				bindDroppable();
+	    		bindDragDrop();
 				bindAlbumContextMenu();
 			});
-
-			add_album(promise, name);
 		}
 	});
 

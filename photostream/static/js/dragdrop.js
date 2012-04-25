@@ -6,7 +6,10 @@ var bindDragDrop = function() {
      */
 
     //console.info(multidrop);
-
+    $("#library .photo").unbind("drop");
+    $("#library .photo").unbind("drag");
+    $("#albums .album").unbind("drop");
+    $(library).unbind("drag");
 
     $("#library .photo")
         .drop("start",function(ev, dd){
@@ -87,46 +90,46 @@ var bindDragDrop = function() {
                 $( dd.proxy ).hide();
             });
         });
-}
-
-/*
- *  Area Drag function. Creates an selection and removed it on drop
- */
 
 
-$( library )
-.drag("start",function( ev, dd ){
+    /*
+     *  Area Drag function. Creates an selection and removed it on drop
+     */
 
-    $.drop({ 
-        multi: true,
-        mode: "overlap",
+
+    $( library )
+    .drag("start",function( ev, dd ){
+
+        $.drop({ 
+            multi: true,
+            mode: "overlap",
+        });
+
+        return $('<div class="selection" />')
+            .css('opacity', .65 )
+            .appendTo( document.body );
+    })
+    .drag(function( ev, dd ){
+        $( dd.proxy ).css({
+            top: Math.min( ev.pageY, dd.startY ),
+            left: Math.min( ev.pageX, dd.startX ),
+            height: Math.abs( ev.pageY - dd.startY ),
+            width: Math.abs( ev.pageX - dd.startX )
+        });
+    })
+    .drag("end",function( ev, dd ){
+        $( dd.proxy ).fadeOut(100, function() {
+            $( dd.proxy ).remove();
+        });
     });
 
-    return $('<div class="selection" />')
-        .css('opacity', .65 )
-        .appendTo( document.body );
-})
-.drag(function( ev, dd ){
-    $( dd.proxy ).css({
-        top: Math.min( ev.pageY, dd.startY ),
-        left: Math.min( ev.pageX, dd.startX ),
-        height: Math.abs( ev.pageY - dd.startY ),
-        width: Math.abs( ev.pageX - dd.startX )
-    });
-})
-.drag("end",function( ev, dd ){
-    $( dd.proxy ).fadeOut(100, function() {
-        $( dd.proxy ).remove();
-    });
-});
 
 
+    /*
+     *  Drop for albums
+     */ 
 
-/*
- *  Drop for albums
- */ 
-
-$("#albums .album")
+    $("#albums .album")
     .drop("start", function(ev, dd) {
         if ($(dd.proxy).hasClass("photodrag"))
         {
@@ -167,3 +170,4 @@ $("#albums .album")
     .drop("end", function() {
         $(this).removeClass("hover");
     });
+}

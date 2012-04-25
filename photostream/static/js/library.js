@@ -1,14 +1,12 @@
-var add_album = function(promise, name) {
+var add_album = function(name, callback) {
 
 	$.post("/api/add/album/", { name: name },
 		function(json) {
 	    	var json = $.parseJSON(json);
 	    	if (!json.success) {
 	    		alert("Something very bad happened...");
-	    		promise.reject();
 	    	} else {
-	    		promise.data = json;
-	    		promise.resolve();
+	    		callback(json);
 	    	}
 		});
 }

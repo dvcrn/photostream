@@ -1,9 +1,13 @@
 
 var bindPhotoContextMenu = function() {
-    /*
+
 	$("#library .photo").contextMenu({
         menu: 'photo-context-menu',
-        childClass: "selected"
+        startFunction: function(el) {
+
+            if (!el.hasClass("selected"))
+                selectPhoto(el, true);
+        }
     },
     function(action, el, pos) {
 
@@ -15,7 +19,6 @@ var bindPhotoContextMenu = function() {
 
         }
     });
-*/
 }
 
 var bindAlbumContextMenu = function() {
@@ -27,8 +30,6 @@ var bindAlbumContextMenu = function() {
 
         var el = $(el);
 
-        //console.info("Action " + action);
-        //console.info(el.attr("id"));
         switch(action) 
         {
             case "context-album-makepublic":
@@ -43,6 +44,13 @@ var bindAlbumContextMenu = function() {
                 createConfirm("Are you sure you want to delete this album? There is NO undo!", function() {
                     delete_album(el.attr("id"), function() {
                         el.remove();
+
+                        var element = $("#library_photos");
+
+                        var id = element.attr("id");
+                        var url = element.find("a").attr("ajax");
+
+                        loadModule(url, id, "library");
                     });
                 });
                 break;

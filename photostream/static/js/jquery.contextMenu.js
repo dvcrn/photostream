@@ -1,6 +1,6 @@
 // jQuery Context Menu Plugin
 //
-// Version 1.02 MOD
+// Version 1.5 MOD
 //
 // Orginal by Cory S.N. LaViska (A Beautiful Site (http://abeautifulsite.net/)
 // Modified by David Mohl (http://dave.cx)
@@ -31,22 +31,23 @@ if(jQuery)( function() {
 				// Add contextMenu class
 				$('#' + o.menu).addClass('contextMenu');
 				// Simulate a true right click
-				$(this).mousedown( function(e) {
+				$(this).bind("contextmenu", function(e) {
 					var evt = e;
 					evt.stopPropagation();
+
 					$(this).mouseup( function(e) {
 						e.stopPropagation();
 
-
-						$(this).unbind('mouseup');
 						if( evt.button == 2 ) {
-							o.startFunction();
 							// Hide context menus that may be showing
 							if (o.srcElement != undefined)
 								o.srcElement.removeClass(o.childClass);
 
 							var srcElement = $(this);
 							o.srcElement = srcElement;
+
+							o.startFunction(o.srcElement);
+
 							$('#' + o.menu).find('A').unbind('click');
 							$('#' + o.menu).find('li').unbind('click');
 

@@ -111,12 +111,21 @@ var showPhoto = function(photo) {
   photo.css("width", "");
 }
 
-var selectPhoto = function(photo) {
+var selectPhoto = function(photo, deselect_others) {
+  if (deselect_others === undefined) {
+    deselect_others = false;
+  }
+
+  if (deselect_others) {
+    deselectAll();
+  }
+
+
   var id = photo.attr("id");
   if (store.selection[id] === undefined) {
     store.selection[id] = photo;
     photo.addClass("selected");
-    console.info(store.selection);
+    //console.info(store.selection);
   }
 }
 
@@ -125,6 +134,10 @@ var deselectPhoto = function(photo) {
   delete store.selection[id]; 
   photo.removeClass("selected");
   console.info(store.selection);
+}
+
+var getSelectedPhotos = function() {
+  return store.selection;
 }
 
 var deselectAll = function() {

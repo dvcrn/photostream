@@ -63,23 +63,28 @@ def album_photo_add(request):
 	if request.user.is_authenticated():
 		if request.method == "GET":
 			raise Http404
-			albumid = int(request.GET.get("albumid", 0))
-			photoid = int(request.GET.get("photoid", 0))
+			#albumid = int(request.GET.get("albumid", 0))
+			#photoids = request.GET.get("photos", 0)
 
 		try: 
 			albumid = request.POST.get("albumid", 0)
-			photoid = request.POST.get("photoid", 0)
+			photoids = request.POST.get("photos", 0)
 
 			user = request.user
 			album = Album.objects.get(id=albumid, owner=user)
-			photo = Photo.objects.get(id=photoid, owner=user)
+			
 
-			photo.album.add(album)
-			photo.save()
+			photos = photoids.split(",")
+
+			for photo in photos:
+				photo = Photo.objects.get(id=photo, owner=user)
+				photo.album.add(album)
+				photo.save()
 
 			json = {"success": True}
-		except Exception:
-			json = {"success": False}
+		except Exception, e:
+			#assert False
+			json = {"success": False, "msg": str(e)}
 
 		json = simplejson.dumps(json)
 		return render_to_response("api/json.html", {'json': json})

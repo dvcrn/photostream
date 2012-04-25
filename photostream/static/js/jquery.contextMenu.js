@@ -23,6 +23,7 @@ if(jQuery)( function() {
 			if( o.outSpeed == 0 ) o.outSpeed = -1;
 			// Custom class for applying to clicked element
 			if ( o.childClass == undefined ) o.childClass = "contextMenu-child";
+			if ( o.startFunction == undefined ) o.startFunction = function() {};
 			// Loop each context menu
 			$(this).each( function() {
 				var el = $(this);
@@ -39,6 +40,7 @@ if(jQuery)( function() {
 
 						$(this).unbind('mouseup');
 						if( evt.button == 2 ) {
+							o.startFunction();
 							// Hide context menus that may be showing
 							if (o.srcElement != undefined)
 								o.srcElement.removeClass(o.childClass);

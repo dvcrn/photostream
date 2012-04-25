@@ -9,6 +9,7 @@ $(".draggable").liveDraggable({
 });
 */
 
+/*
 var bindDroppable = function() {
 	$("#albums .album").droppable({
 		hoverClass: "hover",
@@ -30,7 +31,7 @@ var bindDroppable = function() {
 	});
 }
 bindDroppable();
-
+*/
 
 var add_album = function(promise, name) {
 

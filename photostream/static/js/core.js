@@ -30,29 +30,6 @@ $('html').ajaxSend(function(event, xhr, settings) {
     }
 });
 
-// Damit das draggable live ist
-(function ($) {
-   $.fn.liveDraggable = function (opts) {
-      this.live("mouseover", function() {
-         if (!$(this).data("init")) {
-            $(this).data("init", true).draggable(opts);
-         }
-      });
-      return $();
-   };
-}(jQuery));
-
-// Same for droppable
-(function ($) {
-       $.fn.liveDroppable = function (opts) {
-          this.live("mouseenter", function() {
-             if (!$(this).data("init")) {
-                $(this).data("init", true).droppable(opts);
-             }
-          });
-       };
-}(jQuery));
-
 var getLibraryHeight = function() {
 	return window.innerHeight - toolbar.height() - titlebar.height() - 10;
 }
@@ -114,6 +91,7 @@ var loadModule = function(url, id, section) {
 			store.current = id;
 
       bindPhotoContextMenu();
+      bindDragDrop();
 		} else {
 			createPopup(json.msg);
 		}

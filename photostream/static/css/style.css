@@ -157,10 +157,41 @@ body {
 }
 
 #photodrag {
+	display: none;
 	position: absolute;
 	border: 1px solid #89B;
-	background: #BCE;
-	background-color: #BEC;
+	background: url('../img/drag-bg.jpg');
 	border-color: #8B9;
 	z-index: 15;
+	width: 180px;
+	height: 113px;
+
+	opacity:0.6;
+  	filter:alpha(opacity=60); /* For IE8 and earlier */
+  	cursor: pointer;
+}
+
+#photodrag img {
+	opacity: 0.4;
+	-moz-opacity: 0.4;
+	filter:alpha(opacity=4);
+}
+
+#photodrag #selectcount {
+	background: url('../img/drag-circle.png');
+	height: 61px;
+	width: 61px;
+	margin: 0 auto;
+	position: relative;
+	top: 24px;
+	text-align: center;
+}
+
+#photodrag h3 {
+	color: white;
+	font-size: 26px;
+	position: relative;
+	top: 24%;
+	display: block;
+	margin: 0 auto;
 }

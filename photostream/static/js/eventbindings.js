@@ -6,22 +6,19 @@ $("#library").bind("contextmenu", function(e) {
 	e.preventDefault();
 });
 
-$("#library").not(".photo").bind("click", function(e) {
-	//console.info("Removing all");
-	//deselectAll();
-});
-
-$("#library .photo").live("dblclick", function() {
-	//showPhoto($(this));
+$("#sidebar").bind("contextmenu", function(e) {
+	e.preventDefault();
 });
 
 $("#library .photo").live("click", function() {
-	//deselectAll();
-	//selectPhoto($(this));
+	deselectAll();
+	selectPhoto($(this));
 });
 
-$("#sidebar").bind("contextmenu", function(e) {
-	e.preventDefault();
+$("#library").live("click", function(ev) {
+	if (ev.target.id == "library") {
+		deselectAll();
+	}
 });
 
 var rebindAlbumDoubleclick = function() {

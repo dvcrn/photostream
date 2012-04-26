@@ -228,6 +228,7 @@ def upload(request):
 			if tokenobj.user.is_active:
 				myfile = request.FILES['fileupload']
 				extension = os.path.splitext(myfile.name)[1]
+				extension = extension[1:5]
 				photocount = Photo.objects.filter(owner=tokenobj.user).count() + 1
 
 				filename = photocount

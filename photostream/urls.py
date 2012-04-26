@@ -22,7 +22,7 @@ urlpatterns += patterns('library.views',
 	url(r'^$', 'library'),
     url(r'^album/(?P<id>\d+)/$', 'album'),
     url(r'^recent/$', 'recent'),
-    url(r'^test/$', 'test'),
+    url(r'^image/(?P<size>\w+)/(?P<id>\d+).(?P<extension>\w+)$', 'image'),
 )
 
 urlpatterns += patterns('api.views',

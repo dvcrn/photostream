@@ -2,9 +2,10 @@ from django.shortcuts import render_to_response
 from library.models import Photo, User, Album
 from django.template import RequestContext
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-
+from photostream import settings
+import Image
 
 # Create your views here.
 def library(request):
@@ -23,6 +24,34 @@ def library(request):
 				'albums': albums,
 				'module': module
 			}, context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect(reverse("account.views.custom_login"))
+
+def image(request, size, id, extension):
+	if request.user.is_authenticated():
+		user = request.user
+
+		def switch_size(x):
+			return {
+				'full': "full",
+				'thumb': "180h"
+			}.get(size, "full")    # 9 is default if x not found
+
+		size = switch_size(size)
+
+		photo = Photo.objects.get(owner=user, id=id, extension=extension)
+		path = photo.photo
+
+		if size == "full":
+			imagepath = "%sphotos/%d/%s.%s" % (settings.MEDIA_ROOT, user.id, photo.name, extension)
+		else:
+			imagepath = "%sphotos/%d/%s_%s.%s" % (settings.MEDIA_ROOT, user.id, photo.name, size, extension)
+
+		image = Image.open(imagepath)
+		response = HttpResponse(mimetype="image/jpg")
+		image.save(response, "PNG")
+
+		return response
 	else:
 		return HttpResponseRedirect(reverse("account.views.custom_login"))
 

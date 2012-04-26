@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_delete, post_delete
+from photostream import settings
 import os
 
 class Album(models.Model):
@@ -41,7 +42,7 @@ def resizePhoto(sender, instance, created, **kwargs):
         post_save.disconnect(resizePhoto, sender=Photo)
             
         if instance.processed is False:
-            cmd = "python /home/ubuntu/photostream/scripts/fileparser.py %s &" % (instance.id)
+            cmd = "python %s %d &" % (instance.id, settings.API_RESIZER)
             os.system(cmd)
 
         post_save.connect(resizePhoto, sender=Photo)

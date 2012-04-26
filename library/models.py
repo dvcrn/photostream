@@ -37,12 +37,13 @@ class Photo(models.Model):
 
 def resizePhoto(sender, instance, created, **kwargs):
     #if instance.status is 4:
-    post_save.disconnect(resizePhoto, sender=Photo)
-        
-    if instance.processed is False:
-        cmd = "python /home/ubuntu/photostream/scripts/fileparser.py %s &" % (instance.id)
-        os.system(cmd)
+    if created:
+        post_save.disconnect(resizePhoto, sender=Photo)
+            
+        if instance.processed is False:
+            cmd = "python /home/ubuntu/photostream/scripts/fileparser.py %s &" % (instance.id)
+            os.system(cmd)
 
-    post_save.connect(resizePhoto, sender=Photo)
+        post_save.connect(resizePhoto, sender=Photo)
 
 post_save.connect(resizePhoto, sender=Photo)

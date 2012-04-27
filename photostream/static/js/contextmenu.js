@@ -35,13 +35,13 @@ var bindAlbumContextMenu = function() {
             case "context-album-makepublic":
                 var id = el.attr("id");
                 var statusicon = el.find(".statusicon");
-                statusicon.attr("src", "/static/img/ajaxload-small.gif");
+                changeStatusicon(statusicon, "loading");
 
                 public_album(id, function(json) {
                     if (json.public)
-                        statusicon.attr("src", "/static/img/eye.png");
+                        changeStatusicon(statusicon, "public");
                     else
-                        statusicon.attr("src", "/static/img/none.png");
+                        changeStatusicon(statusicon, "none");
                 });
 
                 break;
@@ -54,7 +54,7 @@ var bindAlbumContextMenu = function() {
                 createConfirm("Are you sure you want to delete this album? There is NO undo!", function() {
                     var id = el.attr("id");
                     var statusicon = el.find(".statusicon");
-                    statusicon.attr("src", "/static/img/ajaxload-small.gif");
+                    changeStatusicon(statusicon, "loading");
 
                     if ( store.current == id ) 
                         var reset = true;

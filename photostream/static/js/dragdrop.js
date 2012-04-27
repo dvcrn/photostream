@@ -152,15 +152,15 @@ var bindDragDrop = function() {
 
             var img = album.find(".statusicon");
             var oldicon = img.attr("src");
-            img.attr("src", "/static/img/ajaxload-small.gif");
+            var oldalt = img.attr("alt");
+
+            changeStatusicon(img, "loading");
 
             for (var pid in selection) {
                 ids.push(pid);
             }
 
             var postString = ids.join(",");
-            //console.info(postString);
-            //console.info(aid);
 
             $.post("/api/album/add/", { albumid: aid, photos: postString },
                 function(json) {
@@ -169,12 +169,15 @@ var bindDragDrop = function() {
                         console.info(json.msg);
                     }
                     else {
-                        img.attr("src", "/static/img/tick.png");
+                        changeStatusicon(img, "tick");
                         setTimeout(function() {
                             img.animate({
                                 opacity: '0'
                             }, 500, function() {
                                 img.attr("src", oldicon);
+                                img.attr("alt", oldalt);
+                                initQtip();
+                                
                                 img.animate({
                                     opacity: "1"
                                 });

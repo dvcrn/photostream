@@ -60,15 +60,20 @@ var initLibrary = function() {
 	bindAlbumContextMenu();
 }
 
-$(".statusicon").qtip({
-	content: {
-		attr: 'alt'
-	},
-	style: {
-		classes: 'ui-tooltip-youtube'
-	},
-	position: {
-		my: 'bottom center',
-		at: 'top center', 
-	}
-});
+var initQtip = function() {
+
+	$(".statusicon").qtip({
+		content: {
+			attr: 'alt'
+		},
+		style: {
+			classes: 'ui-tooltip-youtube'
+		},
+		position: {
+			my: 'bottom center',
+			at: 'top center', 
+		}
+	});
+}
+
+initQtip();

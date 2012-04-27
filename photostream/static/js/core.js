@@ -145,4 +145,41 @@ var deselectAll = function() {
   $(".selected").removeClass("selected");
 }
 
+var changeStatusicon = function(element, icontype) {
+  if (element.hasClass("statusicon")) {
+    icon = element;
+  }
+  else {
+    icon = element.find(".statusicon");
+  }
+
+  switch(icontype) 
+  {
+    case "public":
+      var alt = "This album is public.";
+      var src = "/static/img/eye.png";
+      break;
+
+    case "loading":
+      var alt = "Loading...";
+      var src = "/static/img/ajaxload-small.gif";
+      break;
+
+    case "tick":
+      var alt = "Success!";
+      var src = "/static/img/tick.png";
+      break;
+
+    case "none":
+      var alt = "none";
+      var src = "/static/img/none.png";
+      break;
+  }
+
+  icon.attr("src", src);
+  icon.attr("alt", alt);
+
+  initQtip();
+}
+
 resize();

@@ -158,6 +158,34 @@ def delete_album(request):
 	else:
 		raise Exception("Sorry, only logged in works atm")
 
+def public_album(request):
+	if request.user.is_authenticated():
+		if request.method == "GET":
+			raise Http404
+
+		try:
+			user = request.user
+			id = request.POST.get("id", 0)
+
+			album = Album.objects.get(id=id, owner=user)
+
+			if album.is_public:
+				album.is_public = False
+			else:
+				album.is_public = True
+
+			album.save()
+
+			json = {"success": True, "public": album.is_public}
+		except Exception:
+			json = {"success": False}
+
+		json = simplejson.dumps(json)
+		return render_to_response("api/json.html", {'json': json})
+
+	else:
+		raise Exception("Sorry, only logged in works atm")
+
 def auth(request):
 	
 

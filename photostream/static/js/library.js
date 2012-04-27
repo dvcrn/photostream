@@ -19,7 +19,7 @@ var rename_album = function(id, newname, callback) {
 	    	if (!json.success) {
 	    		createPopup("Something very bad happened...");
 	    	} else {
-	    		callback();
+	    		callback(json);
 	    	}
 		});
 }
@@ -32,7 +32,20 @@ var delete_album = function(id, callback) {
 	    	if (!json.success) {
 	    		createPopup("Something very bad happened...");
 	    	} else {
-	    		callback();
+	    		callback(json);
+	    	}
+		});
+}
+
+var public_album = function(id, callback) {
+	$.post("/api/public/album/", { id: id },
+		function(json) {
+	    	var json = $.parseJSON(json);
+	    	console.info(json.success);
+	    	if (!json.success) {
+	    		createPopup("Something very bad happened...");
+	    	} else {
+	    		callback(json);
 	    	}
 		});
 }

@@ -150,7 +150,7 @@ var bindDragDrop = function() {
             var aid = $(this).attr("id");
             var album = $(this);
 
-            var img = album.find("img");
+            var img = album.find(".statusicon");
             var oldicon = img.attr("src");
             img.attr("src", "/static/img/ajaxload-small.gif");
 

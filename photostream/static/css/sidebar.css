@@ -22,6 +22,10 @@
 .section a {
 	text-decoration: none;
 	color: black;
+	overflow: hidden;
+	width: 182px;
+	text-overflow: ellipsis;
+	display: inline-block;
 }
 
 .section ul {
@@ -42,6 +46,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	position: relative;
 }
 
 .section li .icon {
@@ -49,6 +54,12 @@
 	top: 4px;
 	width: 19px;
 	height: 17px;
+}
+
+.section li .statusicon {
+	position: absolute;
+	right: 10px;
+	top: 4px;
 }
 
 .section .current {

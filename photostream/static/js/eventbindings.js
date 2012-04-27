@@ -32,14 +32,18 @@ var rebindAlbumDoubleclick = function() {
 
 		var title = $(this).children().filter("a").html();
 		var aid = $(this).attr("id");
-		var oldhtml = $(this).html() + "";
 
+		var anchor = $(this).find("a");
+		var atext = anchor.html();
+
+		// Random id for avoiding event overlapping
 		var id = new Date().getTime();
 
-		$(this).html('<img class="icon" src="/static/img/album-icon.png"> <input class="stextbox" id="'+id+'" type="text" name="" value="" placeholder="">');
+		anchor.html('<input class="stextbox" id="'+id+'" type="text" name="" value="" placeholder="">');
+
 		$("#"+id).focus().val(title);
 		$("#"+id).blur(function(e) {
-			$(this).parent().html(oldhtml);
+			$(this).parent().html(atext);
 
 			rebindAlbumDoubleclick();
 		});
@@ -54,7 +58,8 @@ var rebindAlbumDoubleclick = function() {
 				var newtitle = _this.val();
 
 				rename_album(aid, newtitle, function() {
-					_this.parent().html($(oldhtml).html(newtitle));
+					console.info("Atext " + atext);
+					anchor.html(newtitle);
 					changeTitle(newtitle);
 
 					rebindAlbumDoubleclick();

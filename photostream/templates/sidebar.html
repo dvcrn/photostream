@@ -3,7 +3,7 @@
 	<h1>Library</h1>
 	<ul id="" class="">
 		<li id="library_photos" class="library {% if module.name = "library_photos" %}current{% endif %}">
-			<img src="{% static 'img/photos-icon.png' %}" alt="" class="icon">
+			<img src="{% static 'img/image.png' %}" alt="" class="icon">
 			<a ajax="{% url api.views.photos_all %}" href="{% url library.views.library %}" title="">Photos</a>
 		</li>
 		<li id="library_recent" class="library {% if module.name = "library_recent" %}current{% endif %}">
@@ -11,7 +11,7 @@
 			<a ajax="{% url api.views.photos_recent %}" href="{% url library.views.recent %}" title="">Recently Added</a>
 		</li>
 		<li id="library_share" class="{% if module.name = "library_share" %}current{% endif %}">
-			<img src="{% static 'img/share-icon.png' %}" alt="" class="icon">
+			<img src="{% static 'img/share-icon.png' %}" alt="This album is public" class="icon">
 			<a href="" title="">Share</a>
 		</li>
 	</ul>
@@ -24,11 +24,21 @@
 				<li id="{{ album.id }}" class="album current">
 					<img src="{% static 'img/album-icon.png' %}" alt="" class="icon">
 					<a ajax="{% url api.views.album id=album.id %}" href="{% url library.views.album id=album.id %}" title="">{{ album }}</a>
+					{% if album.is_public %}
+						<img src="{% static 'img/house.png' %}" alt="" class="statusicon">
+					{% else %}
+						<img src="{% static 'img/none.png' %}" alt="" class="statusicon">
+					{% endif %}
 				</li>
 			{% else %}
 				<li id="{{ album.id }}" class="album">
 					<img src="{% static 'img/album-icon.png' %}" alt="" class="icon">
 					<a ajax="{% url api.views.album id=album.id %}" href="{% url library.views.album id=album.id %}" title="">{{ album }}</a>
+					{% if album.is_public %}
+						<img src="{% static 'img/house.png' %}" alt="" class="statusicon">
+					{% else %}
+						<img src="{% static 'img/none.png' %}" alt="" class="statusicon">
+					{% endif %}
 				</li>
 			{% endif %}
 		{% endfor %}

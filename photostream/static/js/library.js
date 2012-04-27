@@ -59,3 +59,16 @@ var initLibrary = function() {
 	loadModule(url, id, "library");
 	bindAlbumContextMenu();
 }
+
+$(".statusicon").qtip({
+	content: {
+		attr: 'alt'
+	},
+	style: {
+		classes: 'ui-tooltip-youtube'
+	},
+	position: {
+		my: 'bottom center',
+		at: 'top center', 
+	}
+});

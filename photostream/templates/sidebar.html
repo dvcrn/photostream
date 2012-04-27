@@ -25,6 +25,7 @@
 				<li id="{{ album.id }}" class="album current">
 					<img src="{% static 'img/images.png' %}" alt="" class="icon">
 					<a ajax="{% url api.views.album id=album.id %}" href="{% url library.views.album id=album.id %}" title="">{{ album }}</a>
+
 					{% if album.is_public %}
 						<img src="{% static 'img/eye.png' %}" alt="This album is public." class="statusicon">
 					{% else %}
@@ -33,17 +34,23 @@
 				</li>
 			{% else %}
 				<li id="{{ album.id }}" class="album">
+					
 					<img src="{% static 'img/images.png' %}" alt="" class="icon">
-					<a ajax="{% url api.views.album id=album.id %}" href="{% url library.views.album id=album.id %}" title="">{{ album }}</a>
+					
 					{% if album.is_public %}
 						<img src="{% static 'img/eye.png' %}"  alt="This album is public." class="statusicon">
+						<a ajax="{% url api.views.album id=album.id %}" public="{% url library.views.album_public userid=album.owner.id albumid=album.id %}" href="{% url library.views.album id=album.id %}" title="">{{ album }}</a>
 					{% else %}
 						<img src="{% static 'img/none.png' %}" alt="None" class="statusicon">
+						<a ajax="{% url api.views.album id=album.id %}" href="{% url library.views.album id=album.id %}" title="">{{ album }}</a>
 					{% endif %}
 				</li>
 			{% endif %}
 		{% endfor %}
-		<li id="album_create" class="option"><a href="#" title="">Create new</a></li>
+		<li id="album_create" class="option">
+			<img src="{% static 'img/add.png' %}" alt="" class="icon">
+			<a href="#" title="">Create new</a>
+		</li>
 	</ul>
 </div>
 <div class="section">

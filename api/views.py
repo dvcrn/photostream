@@ -176,7 +176,7 @@ def public_album(request):
 
 			album.save()
 
-			json = {"success": True, "public": album.is_public}
+			json = {"success": True, "public": album.is_public, "url": reverse("library.views.album_public", kwargs={'userid': user.id, 'albumid': album.id })}
 		except Exception:
 			json = {"success": False}
 

@@ -96,14 +96,21 @@ def album(request, id):
 	else:
 		return HttpResponseRedirect(reverse("account.views.custom_login"))
 
-def test(request):
-	#curl -X POST -F fileupload=@bildchen.png 127.0.0.1:8000/test/ > muh.html
-	if request.method == 'POST':
-		myfile = request.FILES['fileupload']
-		destination = open('/Users/David/Developer/photostream/photostream/media/tmp/%s' % myfile.name, "wb+")
-		for chunk in myfile.chunks():
-			destination.write(chunk)
 
-		destination.close()
+def album_public(request, userid, albumid):
+	user = User.objects.get(id=userid)
+	album = Album.objects.get(id=albumid, owner=user)
 
-	assert False
+	if album.is_public:
+		photos = Photo.objects.filter(album=album)
+
+	return render_to_response("public/album.html", {
+			'photos': photos,
+			'album': album,
+			'user': user
+		}, context_instance=RequestContext(request))
+
+
+
+
+

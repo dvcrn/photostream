@@ -21,7 +21,31 @@ var bindPhotoContextMenu = function() {
     });
 }
 
+var toggle_public = function(el, callback) 
+{
+    var id = el.attr("id");
+    var statusicon = el.find(".statusicon");
+    changeStatusicon(statusicon, "loading");
+
+    public_album(id, function(json) {
+        if (json.public)
+        {
+            changeStatusicon(statusicon, "public");
+            el.find("a").attr("public", json.url);
+        }
+        else
+        {
+            changeStatusicon(statusicon, "none");
+            el.find("a").removeAttr("public");
+        }
+        
+        if (callback !== undefined)
+            callback(el);
+    });
+}
+
 var bindAlbumContextMenu = function() {
+
 	$("#albums .album").contextMenu({
         menu: 'album-context-menu',
         childClass: 'hover'
@@ -33,21 +57,24 @@ var bindAlbumContextMenu = function() {
         switch(action) 
         {
             case "context-album-makepublic":
-                var id = el.attr("id");
-                var statusicon = el.find(".statusicon");
-                changeStatusicon(statusicon, "loading");
-
-                public_album(id, function(json) {
-                    if (json.public)
-                        changeStatusicon(statusicon, "public");
-                    else
-                        changeStatusicon(statusicon, "none");
-                });
-
+                toggle_public(el);
                 break;
 
             case "context-album-copyurl":
-                console.info("Going to copy the url");
+                var link = el.find("a").attr("public");
+
+                if (link === undefined) 
+                {
+                    toggle_public(el, function() {
+                        var link = el.find("a").attr("public");
+                        copyToClipboard(link);
+                    });
+                }
+                else 
+                {
+                    copyToClipboard(link);
+                }
+
                 break;
 
             case "context-album-delete":

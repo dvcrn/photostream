@@ -23,6 +23,8 @@ urlpatterns += patterns('library.views',
     url(r'^album/(?P<id>\d+)/$', 'album'),
     url(r'^recent/$', 'recent'),
     url(r'^image/(?P<size>\w+)/(?P<id>\d+).(?P<extension>\w+)$', 'image'),
+
+    url(r'^(?P<userid>\d+)/album/(?P<albumid>\d+)/$', 'album_public'),
 )
 
 urlpatterns += patterns('api.views',

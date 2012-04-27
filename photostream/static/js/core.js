@@ -182,4 +182,8 @@ var changeStatusicon = function(element, icontype) {
   initQtip();
 }
 
+var copyToClipboard = function(text) {
+    window.prompt ("Copy to clipboard. Press Ctrl+C or rightclick and copy", text);     
+}
+
 resize();

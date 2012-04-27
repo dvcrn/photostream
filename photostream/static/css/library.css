@@ -1,0 +1,99 @@
+body {
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+}
+
+#wrapper {
+	overflow: hidden;
+	background: #e8eaf0;
+}
+
+#library {
+	position: relative;
+	z-index: 1;
+	height: 100%;
+	padding-top: 10px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#library-overlay {
+	display: none;
+	top: 0;
+	z-index: 2;
+	width: 100px;
+	height: 100%;
+	position: absolute;
+	background: url('../img/overlay-bg.png');
+}
+
+#main .title {
+	background: url('../img/titlebar-bg.png');
+	height: 36px;
+}
+
+#main .title h1 {
+	position: relative;
+	color: white;
+	font-size: 20px;
+	top: 5px;
+}
+
+#main .title .albumname {
+	color: #5bd9f1;
+}
+
+#main .title .username {
+	color: #e55c4a;
+}
+
+.photo {
+	-webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow:    1px 1px 6px rgba(0, 0, 0, 0.75);
+	box-shadow:         1px 1px 6px rgba(0, 0, 0, 0.75);
+
+	margin: 10px;
+	min-height: 113px;
+	width: 180px;
+}
+
+
+.selected {
+	margin: -2px;
+	border: solid 2px orange;
+	border-radius: 1.0em;
+}
+
+.selected {
+	border: solid 3px yellow;
+	border-radius: 0.4em;
+	margin: 7px;
+}
+
+
+.selection {
+	position: absolute;
+	border: 1px solid #89B;
+	background: #BCE;
+	background-color: #BEC;
+	border-color: #8B9;
+	z-index: 15;
+}
+
+.overlay-body {
+	top: 50%;
+	font-weight: bolder;
+	font-size: 20px;
+	position: relative;
+}
+
+.selection-hover {
+	border: solid 3px yellow;
+	border-radius: 0.4em;
+	margin: 7px;
+}
+
+.selection-action {
+	border: solid 3px pink;
+	border-radius: 0.4em;
+	margin: 7px;
+}

@@ -42,15 +42,26 @@ var bindAlbumContextMenu = function() {
 
             case "context-album-delete":
                 createConfirm("Are you sure you want to delete this album? There is NO undo!", function() {
-                    delete_album(el.attr("id"), function() {
+                    var id = el.attr("id");
+
+                    if ( store.current == id ) 
+                        var reset = true;
+                    else
+                        var reset = false;
+
+
+                    delete_album(id, function() {
                         el.remove();
 
-                        var element = $("#library_photos");
+                        if ( reset )
+                        {
+                            var element = $("#library_photos");
+                            var id = element.attr("id");
+                            var url = element.find("a").attr("ajax");
 
-                        var id = element.attr("id");
-                        var url = element.find("a").attr("ajax");
+                            loadModule(url, id, "library");
+                        }
 
-                        loadModule(url, id, "library");
                     });
                 });
                 break;

@@ -42,7 +42,7 @@ def resizePhoto(sender, instance, created, **kwargs):
         post_save.disconnect(resizePhoto, sender=Photo)
             
         if instance.processed is False:
-            cmd = "python %s %d &" % (instance.id, settings.API_RESIZER)
+            cmd = "python %s %d &" % (settings.API_RESIZER, instance.id)
             os.system(cmd)
 
         post_save.connect(resizePhoto, sender=Photo)

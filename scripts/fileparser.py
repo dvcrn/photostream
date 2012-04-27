@@ -9,7 +9,7 @@ import zipfile
 import sys
 import shutil
 
-sys.path.append("../photostream/")
+sys.path.append("/Users/David/Developer/photostream/photostream/")
 import settings as settings
 
 mediapath = settings.MEDIA_ROOT
@@ -56,10 +56,16 @@ def process(photoid):
 		h = image.size[1]
 		ratio = round((float(w)/float(h)),3)
 
+		# create thumb
 		height = round(float(180) / ratio)
 		thumb = image.resize((180, int(height)), Image.ANTIALIAS)   
 
-		thumb.save("%s%s_180h.%s" % (absolute_userpath, photoname, extension))
+		thumb.save("%s%s_180w.%s" % (absolute_userpath, photoname, extension))
+
+		# create smaller version
+		height = round(float(1000) / ratio)
+		big = image.resize((1000, int(height)), Image.ANTIALIAS)   		
+		big.save("%s%s_1000w.%s" % (absolute_userpath, photoname, extension))
 
 		sql =  "UPDATE library_photo SET processed = 1 WHERE id = %s" % (photoid)
 		cursor.execute(sql)

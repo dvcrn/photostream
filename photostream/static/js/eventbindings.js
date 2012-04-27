@@ -15,6 +15,18 @@ $("#library .photo").live("click", function() {
 	selectPhoto($(this));
 });
 
+$("#library .photo").live("dblclick", function() {
+	console.info("Doubleclick");
+	var api_images = [];
+
+	$(".photo").each(function(index) {
+		api_images.push($(this).attr("bigger"));
+	});
+
+	console.info($.prettyPhoto);
+	$.prettyPhoto.open(api_images);
+});
+
 $("#library").live("click", function(ev) {
 	if (ev.target.id == "library") {
 		deselectAll();

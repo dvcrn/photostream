@@ -92,6 +92,9 @@ var loadModule = function(url, id, section) {
 
       bindPhotoContextMenu();
       bindDragDrop();
+      $("a[rel^='prettyPhoto']").prettyPhoto({
+        overlay_gallery: false, 
+      }); 
 		} else {
 			createPopup(json.msg);
 		}

@@ -48,7 +48,7 @@ def image(request, size, id, extension):
 			imagepath = "%sphotos/%d/%s_%s.%s" % (settings.MEDIA_ROOT, user.id, photo.name, size, extension)
 
 		image = Image.open(imagepath)
-		response = HttpResponse(mimetype="image/jpg")
+		response = HttpResponse(mimetype="image/png")
 		image.save(response, "PNG")
 
 		return response

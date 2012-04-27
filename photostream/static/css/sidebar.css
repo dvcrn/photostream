@@ -47,6 +47,8 @@
 .section li .icon {
 	position: relative;
 	top: 4px;
+	width: 19px;
+	height: 17px;
 }
 
 .section .current {

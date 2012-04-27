@@ -148,6 +148,11 @@ var bindDragDrop = function() {
             var selection = getSelectedPhotos();
             var ids = [];
             var aid = $(this).attr("id");
+            var album = $(this);
+
+            var img = album.find("img");
+            var oldicon = img.attr("src");
+            img.attr("src", "/static/img/ajaxload-small.gif");
 
             for (var pid in selection) {
                 ids.push(pid);
@@ -162,7 +167,21 @@ var bindDragDrop = function() {
                     var json = $.parseJSON(json);
                     if (!json.success) {
                         console.info(json.msg);
-                }
+                    }
+                    else {
+                        img.attr("src", "/static/img/tick.png");
+                        setTimeout(function() {
+                            img.animate({
+                                opacity: '0'
+                            }, 500, function() {
+                                img.attr("src", oldicon);
+                                img.animate({
+                                    opacity: "1"
+                                });
+                            });
+                        }, 1000);
+                        
+                    }
             });
 
         }

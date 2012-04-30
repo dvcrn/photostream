@@ -8,3 +8,23 @@
 	border-top: 1px solid;
 	z-index: 5;
 }
+
+.userbox {
+	padding: 0 10px;
+	position: absolute;
+	right: 10px;
+	border: solid 1px darkgrey;
+	background: url('../img/toolbar-bg.png');
+	bottom: 5px;
+}
+
+.userbox img {
+	width: 30px;
+	height: 30px;
+}
+
+.userbox .name {
+	position: relative;
+	bottom: 8px;
+	font-size: 11px;
+}

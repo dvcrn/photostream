@@ -92,9 +92,6 @@ var loadModule = function(url, id, section) {
 
       bindPhotoContextMenu();
       bindDragDrop();
-      $("a[rel^='prettyPhoto']").prettyPhoto({
-        overlay_gallery: false, 
-      }); 
 		} else {
 			createPopup(json.msg);
 		}
@@ -190,3 +187,8 @@ var copyToClipboard = function(text) {
 }
 
 resize();
+
+$("a[rel^='prettyPhoto']").prettyPhoto({
+  overlay_gallery: false,
+  social_tools: false, 
+}); 

@@ -2,6 +2,6 @@
 
 {% for photo in photos %}
 
-		<img class="photo" id="{{ photo.id }}" bigger="{{ photo|photourl }}" src="{{ photo|thumburl }}" alt="" />
+		<img class="photo" id="{{ photo.id }}" big="{{ photo|bigurl }}" full="{{ photo|fullurl }}" src="{{ photo|thumburl }}" alt="" />
 
 {% endfor %}

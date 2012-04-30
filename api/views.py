@@ -260,7 +260,7 @@ def upload(request):
 				photocount = Photo.objects.filter(owner=tokenobj.user).count() + 1
 
 				filename = photocount
-				filename_full = "%s%s" % (filename, extension)
+				filename_full = "%s.%s" % (filename, extension)
 
 				relative_userpath = 'photos/%s/' % tokenobj.user.id
 				absolute_userpath = '%s%s' % (settings.MEDIA_ROOT, relative_userpath)

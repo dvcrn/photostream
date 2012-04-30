@@ -16,15 +16,22 @@ $("#library .photo").live("click", function() {
 });
 
 $("#library .photo").live("dblclick", function() {
-	console.info("Doubleclick");
 	var api_images = [];
+	var current = $(this).attr("big");
+	var i = 0;
+
 
 	$(".photo").each(function(index) {
-		api_images.push($(this).attr("bigger"));
+		var url = $(this).attr("big")
+		api_images.push(url);
+
+		if (current == url) {
+			i = index;
+		}
 	});
 
-	console.info($.prettyPhoto);
 	$.prettyPhoto.open(api_images);
+	$.prettyPhoto.changePage(i);
 });
 
 $("#library").live("click", function(ev) {

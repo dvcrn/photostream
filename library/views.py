@@ -34,7 +34,8 @@ def image(request, size, id, extension):
 		def switch_size(x):
 			return {
 				'full': "full",
-				'thumb': "180h"
+				'big': "1000w",
+				'thumb': "180w"
 			}.get(size, "full")    # 9 is default if x not found
 
 		size = switch_size(size)

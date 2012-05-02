@@ -138,3 +138,8 @@ $("#album_create").click(function() {
 		$(this).parent().parent().remove();
 	});
 });
+
+$(".userbox").click(function() {
+	$(".usermenu").toggle();
+	$(this).toggleClass("pressed");
+});

@@ -7,6 +7,7 @@
 	background: url('../img/toolbar-bg.png');
 	border-top: 1px solid;
 	z-index: 5;
+
 }
 
 .userbox {
@@ -18,6 +19,10 @@
 	bottom: 5px;
 }
 
+.pressed {
+	background: grey;
+}
+
 .userbox img {
 	width: 30px;
 	height: 30px;
@@ -27,4 +32,33 @@
 	position: relative;
 	bottom: 8px;
 	font-size: 11px;
+}
+
+.usermenu {
+	position: absolute;
+	right: 10px;
+	z-index: 2;
+
+	border: solid 1px darkgrey;
+	width: 130px;
+	bottom: 41px;
+
+	display: none;
+
+	background: url('../img/cmenu-bg.png');
+	padding: 10px;
+}
+
+.usermenu a {
+	text-decoration: none;
+	color: white;
+}
+
+.usermenu li {
+	cursor: pointer;
+	padding: 2px 0;
+}
+
+.usermenu li:hover a {
+	color: blue;
 }

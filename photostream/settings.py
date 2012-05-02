@@ -158,3 +158,5 @@ LOGGING = {
 
 API_SECRET = "s3xyr0xx"
 API_RESIZER = "/Users/David/Developer/photostream/scripts/fileparser.py"
+
+USER_DEFAULTUPGRADE = 0

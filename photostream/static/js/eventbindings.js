@@ -11,8 +11,41 @@ $("#sidebar").bind("contextmenu", function(e) {
 });
 
 $("#library .photo").live("click", function() {
-	deselectAll();
+	if (!key_alt) {
+		deselectAll();
+	}
+
+	console.info($(this));
+
+	/* Theorie:
+
+	- Alle Fotos in einen Array schmeißen
+	- die Position des aktuellen Fotos aus dem Array bestimmen
+	- Das letzte Element der Selection holen und ebenfalls bestimmen
+	- Alles dazwischen Selektieren
+
+	Wenn nur ein Foto selektiert wurde:
+	- Auslesen und alles dazwischen selektieren.
+
+	*/
+
+	if (key_shift)
+	{
+		var current_id = $(this).attr("id");
+
+		$(".photo").each(function(index) {
+			var id = $(this).attr("id")
+
+			if (id < current_id) {
+				selectPhoto($(this));
+			}
+		});
+
+		console.info(store.selection);
+	}
+	
 	selectPhoto($(this));
+
 });
 
 $("#library .photo").live("dblclick", function() {
@@ -142,4 +175,11 @@ $("#album_create").click(function() {
 $(".userbox").click(function() {
 	$(".usermenu").toggle();
 	$(this).toggleClass("pressed");
+	console.info(window.event);
 });
+
+$(document).bind('keyup keydown', function(e){
+	key_shift = e.shiftKey;
+	key_alt = e.altKey;
+});
+

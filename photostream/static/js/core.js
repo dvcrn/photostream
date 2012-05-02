@@ -7,6 +7,9 @@ var titlebar = $("#main .title")
 var store = new Store();
 var overlay = $("#library-overlay");
 
+var key_shift = false;
+var key_alt = false;
+
 // Zum adden des CSRF Tokens an ajax requests
 $('html').ajaxSend(function(event, xhr, settings) {
     function getCookie(name) {

@@ -136,7 +136,6 @@ var deselectPhoto = function(photo) {
   var id = photo.attr("id");
   delete store.selection[id]; 
   photo.removeClass("selected");
-  console.info(store.selection);
 }
 
 var getSelectedPhotos = function() {

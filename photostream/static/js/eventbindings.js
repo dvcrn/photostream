@@ -62,6 +62,13 @@ $("#library .photo").live("click", function() {
 		if (!key_alt) {
 			deselectAll();
 		}
+		else {
+			console.info("Muh");
+			if ($(this).hasClass("selected")) {
+				deselectPhoto($(this));
+				return;
+			}
+		}
 	}
 
 	selectPhoto($(this));

@@ -11,39 +11,59 @@ $("#sidebar").bind("contextmenu", function(e) {
 });
 
 $("#library .photo").live("click", function() {
-	if (!key_alt) {
-		deselectAll();
-	}
-
-	console.info($(this));
-
-	/* Theorie:
-
-	- Alle Fotos in einen Array schmeißen
-	- die Position des aktuellen Fotos aus dem Array bestimmen
-	- Das letzte Element der Selection holen und ebenfalls bestimmen
-	- Alles dazwischen Selektieren
-
-	Wenn nur ein Foto selektiert wurde:
-	- Auslesen und alles dazwischen selektieren.
-
-	*/
 
 	if (key_shift)
 	{
 		var current_id = $(this).attr("id");
+		var counter = 0;
+		var position_end = 0;
+		var position_start = 0;
+		var last_element = 0;
+
+		for (var tmp in store.selection) {
+			last_element = tmp;
+		}
+
+		// Get the position of the last item in selection and the clicked image
 
 		$(".photo").each(function(index) {
 			var id = $(this).attr("id")
 
-			if (id < current_id) {
-				selectPhoto($(this));
+			if (id == current_id) 
+			{
+				position_end = counter;
 			}
+
+			if (id == last_element)
+			{
+				position_start = counter;
+			}
+			
+			counter = counter + 1;
 		});
 
-		console.info(store.selection);
+
+		// Iterate over all images and select all photos who are between start and end
+		var counter = 0;
+		$(".photo").each(function(index) {
+			var id = $(this).attr("id")
+
+			if (counter >= position_start && counter < position_end)
+			{
+				selectPhoto($(this));
+			}
+			
+			counter = counter + 1;
+		});
+
 	}
-	
+	else 
+	{
+		if (!key_alt) {
+			deselectAll();
+		}
+	}
+
 	selectPhoto($(this));
 
 });

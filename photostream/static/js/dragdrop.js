@@ -15,7 +15,11 @@ var bindDragDrop = function() {
         .drop("start",function(ev, dd){
             if ($(dd.proxy).hasClass("selection")) 
             {
-                deselectAll();
+                if (!key_shift)
+                {
+                    deselectAll();
+                }
+
                 $( this ).addClass("selection-hover");
             }
         })

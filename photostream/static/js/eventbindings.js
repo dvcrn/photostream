@@ -118,7 +118,7 @@ var rebindAlbumDoubleclick = function() {
 		// Random id for avoiding event overlapping
 		var id = new Date().getTime();
 
-		anchor.html('<input class="stextbox" id="'+id+'" type="text" name="" value="" placeholder="">');
+		anchor.html('<input class="textbox-borderless" id="'+id+'" type="text" name="" value="" placeholder="">');
 
 		$("#"+id).focus().val(title);
 		$("#"+id).blur(function(e) {
@@ -171,32 +171,30 @@ $("#sidebar .library").click(function(e) {
 	loadModule(url, id, "library");
 })
 
+$("#album_create_box").keydown(function(e) {
+	if (e.keyCode == 13) {
+		var _this = $(this);
+		var name = _this.val();
+
+		add_album(name, function(data) {
+			var html = $(data.html);
+			$("#album_create_box_wrapper").after(html);
+			$("#album_create_box_wrapper").hide();
+
+    		bindDragDrop();
+			bindAlbumContextMenu();
+		});
+	}
+});
+
+$("#album_create_box").blur(function(e) {
+	$("#album_create_box_wrapper").hide();
+});
+
 $("#album_create").click(function() {
-	$("#albums").prepend('<li id="album_create" class="album"><img class="icon" src="/static/img/album-icon.png"> <a href="#" title=""><input class="stextbox" type="text" name="" value="" placeholder=""></a></li>');
-	$(".stextbox").focus();
-	$(".stextbox").keydown(function(e) {
-		if (e.keyCode == 13) {
-			var _this = $(this);
-			var promise = $.Deferred();
-			var name = _this.val();
-
-			add_album(name, function(data) {
-				var json = data;
-
-	    		_this.parent().parent().attr("id", json.id);
-	    		_this.parent().attr("href", json.url);
-	    		_this.parent().attr("ajax", json.ajax);	    		
-	    		_this.parent().html(name);
-
-	    		bindDragDrop();
-				bindAlbumContextMenu();
-			});
-		}
-	});
-
-	$(".stextbox").blur(function(e) {
-		$(this).parent().parent().remove();
-	});
+	$("#album_create_box").val("");
+	$("#album_create_box_wrapper").show();
+	$("#album_create_box").focus();
 });
 
 $(".userbox").click(function() {

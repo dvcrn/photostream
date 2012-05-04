@@ -29,6 +29,7 @@
 }
 
 .section ul {
+	padding-top: 5px;
 	list-style-type: none;
 }
 
@@ -50,7 +51,6 @@
 
 	cursor: pointer;
 }
-
 .section li .icon {
 	position: relative;
 	top: 4px;
@@ -62,7 +62,14 @@
 	position: absolute;
 	right: 10px;
 	top: 4px;
+	height: 16px;
+	width: 16px;
 }
+
+.section li:hover .statusicon { background: url('../img/bullet_wrench.png');}
+.section li .statusicon-public { background: url('../img/eye.png');}
+.section li .statusicon-loading { background: url('../img/ajaxload-small.gif');}
+.section li .statusicon-tick { background: url('../img/tick.png');}
 
 .section .current {
 	background: url('../img/current-bg.png');
@@ -78,7 +85,7 @@
 }
 
 .option {
-	margin-top: 10px;
+	margin-top: 0px;
 	margin-bottom: -10px;
 }
 
@@ -87,7 +94,12 @@
 	font-weight: bold;
 }
 
-.stextbox {
+.textbox-borderless {
 	border: none;
 	background: #E8EAF0;
 }
+
+#album_create_box_wrapper {
+	display: none;
+}
+

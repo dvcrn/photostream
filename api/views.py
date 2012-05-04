@@ -102,7 +102,9 @@ def add_album(request):
 
 			album = Album.objects.create(name=name, owner=user);
 
-			json = {"success": True, "url": reverse("library.views.album", kwargs={'id': album.id}), "id": album.id, "ajax": reverse("api.views.album", kwargs={'id': album.id})}
+			html = render_to_response("snippets/album.html", {"id": album.id, "name": album.name}, context_instance=RequestContext(request)).content
+
+			json = {"success": True, "html": html}
 		except Exception:
 			json = {"success": False}
 

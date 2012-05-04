@@ -15,38 +15,25 @@
 			<img src="{% static 'img/world.png' %}" alt="This album is public" class="icon">
 			<a href="" title="">Share</a>
 		</li>
+
 	</ul>
 </div>
 <div class="section">
 	<h1>Albums</h1>
 	<ul id="albums">
-		{% for album in albums %}
-			{% if module.name == album.name %}
-				<li id="{{ album.id }}" class="album current">
-					<img src="{% static 'img/images.png' %}" alt="" class="icon">
-					<a ajax="{% url api.views.album id=album.id %}" href="{% url library.views.album id=album.id %}" title="">{{ album }}</a>
+		<li id="album_create_box_wrapper" class="album">
+			<img class="icon" src="/static/img/album-icon.png"> 
+			<a href="#" title=""><input id="album_create_box" class="textbox-borderless" type="text" ></a>
+		</li>
 
-					{% if album.is_public %}
-						<img src="{% static 'img/eye.png' %}" alt="This album is public." class="statusicon">
-					{% else %}
-						<img src="{% static 'img/none.png' %}" alt="" class="statusicon">
-					{% endif %}
-				</li>
+		{% for album in albums %}
+			{% if album.is_public %}
+				{% include "snippets/album.html" with id=album.id name=album.name statusclass="statusicon-public" %}
 			{% else %}
-				<li id="{{ album.id }}" class="album">
-					
-					<img src="{% static 'img/images.png' %}" alt="" class="icon">
-					
-					{% if album.is_public %}
-						<img src="{% static 'img/eye.png' %}"  alt="This album is public." class="statusicon">
-						<a ajax="{% url api.views.album id=album.id %}" public="{% url library.views.album_public userid=album.owner.id albumid=album.id %}" href="{% url library.views.album id=album.id %}" title="">{{ album }}</a>
-					{% else %}
-						<img src="{% static 'img/none.png' %}" alt="None" class="statusicon">
-						<a ajax="{% url api.views.album id=album.id %}" href="{% url library.views.album id=album.id %}" title="">{{ album }}</a>
-					{% endif %}
-				</li>
+				{% include "snippets/album.html" with id=album.id name=album.name  %}
 			{% endif %}
 		{% endfor %}
+
 		<li id="album_create" class="option">
 			<img src="{% static 'img/add.png' %}" alt="" class="icon">
 			<a href="#" title="">Create new</a>

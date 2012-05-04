@@ -1,109 +1,41 @@
-
-var bindPhotoContextMenu = function() {
-
-	$("#library .photo").contextMenu({
-        menu: 'photo-context-menu',
-        startFunction: function(el) {
-
-            if (!el.hasClass("selected"))
-                selectPhoto(el, true);
-        }
-    },
-    function(action, el, pos) {
-
-        var el = $(el);
-
-        console.info("Action " + action);
-        switch(action) 
-        {
-
-        }
-    });
+var contextmenu_store = {
+    element: "",
+    menu: "",
 }
 
-var toggle_public = function(el, callback) 
-{
-    var id = el.attr("id");
-    var statusicon = el.find(".statusicon");
-    changeStatusicon(statusicon, "loading");
+var showContextmenu = function(type, left, top, element, callback) {
+    var menu;
+    switch (type)
+    {
+        case "album":
+            menu = $("#album-context-menu");
+            break;
+        case "photo":
+            menu = $("#photo-context-menu");
+            break;
+    }
 
-    public_album(id, function(json) {
-        if (json.public)
-        {
-            changeStatusicon(statusicon, "public");
-            el.find("a").attr("public", json.url);
-        }
-        else
-        {
-            changeStatusicon(statusicon, "none");
-            el.find("a").removeAttr("public");
-        }
-        
-        if (callback !== undefined)
-            callback(el);
-    });
+    menu.css("left", left);
+    menu.css("top", top);
+    contextmenu_store.element = element;
+    contextmenu_store.menu = menu;
+    contextmenu_store.callback = callback;
+    menu.show();
 }
 
-var bindAlbumContextMenu = function() {
+$(".contextmenu-action").click(function() {
+    contextmenu_store.menu.hide();
+    contextmenu_store.callback();
+});
 
-	$("#albums .album").contextMenu({
-        menu: 'album-context-menu',
-        childClass: 'hover'
-    },
-    function(action, el, pos) {
+$("#context-album-makepublic").click(function() {
 
-        var el = $(el);
+});
 
-        switch(action) 
-        {
-            case "context-album-makepublic":
-                toggle_public(el);
-                break;
+$("#context-album-copyurl").click(function() {
 
-            case "context-album-copyurl":
-                var link = el.find("a").attr("public");
+});
 
-                if (link === undefined) 
-                {
-                    toggle_public(el, function() {
-                        var link = el.find("a").attr("public");
-                        copyToClipboard(link);
-                    });
-                }
-                else 
-                {
-                    copyToClipboard(link);
-                }
+$("#context-album-delete").click(function() {
 
-                break;
-
-            case "context-album-delete":
-                createConfirm("Are you sure you want to delete this album? There is NO undo!", function() {
-                    var id = el.attr("id");
-                    var statusicon = el.find(".statusicon");
-                    changeStatusicon(statusicon, "loading");
-
-                    if ( store.current == id ) 
-                        var reset = true;
-                    else
-                        var reset = false;
-
-
-                    delete_album(id, function() {
-                        el.remove();
-
-                        if ( reset )
-                        {
-                            var element = $("#library_photos");
-                            var id = element.attr("id");
-                            var url = element.find("a").attr("ajax");
-
-                            loadModule(url, id, "library");
-                        }
-
-                    });
-                });
-                break;
-        }
-    });
-}
+});

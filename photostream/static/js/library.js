@@ -57,7 +57,6 @@ var initLibrary = function() {
 	var url = element.find("a").attr("ajax");
 
 	loadModule(url, id, "library");
-	bindAlbumContextMenu();
 }
 
 var initQtip = function() {

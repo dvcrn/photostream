@@ -66,11 +66,17 @@
 	width: 16px;
 }
 
-.section li:hover .statusicon { background: url('../img/bullet_wrench.png');}
-.section li .statusicon-public { background: url('../img/eye.png');}
-.section li .statusicon-loading { background: url('../img/ajaxload-small.gif');}
-.section li .statusicon-tick { background: url('../img/tick.png');}
-.section li .statusicon-edit { background: url('../img/bullet_wrench.png');}
+.section li:hover .statusicon { background-image: url('../img/bullet_wrench.png');}
+.section li .statusicon-public { background-image: url('../img/eye.png');}
+.section li .statusicon-loading { background-image: url('../img/ajaxload-small.gif');}
+.section li .statusicon-tick { background-image: url('../img/tick.png');}
+.section li .statusicon-edit { background-image: url('../img/bullet_wrench.png');}
+.section li .statusicon-active { 
+	-webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow:    1px 1px 8px rgba(0, 0, 0, 0.75);
+	box-shadow:         1px 1px 8px rgba(0, 0, 0, 0.75);
+}
+
 
 .section .current {
 	background: url('../img/current-bg.png');
@@ -98,6 +104,10 @@
 .textbox-borderless {
 	border: none;
 	background: #E8EAF0;
+}
+
+#album_create_box {
+	width: 180px;
 }
 
 #album_create_box_wrapper {

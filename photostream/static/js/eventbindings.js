@@ -149,14 +149,35 @@ var rebindAlbumDoubleclick = function() {
 rebindAlbumDoubleclick();
 
 $("#sidebar .album").live("click", function(e) {
-	e.preventDefault();
-	var id = $(this).attr("id");
-	var url = $(this).contents().filter("a").attr("ajax");
 
-	if (store.section != "album" || store.current != id) 
-	{
-		loadModule(url, id, "album");
+	if ($(e.target).hasClass("statusicon")) {
+
+		var el = $(e.target);
+		var classes = el.attr("class");
+		el.addClass("statusicon-edit");
+		el.addClass("statusicon-active");
+
+		var pos = el.offset()
+		var left = pos.left;
+		var top = pos.top;
+
+		showContextmenu("album", left + 16, top, $('#album-context-menu'), function() {
+			$(".statusicon-active").removeClass("statusicon-active");
+			$(".statusicon-edit").removeClass("statusicon-edit");
+		});
 	}
+	else
+	{
+		e.preventDefault();
+		var id = $(this).attr("id");
+		var url = $(this).contents().filter("a").attr("ajax");
+
+		if (store.section != "album" || store.current != id) 
+		{
+			loadModule(url, id, "album");
+		}
+	}
+
 })
 
 $("#sidebar a").click(function(e) {

@@ -34,20 +34,17 @@ body {
 	border: solid 2px grey;
 	text-align: center;
 
-	font-size: 13px;
+	font-size: 10px;
 }
 
 .context-menu hr {
 	margin: 5px auto;
-	width: 80%;
-	color: grey;
-	background: grey;
 }
 
 .context-menu a {
 	color: #cecece;
 	text-decoration: none;
-	line-height: 28px;
+	line-height: 20px;
 }
 
 .context-menu li {

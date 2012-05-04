@@ -93,7 +93,6 @@ var loadModule = function(url, id, section) {
 			store.section = section;
 			store.current = id;
 
-      bindPhotoContextMenu();
       bindDragDrop();
 		} else {
 			createPopup(json.msg);

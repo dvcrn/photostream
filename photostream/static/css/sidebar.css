@@ -70,6 +70,7 @@
 .section li .statusicon-public { background: url('../img/eye.png');}
 .section li .statusicon-loading { background: url('../img/ajaxload-small.gif');}
 .section li .statusicon-tick { background: url('../img/tick.png');}
+.section li .statusicon-edit { background: url('../img/bullet_wrench.png');}
 
 .section .current {
 	background: url('../img/current-bg.png');

@@ -109,9 +109,7 @@ var bindDragDrop = function() {
             mode: "overlap",
         });
 
-        return $('<div class="selection" />')
-            .css('opacity', .65 )
-            .appendTo( document.body );
+        return $('.selection').show();
     })
     .drag(function( ev, dd ){
         $( dd.proxy ).css({
@@ -122,9 +120,7 @@ var bindDragDrop = function() {
         });
     })
     .drag("end",function( ev, dd ){
-        $( dd.proxy ).fadeOut(100, function() {
-            $( dd.proxy ).remove();
-        });
+        $( dd.proxy ).fadeOut(50);
     });
 
 
@@ -145,10 +141,6 @@ var bindDragDrop = function() {
     .drop(function(ev, dd) {
         if ($(dd.proxy).hasClass("photodrag"))
         {
-            //console.info("ev");
-            //console.info($(this).attr("id"));
-            //console.info("DROP! WUBWUBWUB");
-            //console.info($(this));
             var selection = getSelectedPhotos();
             var ids = [];
             var aid = $(this).attr("id");

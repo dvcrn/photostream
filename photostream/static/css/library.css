@@ -77,6 +77,9 @@ body {
 	background-color: #BEC;
 	border-color: #8B9;
 	z-index: 15;
+	opacity: 0.65;
+	-moz-opacity: 0.65;
+	filter:alpha(opacity=65);
 }
 
 .overlay-body {

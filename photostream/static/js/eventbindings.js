@@ -106,14 +106,14 @@ var rebindAlbumDoubleclick = function() {
 	$("#albums .album").bind("dblclick", function(e) {
 		// Function for renaming an album
 		e.preventDefault();
-
 		$(this).unbind("dblclick");
 
-		var title = $(this).children().filter("a").html();
-		var aid = $(this).attr("id");
+		var li = $(this);
+		var copy = li.clone();
 
-		var anchor = $(this).find("a");
-		var atext = anchor.html();
+		var title = li.children().filter("a").html();
+		var aid = li.attr("id");
+		var anchor = li.find("a");
 
 		// Random id for avoiding event overlapping
 		var id = new Date().getTime();
@@ -122,24 +122,23 @@ var rebindAlbumDoubleclick = function() {
 
 		$("#"+id).focus().val(title);
 		$("#"+id).blur(function(e) {
-			$(this).parent().html(atext);
+			li.replaceWith(copy);
 
 			rebindAlbumDoubleclick();
 		});
 
 		$("#"+id).keydown(function(e) {
 			if (e.keyCode == 13) {
-				var _this = $(this);
-				// This part is tricky.
-				// When pressing enter, send an AJAX request to backend. If rename_album returns true, put in the old content, just with different html
-				// This is possible because we don't change anything but the name
+				var newtitle = $(this).val();
 
-				var newtitle = _this.val();
+				rename_album(aid, newtitle, function(data) {
+					var html = $(data.html);
+					li.replaceWith(html);
 
-				rename_album(aid, newtitle, function() {
-					console.info("Atext " + atext);
-					anchor.html(newtitle);
-					changeTitle(newtitle);
+					var id = html.attr("id");
+					var url = html.contents().filter("a").attr("ajax");
+
+					loadModule(url, id, "album");
 
 					rebindAlbumDoubleclick();
 				});

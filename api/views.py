@@ -128,7 +128,9 @@ def rename_album(request):
 			album.name = name[0:50]
 			album.save()
 
-			json = {"success": True}
+			html = render_to_response("snippets/album.html", {"id": album.id, "name": album.name}, context_instance=RequestContext(request)).content
+
+			json = {"success": True, "html": html}
 		except Exception:
 			json = {"success": False}
 

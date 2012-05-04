@@ -152,6 +152,9 @@ $("#sidebar .album").live("click", function(e) {
 
 	if ($(e.target).hasClass("statusicon")) {
 
+		$(".statusicon-active").removeClass("statusicon-active");
+		$(".statusicon-edit").removeClass("statusicon-edit");
+
 		var el = $(e.target);
 		var classes = el.attr("class");
 		el.addClass("statusicon-edit");

@@ -37,5 +37,8 @@ $("#context-album-copyurl").click(function() {
 });
 
 $("#context-album-delete").click(function() {
-
+    createConfirm("Are you sure?", function() {
+        var id = contextmenu_store.element.attr("id");
+        console.info(id);
+    });
 });

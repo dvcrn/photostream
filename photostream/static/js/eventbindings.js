@@ -2,6 +2,7 @@ $(window).resize(function() {
 	resize();
 });
 
+// Avoid rightclicking. (For a contextmenu maybe later.)
 $("#library").bind("contextmenu", function(e) {
 	e.preventDefault();
 });
@@ -10,8 +11,10 @@ $("#sidebar").bind("contextmenu", function(e) {
 	e.preventDefault();
 });
 
+// Basic click action for photos
 $("#library .photo").live("click", function() {
 
+	// If shift is pressed...
 	if (key_shift)
 	{
 		var current_id = $(this).attr("id");
@@ -25,7 +28,6 @@ $("#library .photo").live("click", function() {
 		}
 
 		// Get the position of the last item in selection and the clicked image
-
 		$(".photo").each(function(index) {
 			var id = $(this).attr("id")
 
@@ -59,15 +61,17 @@ $("#library .photo").live("click", function() {
 	}
 	else 
 	{
-		if (!key_alt) {
-			deselectAll();
-		}
-		else {
+		// If alt or strg is pressed while clicking a photo, select it.
+		// If not, deselectall and then select it
+		if (key_alt || key_strg) {
 			console.info("Muh");
 			if ($(this).hasClass("selected")) {
 				deselectPhoto($(this));
 				return;
 			}
+		}
+		else {
+			deselectAll();
 		}
 	}
 
@@ -75,12 +79,13 @@ $("#library .photo").live("click", function() {
 
 });
 
+// Doubleclick opens prettyPhoto
 $("#library .photo").live("dblclick", function() {
 	var api_images = [];
 	var current = $(this).attr("big");
 	var i = 0;
 
-
+	// Create a api photo url list for prettyPhoto
 	$(".photo").each(function(index) {
 		var url = $(this).attr("big")
 		api_images.push(url);
@@ -90,24 +95,31 @@ $("#library .photo").live("dblclick", function() {
 		}
 	});
 
+	// Open it
 	$.prettyPhoto.open(api_images);
 	$.prettyPhoto.changePage(i);
 });
 
+// When no photo is clicked, only the library, deselect them all
 $("#library").live("click", function(ev) {
 	if (ev.target.id == "library") {
 		deselectAll();
 	}
 });
 
+// This is for renaming albums. Moved to a function for easier rebinding
 var rebindAlbumDoubleclick = function() {
+	// Rebind doubleclick to avoid double bindings
 	$("#albums .album").unbind("dblclick");
 
 	$("#albums .album").bind("dblclick", function(e) {
-		// Function for renaming an album
+
 		e.preventDefault();
+
+		// Unbding doubleclick because of strange behaviours
 		$(this).unbind("dblclick");
 
+		// Cloning the element for easier resetting on blur
 		var li = $(this);
 		var copy = li.clone();
 
@@ -122,12 +134,13 @@ var rebindAlbumDoubleclick = function() {
 
 		$("#"+id).focus().val(title);
 		$("#"+id).blur(function(e) {
+			// Replace the whole textbox thing with the copy we did before
 			li.replaceWith(copy);
-
 			rebindAlbumDoubleclick();
 		});
 
 		$("#"+id).keydown(function(e) {
+			// On enter press...
 			if (e.keyCode == 13) {
 				var newtitle = $(this).val();
 
@@ -148,8 +161,10 @@ var rebindAlbumDoubleclick = function() {
 }
 rebindAlbumDoubleclick();
 
+// Basic clicking for albums
 $("#sidebar .album").live("click", function(e) {
 
+	// If the user clicked directly the statusicon...
 	if ($(e.target).hasClass("statusicon")) {
 
 		$(".statusicon-active").removeClass("statusicon-active");
@@ -160,6 +175,7 @@ $("#sidebar .album").live("click", function(e) {
 		el.addClass("statusicon-edit");
 		el.addClass("statusicon-active");
 
+		// ... get the current position of the element and show a contextmenu
 		var pos = el.offset()
 		var left = pos.left;
 		var top = pos.top;
@@ -183,16 +199,6 @@ $("#sidebar .album").live("click", function(e) {
 
 })
 
-$(".context-menu li").click(function(e) {
-	if ($(e.target).hasClass("contextmenu-action"))
-		return;
-
-	$(this).find("a").click();
-});
-
-$("#sidebar a").click(function(e) {
-	e.preventDefault();
-})
 
 $("#sidebar .library").click(function(e) {
 	e.preventDefault();
@@ -201,6 +207,21 @@ $("#sidebar .library").click(function(e) {
 	loadModule(url, id, "library");
 })
 
+// A little trick
+// If the user didn't directly click the contextmenu anchor, click it for him.
+$(".context-menu li").click(function(e) {
+	if ($(e.target).hasClass("contextmenu-action"))
+		return;
+
+	$(this).find("a").click();
+});
+
+// Avoid links from opening new tabs
+$("#sidebar a").click(function(e) {
+	e.preventDefault();
+})
+
+// Monitoring the textbox for new albums
 $("#album_create_box").keydown(function(e) {
 	if (e.keyCode == 13) {
 		var _this = $(this);
@@ -217,24 +238,29 @@ $("#album_create_box").keydown(function(e) {
 	}
 });
 
+// Hide the textbox on focus loose
 $("#album_create_box").blur(function(e) {
 	$("#album_create_box_wrapper").hide();
 });
 
+// Show and focus the album create box 
 $("#album_create").click(function() {
 	$("#album_create_box").val("");
 	$("#album_create_box_wrapper").show();
 	$("#album_create_box").focus();
 });
 
+// Show contextmenu when clicking the own username (down right)
 $(".userbox").click(function() {
 	$(".usermenu").toggle();
 	$(this).toggleClass("pressed");
 	console.info(window.event);
 });
 
+// Monitoring key presses for later use (e.g. shift clicks).
 $(document).bind('keyup keydown', function(e){
 	key_shift = e.shiftKey;
 	key_alt = e.altKey;
+	key_strg = e.ctrlKey;
 });
 

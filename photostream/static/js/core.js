@@ -9,6 +9,7 @@ var overlay = $("#library-overlay");
 
 var key_shift = false;
 var key_alt = false;
+var key_strg = false;
 
 // Zum adden des CSRF Tokens an ajax requests
 $('html').ajaxSend(function(event, xhr, settings) {

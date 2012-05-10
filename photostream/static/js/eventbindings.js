@@ -183,6 +183,13 @@ $("#sidebar .album").live("click", function(e) {
 
 })
 
+$(".context-menu li").click(function(e) {
+	if ($(e.target).hasClass("contextmenu-action"))
+		return;
+
+	$(this).find("a").click();
+});
+
 $("#sidebar a").click(function(e) {
 	e.preventDefault();
 })

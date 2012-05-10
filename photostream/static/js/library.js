@@ -60,7 +60,7 @@ var initLibrary = function() {
 }
 
 var initQtip = function() {
-
+	return;
 	$(".statusicon").qtip({
 		content: {
 			attr: 'alt'
@@ -75,4 +75,4 @@ var initQtip = function() {
 	});
 }
 
-initQtip();
+//initQtip();

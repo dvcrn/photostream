@@ -28,7 +28,7 @@
 
 		{% for album in albums %}
 			{% if album.is_public %}
-				{% include "snippets/album.html" with id=album.id name=album.name statusclass="statusicon-public" %}
+				{% include "snippets/album.html" with id=album.id name=album.name statusclass="statusicon-public" public="True" %}
 			{% else %}
 				{% include "snippets/album.html" with id=album.id name=album.name  %}
 			{% endif %}

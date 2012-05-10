@@ -164,7 +164,7 @@ $("#sidebar .album").live("click", function(e) {
 		var left = pos.left;
 		var top = pos.top;
 
-		showContextmenu("album", left + 16, top, $('#album-context-menu'), function() {
+		showContextmenu("album", left + 16, top, $(this), function() {
 			$(".statusicon-active").removeClass("statusicon-active");
 			$(".statusicon-edit").removeClass("statusicon-edit");
 		});

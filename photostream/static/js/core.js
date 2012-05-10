@@ -154,31 +154,30 @@ var changeStatusicon = function(element, icontype) {
     icon = element.find(".statusicon");
   }
 
+  icon.removeClass("statusicon-public");
+  icon.removeClass("statusicon-loading");
+  icon.removeClass("statusicon-tick");
+
   switch(icontype) 
   {
     case "public":
-      var alt = "This album is public.";
-      var src = "/static/img/eye.png";
+      var iconclass = "statusicon-public";
       break;
 
     case "loading":
-      var alt = "Loading...";
-      var src = "/static/img/ajaxload-small.gif";
+      var iconclass = "statusicon-loading";
       break;
 
     case "tick":
-      var alt = "Success!";
-      var src = "/static/img/tick.png";
+      var iconclass = "statusicon-tick";
       break;
 
     case "none":
-      var alt = "none";
-      var src = "/static/img/none.png";
+      var iconclass = "";
       break;
   }
 
-  icon.attr("src", src);
-  icon.attr("alt", alt);
+  icon.addClass(iconclass);
 
   initQtip();
 }

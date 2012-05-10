@@ -34,6 +34,7 @@ $('html').ajaxSend(function(event, xhr, settings) {
     }
 });
 
+// Resizing and calculating height for library, etc.
 var getLibraryHeight = function() {
 	return window.innerHeight - toolbar.height() - titlebar.height() - 10;
 }
@@ -76,6 +77,7 @@ var changeTitle = function(title) {
 	titlebar.html("<h1>"+title+"</h1>");
 }
 
+// Important one. For changing albums for example
 var loadModule = function(url, id, section) {
   $("#sidebar .current").removeClass("current");
   $("#"+id).addClass("current");
@@ -101,19 +103,7 @@ var loadModule = function(url, id, section) {
 	});
 }
 
-var showPhoto = function(photo) {
-  var url = photo.attr("bigger");
-  console.info(url);
-
-  // Replace photo with bigger version
-  photo.nextAll().hide();
-  photo.prevAll().hide();
-
-  photo.css("height", getLibraryHeight() - 30);
-  photo.attr("src", url);
-  photo.css("width", "");
-}
-
+// Selection part....
 var selectPhoto = function(photo, deselect_others) {
   if (deselect_others === undefined) {
     deselect_others = false;
@@ -146,6 +136,7 @@ var deselectAll = function() {
   store.selection = {};
   $(".selected").removeClass("selected");
 }
+// End selection
 
 var changeStatusicon = function(element, icontype) {
   if (element.hasClass("statusicon")) {

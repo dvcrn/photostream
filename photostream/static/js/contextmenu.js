@@ -1,6 +1,6 @@
 var contextmenu_store = {
     element: "",
-    menu: "",
+    menu: $(".context-menu"),
 }
 
 var showContextmenu = function(type, left, top, element, callback) {

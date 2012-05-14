@@ -23,9 +23,13 @@ var showContextmenu = function(type, left, top, element, callback) {
     menu.show();
 }
 
-$(".contextmenu-action").click(function() {
+var hideContextmenu = function() {
     contextmenu_store.menu.hide();
-    contextmenu_store.callback();
+    contextmenu_store.callback();   
+}
+
+$(".contextmenu-action").click(function() {
+    hideContextmenu();
 });
 
 $("#context-album-makepublic").click(function() {

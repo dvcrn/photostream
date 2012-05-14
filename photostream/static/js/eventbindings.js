@@ -105,6 +105,14 @@ $("#library").live("click", function(ev) {
 	if (ev.target.id == "library") {
 		deselectAll();
 	}
+	hideContextmenu();
+});
+
+$("#sidebar").live("click", function(ev) {
+	var target = $(ev.target);
+	if (!target.hasClass("statusicon")) {
+		hideContextmenu();
+	}
 });
 
 // This is for renaming albums. Moved to a function for easier rebinding
@@ -264,3 +272,6 @@ $(document).bind('keyup keydown', function(e){
 	key_strg = e.ctrlKey;
 });
 
+$(document).bind('click', function(e) {
+
+});

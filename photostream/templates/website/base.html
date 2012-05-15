@@ -1,10 +1,29 @@
-<!DOCTYPE html>
+{% load staticfiles %}<!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Photolicious :: {% block title %}Home{% endblock %}</title>
+	<link rel="stylesheet" href="{% static "css/website/style.css" %}">
 </head>
 <body>
-	{% block content %}
-	{% endblock %}
+	<div id="wrapper">
+		<div id="header">
+			<ul class="nav">
+				<li class="active"><a href="{% url website.views.home %}" title="">Home</a></li>
+				{% comment %}
+					<li><a href="{% url website.views.pricing %}" title="">Pricing</a></li>
+					<li><a href="{% url website.views.blog %}" title="">Blog</a></li>
+					<li><a href="{% url website.views.notify %}" title="">Notify Me!</a></li>
+				{% endcomment %}
+				<li><a href="{% url account.views.custom_login %}" title="">Beta Login</a></li>
+			</ul>
+		</div>
+		<div id="content" class="{% block contentclass %}{% endblock %}">
+			{% block content %}
+			{% endblock %}
+		</div>
+		<div id="footer">
+			&copy; 2012 - photolicious.im
+		</div>	
+	</div>
 </body>
 </html>

@@ -19,7 +19,10 @@ urlpatterns += patterns('account.views',
 )
 
 urlpatterns += patterns('website.views',
-    url(r'^$', 'test'),
+    url(r'^$', 'home'),
+    url(r'^pricing/$', 'pricing'),
+    url(r'^blog/$', 'blog'),
+    url(r'^notify/$', 'notify'),
 )
 
 urlpatterns += patterns('library.views',

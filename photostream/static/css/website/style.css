@@ -1,0 +1,106 @@
+body {
+	background: #FCFCFC;
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+}
+
+#wrapper {
+	width: 760px;
+	margin: 0 auto;
+	min-height: 500px;
+	position: relative;
+}
+
+#header {
+	min-height: 50px;
+	position: relative;
+	margin: 10px 0;
+}
+
+.nav {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.nav li {
+	display: inline-block;
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.nav a {
+	text-decoration: none;
+	color: black;
+}
+
+.nav a:hover {
+	color: #5a71d3;
+}
+
+.nav .active a {
+	color: red;
+}
+
+img {
+	border-radius: 0.5em;
+}
+
+.content-home {
+	text-align: center;
+}
+
+.caption {
+	margin-top: -12px;
+	font-size: 12px;
+}
+
+.feature {
+	text-align: left;
+	height: 200px;
+	position: relative;
+	padding: 20px;
+}
+
+.feature img {
+	height: 200px;
+	width: 300px;
+}
+
+.feature h3 {
+	margin: 0;
+	font-size: 17px;
+	margin-bottom: 20px;
+}
+
+.feature .description {
+	font-size: 15px;
+	width: 380px;
+	margin-top: 10px;
+}
+
+.feature-left img {
+	float: right;
+}
+
+.feature-right img {
+	float: left;
+}
+
+.feature-right .description {
+	float: right;
+}
+
+.red {
+	color: #a14545;
+}
+
+#footer {
+	margin: 20px 0;
+	text-align: center;
+	font-size: 12px;
+	color: grey;
+}

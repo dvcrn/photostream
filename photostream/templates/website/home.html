@@ -1,0 +1,32 @@
+{% extends "website/base.html" %}{% load staticfiles %}
+{% block contentclass %}content-home{% endblock %}
+{% block content %}
+	<img src="{% static "img/website/photolicious-banner.png" %}" alt="">
+	<h3>All your photos. Always. Everywhere. <span class="red">Coming soon.</span></h3>
+	<p class="caption">Because if you need them, you just need them!</p>
+	<div class="feature feature-left">
+		
+		<img src="{% static "img/website/friendlyui.png" %}" alt="">
+		
+		<div class="description">
+			<h3>Friendly UI</h3>
+			Using different photo software as reference, we've tried to bring you the same look & feel back, you already know! Simple, quite self understandable and easy to use. Did we succeed? Do you want a different style? You tell us!
+		</div>
+	</div>
+	<div class="feature feature-right">
+		<img src="{% static "img/website/dragdrop.png" %}" alt="">
+		<div class="description">
+			<h3>Native feel</h3>
+			What is the most native thing you can imagine on your operating system? Is it drag and drop? Organizing everything like you want? Or maybe shortcuts? We've tried to bring all that right in your browser. Just try it out!
+		</div>
+	</div>
+	<div class="feature feature-left">
+		
+		<img src="{% static "img/website/noimg.png" %}" alt="">
+		
+		<div class="description">
+			<h3>Sharing control</h3>
+			Want to share some photos with friends, your family, your dog or the entire world? We give you full control over your photos. Delete them and they are gone. Change them to private and noone can see them again! Why? Because they belong to you! We respect privacy.
+		</div>
+	</div>
+{% endblock %}

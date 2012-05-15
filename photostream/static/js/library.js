@@ -75,4 +75,4 @@ var initQtip = function() {
 	});
 }
 
-//initQtip();
+initQtip();

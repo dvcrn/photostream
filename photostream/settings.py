@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     'library',
     'api',
     'account',
+    'website',
 )
 
 # A sample logging configuration. The only tangible logging

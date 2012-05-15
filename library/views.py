@@ -19,7 +19,7 @@ def library(request):
 		module['title'] = "Library"
 		module['name'] = "library_photos"
 
-		return render_to_response("library.html", {
+		return render_to_response("app/library.html", {
 				#'photos': photos,
 				'albums': albums,
 				'module': module
@@ -67,7 +67,7 @@ def recent(request):
 		module['title'] = "Recently Added"
 		module['name'] = "library_recent"
 
-		return render_to_response("library.html", {
+		return render_to_response("app/library.html", {
 				'photos': photos,
 				'albums': albums,
 				'module': module

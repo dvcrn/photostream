@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 
 def custom_login(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect(reverse("library.views.library"))
+		return HttpResponseRedirect(reverse("website.views.home"))
 
 	if request.method == "POST":
 		try: 
@@ -37,11 +37,11 @@ def custom_login(request):
 				"error": message
 			}, context_instance=RequestContext(request))	
 
-		return HttpResponseRedirect(reverse("library.views.library"))
+		return HttpResponseRedirect(reverse("website.views.home"))
 
 	else:
 		return render_to_response("account/login.html", {}, context_instance=RequestContext(request))
 
 def custom_logout(request):
 	logout(request)
-	return HttpResponseRedirect(reverse("account.views.custom_login"))
+	return HttpResponseRedirect(reverse("website.views.home"))

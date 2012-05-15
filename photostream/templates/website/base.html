@@ -14,7 +14,13 @@
 					<li><a href="{% url website.views.blog %}" title="">Blog</a></li>
 					<li><a href="{% url website.views.notify %}" title="">Notify Me!</a></li>
 				{% endcomment %}
-				<li><a href="{% url account.views.custom_login %}" title="">Beta Login</a></li>
+				{% if user.is_authenticated %}
+				<li><a class="important" href="#{% url account.views.custom_logout %}" title="">Launch App</a></li>
+					<li><a href="#{% url account.views.custom_login %}" title="">My Account</a></li>
+					<li><a href="{% url account.views.custom_logout %}" title="">Logout</a></li>
+				{% else %}
+					<li><a href="{% url account.views.custom_login %}" title="">Beta Login</a></li>
+				{% endif %}
 			</ul>
 		</div>
 		<div id="content" class="{% block contentclass %}{% endblock %}">

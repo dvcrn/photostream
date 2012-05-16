@@ -3,6 +3,8 @@
 <head>
 	<title>Photolicious :: {% block title %}Home{% endblock %}</title>
 	<link rel="stylesheet" href="{% static "css/website/style.css" %}">
+	<script src="{% static 'js/jquery-1.7.1.min.js' %}" type="text/javascript"></script>
+	<script src="{% static 'js/website/script.js' %}" type="text/javascript"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -15,7 +17,7 @@
 					<li><a href="{% url website.views.notify %}" title="">Notify Me!</a></li>
 				{% endcomment %}
 				{% if user.is_authenticated %}
-				<li><a class="important" href="#{% url account.views.custom_logout %}" title="">Launch App</a></li>
+				<li><a id='nav_launchapp' class="important" href="{% url library.views.library %}" title="">Launch App</a></li>
 					<li><a href="#{% url account.views.custom_login %}" title="">My Account</a></li>
 					<li><a href="{% url account.views.custom_logout %}" title="">Logout</a></li>
 				{% else %}

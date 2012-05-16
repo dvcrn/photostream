@@ -35,14 +35,20 @@ urlpatterns += patterns('library.views',
 )
 
 urlpatterns += patterns('api.views',
-    url(r'^api/album/add/$', 'album_photo_add'),
+    
+    url(r'^api/album/(?P<id>\d+)/$', 'album'),
+
     url(r'^api/add/album/$', 'add_album'),
     url(r'^api/rename/album/$', 'rename_album'),
     url(r'^api/delete/album/$', 'delete_album'),
     url(r'^api/public/album/$', 'public_album'),
-    url(r'^api/album/(?P<id>\d+)/$', 'album'),
+    
+    url(r'^api/album/add/$', 'album_photo_add'),
+
     url(r'^api/photos/all/$', 'photos_all'),
     url(r'^api/photos/recent/$', 'photos_recent'),
+
+    url(r'^api/delete/photos/$', 'photos_delete'),
 
     url(r'^api/auth/$', 'auth'),    
     url(r'^api/upload/$', 'upload'),    

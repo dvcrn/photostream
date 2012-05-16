@@ -11,8 +11,29 @@ $("#sidebar").bind("contextmenu", function(e) {
 	e.preventDefault();
 });
 
+$(".options a").live("click", function(ev) {
+	var element = $(this);
+	var photo = $(this).parent().parent();
+
+	if (element.hasClass("option-delete")) {
+		createConfirm("Do you want do delete this?", function() {
+			delete_photo(photo.attr("id"), function() {
+				photo.remove();
+			});
+		});
+	}
+	else if (element.hasClass("option-gallery")) {
+		openGallery(photo);
+	}
+	else if (element.hasClass("option-edit")) {
+
+	}
+});
+
 // Basic click action for photos
-$("#library .photo").live("click", function() {
+$("#library .photo").live("click", function(ev) {
+	if (!$(ev.target).hasClass("thumb"))
+		return;
 
 	// If shift is pressed...
 	if (key_shift)
@@ -79,10 +100,9 @@ $("#library .photo").live("click", function() {
 
 });
 
-// Doubleclick opens prettyPhoto
-$("#library .photo").live("dblclick", function() {
+var openGallery = function(image) {
 	var api_images = [];
-	var current = $(this).attr("big");
+	var current = image.attr("big");
 	var i = 0;
 
 	// Create a api photo url list for prettyPhoto
@@ -98,6 +118,11 @@ $("#library .photo").live("dblclick", function() {
 	// Open it
 	$.prettyPhoto.open(api_images);
 	$.prettyPhoto.changePage(i);
+}
+
+// Doubleclick opens prettyPhoto
+$("#library .photo").live("dblclick", function() {
+	openGallery($(this));
 });
 
 // When no photo is clicked, only the library, deselect them all

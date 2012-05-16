@@ -50,6 +50,19 @@ var public_album = function(id, callback) {
 		});
 }
 
+var delete_photo = function(id, callback) {
+	$.post("/api/delete/photos/", { id: id },
+		function(json) {
+	    	var json = $.parseJSON(json);
+	    	console.info(json.success);
+	    	if (!json.success) {
+	    		createPopup("Something very bad happened...");
+	    	} else {
+	    		callback(json);
+	    	}
+		});
+}
+
 var initLibrary = function() {
 	var element = $("#library_photos");
 

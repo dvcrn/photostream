@@ -42,6 +42,23 @@ def photos_recent(request):
 
 	return render_to_response("api/json.html", {"json": simplejson.dumps(json)})
 
+def photos_delete(request):
+	if request.user.is_authenticated():
+		if request.method == "GET":
+			raise Http404
+
+		photoid = request.POST.get("id", 0)
+
+		user = request.user
+		photo = Photo.objects.get(owner=user, id=photoid)
+		photo.delete()
+		
+		json = {"success": True}
+	else:
+		json = {"success": False, "msg": "Only logged in works at the moment."}
+
+	return render_to_response("api/json.html", {"json": simplejson.dumps(json)})
+
 
 def album(request, id):
 	if request.user.is_authenticated():

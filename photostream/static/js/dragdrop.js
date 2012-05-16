@@ -170,7 +170,6 @@ var bindDragDrop = function() {
                                 opacity: '0'
                             }, 500, function() {
                                 img.attr("class", oldclass);
-                                console.info(oldclass);
                                 initQtip();
                                 
                                 img.animate({

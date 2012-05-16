@@ -27,7 +27,7 @@ def library(request):
 	else:
 		return HttpResponseRedirect(reverse("account.views.custom_login"))
 
-def image(request, size, id, extension):
+def image(request, userid, size, id, extension):
 	if request.user.is_authenticated():
 		user = request.user
 

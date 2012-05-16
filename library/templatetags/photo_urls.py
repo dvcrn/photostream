@@ -12,7 +12,7 @@ def thumburl(photo):
 
 	media_url = settings.MEDIA_URL
 
-	path = reverse("library.views.image", kwargs={'size': 'thumb', "id": int(photo.id), "extension": photo.extension})
+	path = reverse("library.views.image", kwargs={'userid': int(owner), 'size': 'thumb', "id": int(photo.id), "extension": photo.extension})
 	return path
 
 @register.filter(name='fullurl', is_safe=True)
@@ -23,7 +23,7 @@ def photourl(photo):
 
 	media_url = settings.MEDIA_URL
 
-	path = reverse("library.views.image", kwargs={'size': 'full', "id": int(photo.id), "extension": photo.extension})
+	path = reverse("library.views.image", kwargs={'userid': int(owner), 'size': 'full', "id": int(photo.id), "extension": photo.extension})
 	return path
 
 @register.filter(name='bigurl', is_safe=True)
@@ -34,5 +34,5 @@ def thumburl(photo):
 
 	media_url = settings.MEDIA_URL
 
-	path = reverse("library.views.image", kwargs={'size': 'big', "id": int(photo.id), "extension": photo.extension})
+	path = reverse("library.views.image", kwargs={'userid': int(owner), 'size': 'big', "id": int(photo.id), "extension": photo.extension})
 	return path

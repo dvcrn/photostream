@@ -147,8 +147,7 @@ var bindDragDrop = function() {
             var album = $(this);
 
             var img = album.find(".statusicon");
-            var oldicon = img.attr("src");
-            var oldalt = img.attr("alt");
+            var oldclass = img.attr("class");
 
             changeStatusicon(img, "loading");
 
@@ -170,8 +169,8 @@ var bindDragDrop = function() {
                             img.animate({
                                 opacity: '0'
                             }, 500, function() {
-                                img.attr("src", oldicon);
-                                img.attr("alt", oldalt);
+                                img.attr("class", oldclass);
+                                console.info(oldclass);
                                 initQtip();
                                 
                                 img.animate({

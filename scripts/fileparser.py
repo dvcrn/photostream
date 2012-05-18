@@ -9,9 +9,10 @@ import zipfile
 import sys
 import shutil
 
-#sys.path.append("/Users/David/Developer/photostream/photostream/")
-sys.path.append("/var/www/photostream/photostream/")
-import settings as settings
+sys.path.append("/Users/David/Developer/photostream")
+#sys.path.append("/var/www/photostream/")
+import photostream.settings as settings
+from library.models import Photo
 
 mediapath = settings.MEDIA_ROOT
 thumbdestination = "thumbs"
@@ -19,25 +20,18 @@ thumbdestination = "thumbs"
 def process(photoid):
 	# connect to mysql
 	try:
-		host = settings.DATABASES['default']['HOST']
-		database = settings.DATABASES['default']['NAME']
-		user = settings.DATABASES['default']['USER']
-		password = settings.DATABASES['default']['PASSWORD']
 
-		db = MySQLdb.connect(host=host,
-							 user=user,
-							 passwd=password,
-							 charset = "utf8",
-							 db=database)
+		photo = Photo.objects.get(id=photoid)
 
-		cursor = db.cursor()
-		cursor.execute("""SELECT owner_id, photo, name, extension FROM library_photo WHERE id = %s""" % (photoid))
-		userid, relative_filepath, photoname, extension = cursor.fetchone()
+		userid = photo.owner.id
+		relative_filepath = photo.photo
+		photoname = photo.name
+		extension = photo.extension
 		
+		# Create filepathes
 		absolute_filepath = "%s%s" % (mediapath, relative_filepath)
 		relative_userpath = "photos/%s/" % (userid)
 		absolute_userpath = "%s%s/" % (mediapath, relative_userpath)
-
 
 		'''
 		print "Creating thumb:"
@@ -68,36 +62,26 @@ def process(photoid):
 		big = image.resize((1000, int(height)), Image.ANTIALIAS)   		
 		big.save("%s%s_1000w.%s" % (absolute_userpath, photoname, extension))
 
-		sql =  "UPDATE library_photo SET processed = 1 WHERE id = %s" % (photoid)
-		cursor.execute(sql)
-		#print sql
+		photo.processed = True
+		photo.save()
 
-	except MySQLdb.Error, e:
-		print MySQLdb.Error, e
+	except Exception, e:
+		print e
 		sys.exit(1)
 
 def processAll():
 	# connect to mysql
 	try:
-		host = settings.DATABASES['default']['HOST']
-		database = settings.DATABASES['default']['NAME']
-		user = settings.DATABASES['default']['USER']
-		password = settings.DATABASES['default']['PASSWORD']
 
-		db = MySQLdb.connect(host=host,
-							 user=user,
-							 passwd=password,
-							 charset = "utf8",
-							 db=database)
+		photos = Photo.objects.filter(processed=False)
 
-		cursor = db.cursor()
-		cursor.execute("""SELECT id, owner_id, photo, name, extension FROM library_photo WHERE processed = 0""" )
-		
-		results = cursor.fetchall()
+		for photo in photos:
+			userid = photo.owner.id
+			relative_filepath = photo.photo
+			photoname = photo.name
+			extension = photo.extension
 
-		for row in results:
-			photoid, userid, relative_filepath, photoname, extension = row
-
+			# Filepathes
 			absolute_filepath = "%s%s" % (mediapath, relative_filepath)
 			relative_userpath = "photos/%s/" % (userid)
 			absolute_userpath = "%s%s/" % (mediapath, relative_userpath)
@@ -132,12 +116,11 @@ def processAll():
 			big = image.resize((1000, int(height)), Image.ANTIALIAS)   		
 			big.save("%s%s_1000w.%s" % (absolute_userpath, photoname, extension))
 
-			sql =  "UPDATE library_photo SET processed = 1 WHERE id = %s" % (photoid)
-			cursor.execute(sql)
-			#print sql
+			photo.processed = True
+			photo.save()
 
-	except MySQLdb.Error, e:
-		print MySQLdb.Error, e
+	except Exception, e:
+		print e
 		sys.exit(1)
 
 

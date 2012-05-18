@@ -42,6 +42,7 @@ def resizePhoto(sender, instance, created, **kwargs):
         post_save.disconnect(resizePhoto, sender=Photo)
             
         if instance.processed is False:
+            os.system("export DJANGO_SETTINGS_MODULE=photostream.settings")
             cmd = "python %s %d &" % (settings.API_RESIZER, instance.id)
             os.system(cmd)
 

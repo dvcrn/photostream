@@ -1,14 +1,13 @@
 from django.contrib import admin
 from account.models import *
 
-class UpgradeAdmin(admin.ModelAdmin):
-	list_filter = ('type', )
-	list_display = ('name', 'type', 'limit', 'duration', 'price')
-	search_fields = ['name']
+class TypeAdmin(admin.ModelAdmin):
+	list_display = ('name', 'duration', 'photolimit', 'albumlimit')
 
-class UserUpgradeAdmin(admin.ModelAdmin):
-	list_display = ('user', 'upgrade', 'created')
-	search_fields = ['user', 'upgrade']
+class ExtendedAdmin(admin.ModelAdmin):
+	list_filter = ('accounttype', )
+	list_display = ('user', 'accounttype', 'upgraded_on')
+	search_fields = ['user']
 
-admin.site.register(UserUpgrade, UserUpgradeAdmin)
-admin.site.register(Upgrade, UpgradeAdmin)
+admin.site.register(AccountType, TypeAdmin)
+admin.site.register(ExtendedUser, ExtendedAdmin)

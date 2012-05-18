@@ -103,6 +103,8 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'photostream.urls'
 
+AUTH_PROFILE_MODULE = 'account.ExtendedUser'
+
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'photostream.wsgi.application'
 

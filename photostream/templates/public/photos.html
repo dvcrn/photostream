@@ -1,0 +1,8 @@
+{% load photo_urls %}
+{% load staticfiles %}
+
+{% for photo in photos %}
+	<div class="photo" id="{{ photo.id }}" big="{{ photo|bigurl:album.id }}" full="{{ photo|fullurl:album.id }}">
+		<img class="thumb" id="{{ photo.id }}" big="{{ photo|bigurl:album.id }}" full="{{ photo|fullurl:album.id }}" src="{{ photo|thumburl:album.id }}" alt="" />
+	</div>
+{% endfor %}

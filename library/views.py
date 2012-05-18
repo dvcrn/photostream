@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from library.models import Photo, User, Album
 from django.template import RequestContext
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
 from photostream import settings
 import Image
@@ -56,6 +56,37 @@ def image(request, userid, size, id, extension):
 	else:
 		return HttpResponseRedirect(reverse("account.views.custom_login"))
 
+def album_image(request, albumid, userid, size, id, extension):
+	user = request.user
+
+	def switch_size(x):
+		return {
+			'full': "full",
+			'big': "1000w",
+			'thumb': "180w"
+		}.get(size, "full")    # 9 is default if x not found
+
+	size = switch_size(size)
+
+	album = Album.objects.get(id=albumid)
+
+	if not album.is_public:
+		raise Http404
+
+	photo = Photo.objects.get(owner=userid, id=id, extension=extension, album=album)
+	
+	path = photo.photo
+	if size == "full":
+		imagepath = "%sphotos/%d/%s.%s" % (settings.MEDIA_ROOT, int(userid), photo.name, extension)
+	else:
+		imagepath = "%sphotos/%d/%s_%s.%s" % (settings.MEDIA_ROOT, int(userid), photo.name, size, extension)
+
+	image = Image.open(imagepath)
+	response = HttpResponse(mimetype="image/png")
+	image.save(response, "PNG")
+
+	return response
+
 def recent(request):
 	if request.user.is_authenticated():
 		user = request.user
@@ -104,6 +135,8 @@ def album_public(request, userid, albumid):
 
 	if album.is_public:
 		photos = Photo.objects.filter(album=album)
+	else:
+		raise Http404
 
 	return render_to_response("public/album.html", {
 			'photos': photos,

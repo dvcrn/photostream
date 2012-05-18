@@ -29,7 +29,8 @@ urlpatterns += patterns('library.views',
 	url(r'^app/$', 'library'),
     url(r'^app/album/(?P<id>\d+)/$', 'album'),
     url(r'^app/recent/$', 'recent'),
-    url(r'^image/(?P<userid>\d+)/(?P<id>\d+)_(?P<size>\w+).(?P<extension>\w+)$', 'image'),
+    url(r'^(?P<userid>\d+)/(?P<id>\d+)_(?P<size>\w+).(?P<extension>\w+)$', 'image'),
+    url(r'^(?P<userid>\d+)/(?P<albumid>\d+)/(?P<id>\d+)_(?P<size>\w+).(?P<extension>\w+)$', 'album_image'),
 
     url(r'^(?P<userid>\d+)/album/(?P<albumid>\d+)/$', 'album_public'),
 )

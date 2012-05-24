@@ -175,6 +175,7 @@ var rebindAlbumDoubleclick = function() {
 
 				rename_album(aid, newtitle, function(data) {
 					var html = $(data.html);
+					console.info(html);
 					li.replaceWith(html);
 
 					var id = html.attr("id");

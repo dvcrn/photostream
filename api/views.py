@@ -145,7 +145,13 @@ def rename_album(request):
 			album.name = name[0:50]
 			album.save()
 
-			html = render_to_response("snippets/album.html", {"id": album.id, "name": album.name}, context_instance=RequestContext(request)).content
+			public = False
+			statusClass = ""
+			if album.is_public:
+				public = True
+				statusClass = "statusicon-public"
+
+			html = render_to_response("snippets/album.html", {"id": album.id, "name": album.name, "public": public, "statusclass": statusClass}, context_instance=RequestContext(request)).content
 
 			json = {"success": True, "html": html}
 		except Exception:

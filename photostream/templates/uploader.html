@@ -1,11 +1,11 @@
 {% load staticfiles %}<!DOCTYPE html>
 <html>
 <head>
-	<title>Uploader</title>
+	<title>Photolicious:: Photo Uploader</title>
 	<link rel="stylesheet" href="{% static "css/uploadify.css" %}">
+	<link rel="stylesheet" href="{% static "css/uploader/uploader.css" %}">
 	<script src="{% static "js/jquery-1.7.1.min.js" %}" type="text/javascript" charset="utf-8"></script>
 	<script src="{% static "js/jquery.uploadify-3.1.min.js" %}" type="text/javascript" charset="utf-8"></script>
-	<script src="https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js" type="text/javascript" charset="utf-8" ></script>
 	<script type="text/javascript" charset="utf-8">
 		$(function() {
 			var sessionid = "{{session_key}}";
@@ -13,19 +13,42 @@
 		    $('#file_upload').uploadify({
 		        'swf'      : '{% static "etc/uploadify.swf" %}',
 		        'uploader' : '/upload/',
-		        // Put your options here
-		        'debug': true,
-		        'onUploadError' : function(file, errorCode, errorMsg, errorString) {
-         		   console.info(errorMsg);
-        		},
         		formData: {'{{session_cookie_name}}': '{{session_key}}'},
         		checkExisting: false,
+        		auto: false,
+        		buttonClass: "selectbutton",
+        		buttonText: "Select Files",
+		        fileTypeDesc : 'Image Files',
+		        fileTypeExts : '*.gif; *.jpg; *.png',
+    		    onSelect : function(file) {
+            		$("#uploadbutton").removeClass("disabled");
+            		$("#uploadbutton").addClass("hoverable");
+       			},
+       			onUploadStart : function(queueData) {
+       				$("#uploadbutton").addClass("disabled");
+            		$("#uploadbutton").removeClass("hoverable");
+        		}
+		    });
+
+		    $("#uploadbutton").click(function() {
+		    	if (!$("#uploadbutton").hasClass("disabled")) 
+		    	{
+		    		$("#file_upload").uploadify("upload");
+		    	}
 		    });
 		});
 	</script>
 </head>
 <body>
-	<input type="file" name="file_upload" id="file_upload" />
-	<p>Sessionid: {{session_key}}</p>
+	<div id="wrapper">
+		<h1>Photolicious Uploader</h1>
+		<p>Please select all photos you wish to upload.</p>
+		<div id="uploader">
+			<div id="uploadbutton" class="uploadify-button disabled" href="" title="">
+				<span class="uploadify-button-text">Start Upload</span>
+			</div>
+			<input type="file" name="file_upload" id="file_upload" />
+		</div>
+	</div>
 </body>
 </html>

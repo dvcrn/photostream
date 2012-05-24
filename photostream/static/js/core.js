@@ -73,7 +73,7 @@ var createConfirm = function(msg, callback) {
   }
 }
 
-var changeTitle = function(title) {
+var changeLibrarytitle = function(title) {
 	titlebar.html("<h1>"+title+"</h1>");
 }
 
@@ -91,7 +91,8 @@ var loadModule = function(url, id, section) {
       hideOverlay();
 
 			library.html(json.html);
-			changeTitle(json.title);
+			changeLibrarytitle(json.title);
+      changeTitle(json.title);
 
 			store.section = section;
 			store.current = id;
@@ -137,6 +138,10 @@ var deselectAll = function() {
   $(".selected").removeClass("selected");
 }
 // End selection
+
+var changeTitle = function(title) {
+  document.title = "Photolicious :: " + title;
+}
 
 var changeStatusicon = function(element, icontype) {
   if (element.hasClass("statusicon")) {

@@ -1,13 +1,11 @@
 {% load staticfiles %}
-<li id="{{ id }}" class="album">
+<li id="{{ id }}" class="album" {% if public %}public="true"{% else %}public="false"{% endif %}>
 	<img class="icon" src="{% static "img/images.png" %}" alt="">
 	
 	<a 
 		ajax="{% url api.views.album id=id %}" 
 		href="{% url library.views.album id=id %}" 
-		{% if public %}
-			public="{% url library.views.album_public userid=user.id albumid=id %}"
-		{% endif %}
+		public="{% url library.views.album_public userid=user.id albumid=id %}"
 		title=""
 	>{{ name }}</a>
 	

@@ -41,7 +41,13 @@ $("#context-album-makepublic").click(function() {
 
 $("#context-album-url").click(function() {
     var url = contextmenu_store.element.find("a").attr("public");
-    window.open(url);
+    var is_public = contextmenu_store.element.attr("public");
+    if (is_public == "false") {
+        toggle_public(contextmenu_store.element, function() {
+            window.open(url);
+        });
+    }
+
 });
 
 $("#context-album-delete").click(function() {
@@ -65,12 +71,12 @@ var toggle_public = function(el, callback)
         if (json.public)
         {
             changeStatusicon(statusicon, "public");
-            el.find("a").attr("public", json.url);
+            el.attr("public", "true");
         }
         else
         {
             changeStatusicon(statusicon, "none");
-            el.find("a").removeAttr("public");
+            el.attr("public", "false");
         }
         
         if (callback !== undefined)

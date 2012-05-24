@@ -38,16 +38,21 @@ var delete_album = function(id, callback) {
 }
 
 var public_album = function(id, callback) {
-	$.post("/api/public/album/", { id: id },
-		function(json) {
-	    	var json = $.parseJSON(json);
-	    	console.info(json.success);
-	    	if (!json.success) {
-	    		createPopup("Something very bad happened...");
-	    	} else {
-	    		callback(json);
-	    	}
-		});
+	$.ajax({
+		url: "/api/public/album/",
+		async: false,
+		dataType: "json",
+		type: "POST",
+		data: { id: id },
+		success: function(json) {
+			console.info(json);
+			if (!json.success) {
+				createPopup("Something very bad happened...");
+			} else {
+				callback(json);
+			}
+		}
+    });
 }
 
 var delete_photo = function(id, callback) {

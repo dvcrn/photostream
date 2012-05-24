@@ -63,23 +63,33 @@ $("#context-album-delete").click(function() {
 
 var toggle_public = function(el, callback) 
 {
-    var id = el.attr("id");
-    var statusicon = el.find(".statusicon");
-    changeStatusicon(statusicon, "loading");
+    var is_public = el.attr("public");
+    var txt = "";
+    if (is_public == "true") {
+        txt = "Are you sure you want to make this album private again?";
+    } else {
+        txt = "This album is about to become public to EVERYONE. Do you want that?";
+    }
 
-    public_album(id, function(json) {
-        if (json.public)
-        {
-            changeStatusicon(statusicon, "public");
-            el.attr("public", "true");
-        }
-        else
-        {
-            changeStatusicon(statusicon, "none");
-            el.attr("public", "false");
-        }
-        
-        if (callback !== undefined)
-            callback(el);
+    createConfirm(txt, function() {
+        var id = el.attr("id");
+        var statusicon = el.find(".statusicon");
+        changeStatusicon(statusicon, "loading");
+
+        public_album(id, function(json) {
+            if (json.public)
+            {
+                changeStatusicon(statusicon, "public");
+                el.attr("public", "true");
+            }
+            else
+            {
+                changeStatusicon(statusicon, "none");
+                el.attr("public", "false");
+            }
+            
+            if (callback !== undefined)
+                callback(el);
+        });
     });
 }

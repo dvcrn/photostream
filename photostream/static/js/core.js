@@ -178,6 +178,32 @@ var copyToClipboard = function(text) {
     window.prompt ("Copy to clipboard. Press Ctrl+C or rightclick and copy", text);     
 }
 
+var ajaxCall = function(url, params, async, callback) {
+  if (async === undefined) {
+    async = true;
+  }
+
+  if (callback === undefined) {
+    callback = function() {}
+  }
+
+  $.ajax({
+    url: url,
+    async: async,
+    dataType: "json",
+    type: "POST",
+    data: params,
+    success: function(json) {
+      if (!json.success) {
+        // TODO: Fehlerhandler hier
+        createPopup("Something very bad happened...");
+      } else {
+        callback(json);
+      }
+    }
+    });
+}
+
 resize();
 
 $("a[rel^='prettyPhoto']").prettyPhoto({

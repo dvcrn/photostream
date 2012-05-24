@@ -1,71 +1,21 @@
 var add_album = function(name, callback) {
-
-	$.post("/api/add/album/", { name: name },
-		function(json) {
-	    	var json = $.parseJSON(json);
-	    	if (!json.success) {
-	    		alert("Something very bad happened...");
-	    	} else {
-	    		callback(json);
-	    	}
-		});
+	ajaxCall("/api/add/album/", { name: name }, true, callback);
 }
 
 var rename_album = function(id, newname, callback) {
-	$.post("/api/rename/album/", { id: id, name: newname },
-		function(json) {
-	    	var json = $.parseJSON(json);
-	    	console.info(json.success);
-	    	if (!json.success) {
-	    		createPopup("Something very bad happened...");
-	    	} else {
-	    		callback(json);
-	    	}
-		});
+	ajaxCall("/api/rename/album/", { id: id, name: newname }, true, callback);
 }
 
 var delete_album = function(id, callback) {
-	$.post("/api/delete/album/", { id: id },
-		function(json) {
-	    	var json = $.parseJSON(json);
-	    	console.info(json.success);
-	    	if (!json.success) {
-	    		createPopup("Something very bad happened...");
-	    	} else {
-	    		callback(json);
-	    	}
-		});
+	ajaxCall("/api/delete/album/", { id: id }, true, callback);
 }
 
 var public_album = function(id, callback) {
-	$.ajax({
-		url: "/api/public/album/",
-		async: false,
-		dataType: "json",
-		type: "POST",
-		data: { id: id },
-		success: function(json) {
-			console.info(json);
-			if (!json.success) {
-				createPopup("Something very bad happened...");
-			} else {
-				callback(json);
-			}
-		}
-    });
+	ajaxCall("/api/public/album/", { id: id }, false, callback);
 }
 
 var delete_photo = function(id, callback) {
-	$.post("/api/delete/photos/", { id: id },
-		function(json) {
-	    	var json = $.parseJSON(json);
-	    	console.info(json.success);
-	    	if (!json.success) {
-	    		createPopup("Something very bad happened...");
-	    	} else {
-	    		callback(json);
-	    	}
-		});
+	ajaxCall("/api/delete/photos/", { id: id }, true, callback);
 }
 
 var initLibrary = function() {

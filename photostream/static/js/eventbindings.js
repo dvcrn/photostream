@@ -65,6 +65,14 @@ $("#library .photo").live("click", function(ev) {
 			counter = counter + 1;
 		});
 
+		// If End is lower than start -> Flip them. (Means selection from down to top)
+		if (position_start > position_end) {
+			t_start = position_start;
+			t_end = position_end;
+			position_end = t_start;
+			position_start = t_end;
+		}
+
 
 		// Iterate over all images and select all photos who are between start and end
 		var counter = 0;

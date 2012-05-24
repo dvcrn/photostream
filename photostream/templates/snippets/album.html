@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <li id="{{ id }}" class="album">
-	<img src="{% static "img/images.png" %}" alt="">
+	<img class="icon" src="{% static "img/images.png" %}" alt="">
 	
 	<a 
 		ajax="{% url api.views.album id=id %}" 

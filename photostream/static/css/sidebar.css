@@ -26,6 +26,7 @@
 	width: 182px;
 	text-overflow: ellipsis;
 	display: inline-block;
+	line-height: 15px;
 }
 
 .section ul {
@@ -42,7 +43,6 @@
 	*/
 
 	padding: 1px 0 5px 20px;
-	height: 19px;
 	width: 235px;
 	overflow: hidden;
 	text-overflow: ellipsis;

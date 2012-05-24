@@ -20,7 +20,7 @@ urlpatterns += patterns('account.views',
 
 urlpatterns += patterns('website.views',
     url(r'^$', 'home'),
-    url(r'^pricing/$', 'pricing'),
+    url(r'^account/$', 'account'),
     url(r'^blog/$', 'blog'),
     url(r'^notify/$', 'notify'),
 )
@@ -33,6 +33,9 @@ urlpatterns += patterns('library.views',
     url(r'^(?P<userid>\d+)/(?P<albumid>\d+)/(?P<id>\d+)_(?P<size>\w+).(?P<extension>\w+)$', 'album_image'),
 
     url(r'^(?P<userid>\d+)/album/(?P<albumid>\d+)/$', 'album_public'),
+
+    url(r'^uploader/$', 'uploader'),
+    url(r'^upload/$', 'upload'),
 )
 
 urlpatterns += patterns('api.views',

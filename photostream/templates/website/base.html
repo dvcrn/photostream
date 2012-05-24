@@ -18,7 +18,7 @@
 				{% endcomment %}
 				{% if user.is_authenticated %}
 					<li><a id='nav_launchapp' class="important" href="{% url library.views.library %}" title="">Launch App</a></li>
-					<li><a href="#{% url account.views.custom_login %}" title="">My Account</a></li>
+					<li><a href="{% url website.views.account %}" title="">My Account</a></li>
 					<li><a href="{% url account.views.custom_logout %}" title="">Logout</a></li>
 				{% else %}
 					<li><a href="{% url account.views.custom_login %}" title="">Beta Login</a></li>

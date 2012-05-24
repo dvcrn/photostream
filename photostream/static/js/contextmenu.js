@@ -40,10 +40,8 @@ $("#context-album-makepublic").click(function() {
 });
 
 $("#context-album-url").click(function() {
-    toggle_public(contextmenu_store.element, function(el) {
-        var url = el.attr("public");
-        window.open(url);
-    });
+    var url = contextmenu_store.element.find("a").attr("public");
+    window.open(url);
 });
 
 $("#context-album-delete").click(function() {

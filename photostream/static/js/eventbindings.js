@@ -271,7 +271,6 @@ $("#album_create_box").keydown(function(e) {
 			$("#album_create_box_wrapper").hide();
 
     		bindDragDrop();
-			bindAlbumContextMenu();
 		});
 	}
 });

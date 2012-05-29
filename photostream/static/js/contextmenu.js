@@ -47,6 +47,9 @@ $("#context-album-url").click(function() {
             window.open(url);
         });
     }
+    else {
+        window.open(url);
+    }
 
 });
 

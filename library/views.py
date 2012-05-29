@@ -35,7 +35,8 @@ def uploader(request):
 	sessionid = request.session.session_key
 	return render_to_response("uploader.html", {
 	       'session_cookie_name': settings_default.SESSION_COOKIE_NAME,
-	       'session_key': request.session.session_key
+	       'session_key': request.session.session_key,
+	       'photoserver': settings.PHOTOSERVER_URL
 		}, context_instance=RequestContext(request))
 
 def upload(request):

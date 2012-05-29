@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
-urlpatterns = patterns('django.views.generic.simple',
+urlpatterns += patterns('django.views.generic.simple',
     (r'^noaccess.html$',             'direct_to_template', {'template': 'noaccess.html'}),
 )
 

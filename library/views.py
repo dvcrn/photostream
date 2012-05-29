@@ -31,37 +31,6 @@ def library(request):
 	else:
 		return HttpResponseRedirect(reverse("account.views.custom_login"))
 
-def image(request, userid, size, id, extension):
-	if request.user.is_authenticated():
-		user = request.user
-
-		def switch_size(x):
-			return {
-				'full': "full",
-				'big': "1000w",
-				'thumb': "180w"
-			}.get(size, "full")    # 9 is default if x not found
-
-		size = switch_size(size)
-
-		photo = Photo.objects.get(owner=user, id=id, extension=extension)
-		path = photo.photo
-
-		if size == "full":
-			imagepath = "%sphotos/%d/%s.%s" % (settings.MEDIA_ROOT, user.id, photo.name, extension)
-		else:
-			imagepath = "%sphotos/%d/%s_%s.%s" % (settings.MEDIA_ROOT, user.id, photo.name, size, extension)
-
-		image = open(imagepath, "r")
-		mimetype = mimetypes.guess_type(imagepath)[0]
-		if not mimetype: mimetype = "application/octet-stream"
-
-		response = HttpResponse(image.read(), mimetype=mimetype)
-
-		return response
-	else:
-		return HttpResponseRedirect(reverse("account.views.custom_login"))
-
 def uploader(request):
 	sessionid = request.session.session_key
 	return render_to_response("uploader.html", {
@@ -70,11 +39,8 @@ def uploader(request):
 		}, context_instance=RequestContext(request))
 
 def upload(request):
-	if request.method != "POST":
+	if request.method != "POST" or not request.user.is_authenticated():
 		raise Http404()
-
-	if not request.user.is_authenticated():
-		raise Http404
 	
 	user = request.user
 
@@ -108,6 +74,37 @@ def upload(request):
 
 	return HttpResponse("ok", mimetype="text/plain")
 
+def image(request, userid, size, id, extension):
+	if request.user.is_authenticated():
+		user = request.user
+
+		def switch_size(x):
+			return {
+				'full': "full",
+				'big': "1000w",
+				'thumb': "180w"
+			}.get(size, "full")    # 9 is default if x not found
+
+		size = switch_size(size)
+
+		photo = Photo.objects.get(owner=user, id=id, extension=extension)
+		path = photo.photo
+
+		if size == "full":
+			imagepath = "%sphotos/%d/%s.%s" % (settings.MEDIA_ROOT, user.id, photo.name, extension)
+		else:
+			imagepath = "%sphotos/%d/%s_%s.%s" % (settings.MEDIA_ROOT, user.id, photo.name, size, extension)
+
+		image = open(imagepath, "r")
+		mimetype = mimetypes.guess_type(imagepath)[0]
+		if not mimetype: mimetype = "application/octet-stream"
+
+		response = HttpResponse(image.read(), mimetype=mimetype)
+
+		return response
+	else:
+		return render_to_response("noaccess.html")
+
 def album_image(request, albumid, userid, size, id, extension):
 	user = request.user
 
@@ -123,7 +120,7 @@ def album_image(request, albumid, userid, size, id, extension):
 	album = Album.objects.get(id=albumid)
 
 	if not album.is_public:
-		raise Http404
+		return render_to_response("noaccess.html")
 
 	photo = Photo.objects.get(owner=userid, id=id, extension=extension, album=album)
 	
@@ -148,7 +145,7 @@ def album_public(request, userid, albumid):
 	if album.is_public:
 		photos = Photo.objects.filter(album=album, processed=1, flag=0)
 	else:
-		raise Http404
+		return render_to_response("noaccess.html")
 
 	return render_to_response("public/album.html", {
 			'photos': photos,
@@ -174,7 +171,7 @@ def image_download(request, userid, size, id, extension):
 
 		return response
 	else:
-		return HttpResponseRedirect(reverse("account.views.custom_login"))
+		return render_to_response("noaccess.html")
 
 def album_image_download(request, albumid, userid, size, id, extension):
 	user = request.user
@@ -191,7 +188,7 @@ def album_image_download(request, albumid, userid, size, id, extension):
 	album = Album.objects.get(id=albumid)
 
 	if not album.is_public:
-		raise Http404
+		return render_to_response("noaccess.html")
 
 	photo = Photo.objects.get(owner=userid, id=id, extension=extension, album=album)
 	

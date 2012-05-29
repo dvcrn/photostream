@@ -13,6 +13,10 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
+urlpatterns = patterns('django.views.generic.simple',
+    (r'^noaccess.html$',             'direct_to_template', {'template': 'noaccess.html'}),
+)
+
 urlpatterns += patterns('account.views',
     url(r'^login/$', 'custom_login'),
     url(r'^logout/$', 'custom_logout'),

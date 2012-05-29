@@ -1,0 +1,14 @@
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+	<title>You don't have access to view this ressource</title>
+	<link rel="stylesheet" href="{% static "css/noaccess.css" %}">
+</head>
+<body>
+	<div id="wrapper">
+		<img src="{% static "img/lock.png" %}" alt="">
+		<h1>You don't have access to view this ressource.</h1>
+		<p class="caption">This page is not public. Try contacting the owner if you really want to see it.</p>
+	</div>
+</body>
+</html>

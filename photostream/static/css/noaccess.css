@@ -1,0 +1,21 @@
+body {
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+	background: #EEE;
+}
+
+#wrapper {
+	width: 600px;
+	margin: 0 auto;
+	text-align: center;
+	position: relative;
+	top: 200px;
+}
+
+h1 {
+
+}
+
+.caption {
+	margin-top: -10px;
+	font-size: 13px;
+}

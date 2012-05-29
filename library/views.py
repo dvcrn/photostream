@@ -9,6 +9,7 @@ from photostream import settings
 import Image
 import simplejson
 import os
+import mimetypes
 
 # Create your views here.
 def library(request):
@@ -51,9 +52,11 @@ def image(request, userid, size, id, extension):
 		else:
 			imagepath = "%sphotos/%d/%s_%s.%s" % (settings.MEDIA_ROOT, user.id, photo.name, size, extension)
 
-		image = Image.open(imagepath)
-		response = HttpResponse(mimetype="image/png")
-		image.save(response, "PNG")
+		image = open(imagepath, "r")
+		mimetype = mimetypes.guess_type(imagepath)[0]
+		if not mimetype: mimetype = "application/octet-stream"
+
+		response = HttpResponse(image.read(), mimetype=mimetype)
 
 		return response
 	else:
@@ -130,9 +133,11 @@ def album_image(request, albumid, userid, size, id, extension):
 	else:
 		imagepath = "%sphotos/%d/%s_%s.%s" % (settings.MEDIA_ROOT, int(userid), photo.name, size, extension)
 
-	image = Image.open(imagepath)
-	response = HttpResponse(mimetype="image/png")
-	image.save(response, "PNG")
+	image = open(imagepath, "r")
+	mimetype = mimetypes.guess_type(imagepath)[0]
+	if not mimetype: mimetype = "application/octet-stream"
+
+	response = HttpResponse(image.read(), mimetype=mimetype)
 
 	return response
 
@@ -151,7 +156,59 @@ def album_public(request, userid, albumid):
 			'user': user
 		}, context_instance=RequestContext(request))
 
+def image_download(request, userid, size, id, extension):
+	if request.user.is_authenticated():
+		user = request.user
 
+		photo = Photo.objects.get(owner=user, id=id, extension=extension)
+		path = photo.photo
+
+		imagepath = "%sphotos/%d/%s.%s" % (settings.MEDIA_ROOT, user.id, photo.name, extension)
+
+		image = open(imagepath, "r")
+		mimetype = mimetypes.guess_type(imagepath)[0]
+		if not mimetype: mimetype = "application/octet-stream"
+
+		response = HttpResponse(image.read(), mimetype=mimetype)
+		response["Content-Disposition"]= "attachment; filename=%s" % photo.raw_name
+
+		return response
+	else:
+		return HttpResponseRedirect(reverse("account.views.custom_login"))
+
+def album_image_download(request, albumid, userid, size, id, extension):
+	user = request.user
+
+	def switch_size(x):
+		return {
+			'full': "full",
+			'big': "1000w",
+			'thumb': "180w"
+		}.get(size, "full")    # 9 is default if x not found
+
+	size = switch_size(size)
+
+	album = Album.objects.get(id=albumid)
+
+	if not album.is_public:
+		raise Http404
+
+	photo = Photo.objects.get(owner=userid, id=id, extension=extension, album=album)
+	
+	path = photo.photo
+	if size == "full":
+		imagepath = "%sphotos/%d/%s.%s" % (settings.MEDIA_ROOT, int(userid), photo.name, extension)
+	else:
+		imagepath = "%sphotos/%d/%s_%s.%s" % (settings.MEDIA_ROOT, int(userid), photo.name, size, extension)
+
+	image = open(imagepath, "r")
+	mimetype = mimetypes.guess_type(imagepath)[0]
+	if not mimetype: mimetype = "application/octet-stream"
+
+	response = HttpResponse(image.read(), mimetype=mimetype)
+	response["Content-Disposition"]= "attachment; filename=%s" % photo.raw_name
+
+	return response
 
 
 

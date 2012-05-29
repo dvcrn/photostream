@@ -142,3 +142,9 @@ body {
 	border-radius: 0.4em;
 	margin: 7px;
 }
+
+.downloadlink {
+	float: right;
+	text-decoration: none;
+	line-height: 22px;
+}

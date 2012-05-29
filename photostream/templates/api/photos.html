@@ -2,8 +2,8 @@
 {% load staticfiles %}
 
 {% for photo in photos %}
-	<div class="photo" id="{{ photo.id }}" big="{{ photo|bigurl }}" full="{{ photo|fullurl }}">
-		<img class="thumb" id="{{ photo.id }}" big="{{ photo|bigurl }}" full="{{ photo|fullurl }}" src="{{ photo|thumburl }}" alt="" />
+	<div class="photo" id="{{ photo.id }}" big="{{ photo|bigurl }}" download="{{ photo|downloadurl }}" caption="{{ photo.caption }}">
+		<img class="thumb" id="{{ photo.id }}" big="{{ photo|bigurl }}" download="{{ photo|downloadurl }}" src="{{ photo|thumburl }}" alt="" />
 		<div class="options">
 			<a class="option-delete option-icon option-left" href="#" title=""><img src="{% static "img/bin.png" %}" alt=""></a>
 			<a class="option-gallery option-icon option-middle" href="#" title=""><img src="{% static "img/magnifier.png" %}" alt=""></a>

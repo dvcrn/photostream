@@ -3,7 +3,7 @@ from library.models import *
 
 class PhotoAdmin(admin.ModelAdmin):
 	list_filter = ('extension', 'processed', 'created', 'flag')
-	list_display = ('name', 'raw_name', 'extension', 'photo', 'owner', 'processed', 'created', 'flag')
+	list_display = ('id', 'name', 'raw_name', 'extension', 'photo', 'owner', 'processed', 'created', 'flag')
 	search_fields = ['name', 'description']
 
 	def has_add_permission(self, request):

@@ -77,8 +77,9 @@ def upload(request):
 
 	for field_name in request.FILES:
 		myfile = request.FILES[field_name]
+		photoname = os.path.splitext(myfile.name)[0]
 		extension = os.path.splitext(myfile.name)[1]
-		extension = extension[1:5]
+		extension = extension[1:5].lower()
 		photocount = Photo.objects.filter(owner=user).count() + 1
 
 		filename = photocount
@@ -100,7 +101,7 @@ def upload(request):
 
 		destination.close()
 
-		Photo.objects.create(owner=user, name=filename, extension=extension, photo=relative_filepath)
+		Photo.objects.create(owner=user, raw_name=photoname, name=filename, extension=extension, photo=relative_filepath)
 
 	return HttpResponse("ok", mimetype="text/plain")
 
@@ -135,54 +136,12 @@ def album_image(request, albumid, userid, size, id, extension):
 
 	return response
 
-def recent(request):
-	if request.user.is_authenticated():
-		user = request.user
-
-		photos = Photo.objects.filter(owner=user)[:30]
-		albums = Album.objects.filter(owner=user)
-
-		module = {}
-		module['title'] = "Recently Added"
-		module['name'] = "library_recent"
-
-		return render_to_response("app/library.html", {
-				'photos': photos,
-				'albums': albums,
-				'module': module
-			}, context_instance=RequestContext(request))
-	else:
-		return HttpResponseRedirect(reverse("account.views.custom_login"))
-
-def album(request, id):
-	if request.user.is_authenticated():
-
-		user = request.user
-		album = Album.objects.get(owner=user, id=id)
-		
-		albums = Album.objects.filter(owner=user)
-		photos = Photo.objects.filter(album=album)
-
-		module = {}
-		module['title'] = album.name
-		module['name'] = album.name
-
-		return render_to_response("library.html", {
-				'photos': photos,
-				'albums': albums,
-				'current_album': album,
-				'module': module
-			}, context_instance=RequestContext(request))
-	else:
-		return HttpResponseRedirect(reverse("account.views.custom_login"))
-
-
 def album_public(request, userid, albumid):
 	user = User.objects.get(id=userid)
 	album = Album.objects.get(id=albumid, owner=user)
 
 	if album.is_public:
-		photos = Photo.objects.filter(album=album)
+		photos = Photo.objects.filter(album=album, processed=1, flag=0)
 	else:
 		raise Http404
 

@@ -19,7 +19,13 @@ class Album(models.Model):
     
 
 class Photo(models.Model):
+    PHOTO_FLAGS = (
+        (0, 'Normal'),
+        (1, 'Pending Delete'),
+    )
+
     name = models.CharField(max_length=50)
+    raw_name = models.CharField(max_length=100)
     caption = models.TextField(max_length=200, blank=True)
     extension = models.CharField(max_length=5)
     owner = models.ForeignKey(User)
@@ -27,6 +33,7 @@ class Photo(models.Model):
     album = models.ManyToManyField(Album, blank=True)
     created = models.DateTimeField(auto_now=True)
     processed = models.BooleanField(default=False)
+    flag = models.IntegerField(default=0, choices=PHOTO_FLAGS)
     class Meta:
         verbose_name = ('Photo')
         verbose_name_plural = ('Photos')

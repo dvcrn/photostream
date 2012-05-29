@@ -2,16 +2,16 @@
 <div class="section">
 	<h1>Library</h1>
 	<ul id="" class="">
-		<li id="library_photos" class="library {% if module.name = "library_photos" %}current{% endif %}">
+		<li id="library_photos" class="library">
 			<img src="{% static 'img/image.png' %}" alt="" class="icon">
-			<a ajax="{% url api.views.photos_all %}" href="{% url library.views.library %}" title="">Photos</a>
+			<a ajax="{% url api.views.photos_all %}" href="#" title="">Photos</a>
 			<img src="{% static 'img/house.png' %}" alt="This is your library :)" class="statusicon">
 		</li>
-		<li id="library_recent" class="library {% if module.name = "library_recent" %}current{% endif %}">
+		<li id="library_recent" class="library">
 			<img src="{% static 'img/time.png' %}" alt="" class="icon">
-			<a ajax="{% url api.views.photos_recent %}" href="{% url library.views.recent %}" title="">Recently Added</a>
+			<a ajax="{% url api.views.photos_recent %}" href="#" title="">Recently Added</a>
 		</li>
-		<li id="library_share" class="{% if module.name = "library_share" %}current{% endif %}">
+		<li id="library_share" class="">
 			<img src="{% static 'img/world.png' %}" alt="This album is public" class="icon">
 			<a href="" title="">Share</a>
 		</li>

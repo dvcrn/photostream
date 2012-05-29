@@ -4,7 +4,7 @@
 	
 	<a 
 		ajax="{% url api.views.album id=id %}" 
-		href="{% url library.views.album id=id %}" 
+		href="#" 
 		public="{% url library.views.album_public userid=user.id albumid=id %}"
 		title=""
 	>{{ name }}</a>

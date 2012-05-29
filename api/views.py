@@ -20,7 +20,7 @@ import os
 def photos_all(request):
 	if request.user.is_authenticated():
 		user = request.user
-		photos = Photo.objects.filter(owner=user)
+		photos = Photo.objects.filter(owner=user, processed=1, flag=0)
 
 		html = render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request)).content
 		json = {"success": True, "html": html, "title": "Library"}
@@ -33,7 +33,7 @@ def photos_all(request):
 def photos_recent(request):
 	if request.user.is_authenticated():
 		user = request.user
-		photos = Photo.objects.filter(owner=user)[:30]
+		photos = Photo.objects.filter(owner=user, processed=1, flag=0)[:30]
 
 		html = render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request)).content
 		json = {"success": True, "html": html, "title": "Recently Added"}
@@ -51,7 +51,8 @@ def photos_delete(request):
 
 		user = request.user
 		photo = Photo.objects.get(owner=user, id=photoid)
-		photo.delete()
+		photo.flag = 1
+		photo.save()
 		
 		json = {"success": True}
 	else:
@@ -64,7 +65,7 @@ def album(request, id):
 	if request.user.is_authenticated():
 		user = request.user
 		album = Album.objects.get(id=id, owner=user)
-		photos = Photo.objects.filter(album=album, owner=user)
+		photos = Photo.objects.filter(album=album, owner=user, processed=1, flag=0)
 
 		html = render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request)).content
 

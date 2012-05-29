@@ -2,12 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_delete, post_delete
 from photostream import settings
+from datetime import datetime
 import os
 
 class Album(models.Model):
     name = models.CharField(max_length=50)
     owner = models.ForeignKey(User)
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(default=datetime.now())
     is_public = models.BooleanField(default=False)
     class Meta:
         verbose_name = ('Album')
@@ -32,7 +33,7 @@ class Photo(models.Model):
     photo = models.FileField(upload_to="photos")
     album = models.ManyToManyField(Album, blank=True)
     created = models.DateTimeField(auto_now=True)
-    processed = models.BooleanField(default=False)
+    processed = models.BooleanField(default=datetime.now())
     flag = models.IntegerField(default=0, choices=PHOTO_FLAGS)
     class Meta:
         verbose_name = ('Photo')

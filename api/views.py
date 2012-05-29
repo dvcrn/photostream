@@ -33,7 +33,10 @@ def photos_all(request):
 def photos_recent(request):
 	if request.user.is_authenticated():
 		user = request.user
-		photos = Photo.objects.filter(owner=user, processed=1, flag=0)[:30]
+		photo = Photo.objects.filter(owner=user, processed=1, flag=0).latest("id")
+		date = photo.created
+
+		photos = Photo.objects.filter(owner=user, processed=1, flag=0, created=date)
 
 		html = render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request)).content
 		json = {"success": True, "html": html, "title": "Recently Added"}

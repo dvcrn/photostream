@@ -1,6 +1,7 @@
 from django import template
 from photostream import settings
 from django.core.urlresolvers import reverse
+from photostream import settings
 
 register = template.Library()
 
@@ -17,7 +18,7 @@ def thumburl(photo, albumid=0):
 	else:
 		path = reverse("library.views.album_image", kwargs={'userid': int(owner), 'albumid': int(albumid), 'size': 'thumb', "id": int(photo.id), "extension": photo.extension})
 	
-	return path
+	return "%s%s" % (settings.PHOTOSERVER_URL, path)
 
 @register.filter(name='fullurl', is_safe=True)
 def photourl(photo, albumid=0):
@@ -32,7 +33,7 @@ def photourl(photo, albumid=0):
 	else:
 		path = reverse("library.views.album_image", kwargs={'userid': int(owner), 'albumid': int(albumid), 'size': 'full', "id": int(photo.id), "extension": photo.extension})
 	
-	return path
+	return "%s%s" % (settings.PHOTOSERVER_URL, path)
 
 @register.filter(name='bigurl', is_safe=True)
 def thumburl(photo, albumid=0):
@@ -47,4 +48,4 @@ def thumburl(photo, albumid=0):
 	else:
 		path = reverse("library.views.album_image", kwargs={'userid': int(owner), 'albumid': int(albumid), 'size': 'big', "id": int(photo.id), "extension": photo.extension})
 	
-	return path
+	return "%s%s" % (settings.PHOTOSERVER_URL, path)

@@ -163,4 +163,6 @@ LOGGING = {
 API_SECRET = "s3xyr0xx"
 API_RESIZER = "/Users/David/Developer/photostream/scripts/fileparser.py"
 
+PHOTOSERVER_URL = "http://127.0.0.1:8080"
+
 USER_DEFAULTUPGRADE = 0

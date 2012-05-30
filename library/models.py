@@ -21,7 +21,7 @@ class Album(models.Model):
 
 class Photo(models.Model):
     PHOTO_FLAGS = (
-        (0, 'Normal'),
+        (0, 'Online'),
         (1, 'Pending Delete'),
     )
 

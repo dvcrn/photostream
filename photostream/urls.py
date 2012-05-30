@@ -15,6 +15,7 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('django.views.generic.simple',
     (r'^noaccess.html$',             'direct_to_template', {'template': 'noaccess.html'}),
+    (r'^crossdomain.xml$',             'direct_to_template', {'template': 'crossdomain.xml'}),
 )
 
 urlpatterns += patterns('account.views',

@@ -46,22 +46,38 @@ body {
 	color: #e55c4a;
 }
 
+.photowrapper {
+	width: 175px;
+	display: inline-block;
+	position: relative;
+	margin: 7px;
+}
+
 .photo {
 	-webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.75);
 	-moz-box-shadow:    1px 1px 6px rgba(0, 0, 0, 0.75);
 	box-shadow:         1px 1px 6px rgba(0, 0, 0, 0.75);
 
+	/*
 	margin: 10px;
 	min-height: 100px;
 	max-height: 110px;
 	width: 180px;
+	*/
 	display: inline-block;
 	position: relative;
+	margin: 0 auto;
 }
 
 .photo .thumb {
+	/*
 	width: 100%;
 	max-height: 110px;
+	*/
+	max-height: 130px;
+	max-width: 175px;
+	display: block;
+	margin: 0 auto;
 }
 
 .photo .options {
@@ -100,15 +116,9 @@ body {
 
 
 .selected {
-	margin: -2px;
-	border: solid 2px orange;
-	border-radius: 1.0em;
-}
-
-.selected {
+	margin: -3px;
 	border: solid 3px yellow;
 	border-radius: 0.4em;
-	margin: 7px;
 }
 
 
@@ -132,9 +142,9 @@ body {
 }
 
 .selection-hover {
+	margin: -3px;
 	border: solid 3px yellow;
 	border-radius: 0.4em;
-	margin: 7px;
 }
 
 .selection-action {

@@ -9,8 +9,8 @@ import zipfile
 import sys
 import shutil
 
-sys.path.append("/Users/David/Developer/photostream")
-#sys.path.append("/var/www/photostream/")
+#sys.path.append("/Users/David/Developer/photostream")
+sys.path.append("/var/www/photostream/")
 import photostream.settings as settings
 from library.models import Photo
 

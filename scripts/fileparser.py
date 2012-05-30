@@ -20,7 +20,7 @@ thumbdestination = "thumbs"
 def process(photoid):
 	# connect to mysql
 	try:
-
+		print "Processing photo %s" % photoid
 		photo = Photo.objects.get(id=photoid)
 
 		userid = photo.owner.id
@@ -72,7 +72,7 @@ def process(photoid):
 def processAll():
 	# connect to mysql
 	try:
-
+		print "Processing all photos"
 		photos = Photo.objects.filter(processed=False)
 
 		for photo in photos:
@@ -80,6 +80,8 @@ def processAll():
 			relative_filepath = photo.photo
 			photoname = photo.name
 			extension = photo.extension
+
+			print "Processing %s" % photoname
 
 			# Filepathes
 			absolute_filepath = "%s%s" % (mediapath, relative_filepath)

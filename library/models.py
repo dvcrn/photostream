@@ -32,8 +32,8 @@ class Photo(models.Model):
     owner = models.ForeignKey(User)
     photo = models.FileField(upload_to="photos")
     album = models.ManyToManyField(Album, blank=True)
-    created = models.DateTimeField(auto_now=True)
-    processed = models.BooleanField(default=datetime.now())
+    created = models.DateTimeField(default=datetime.now())
+    processed = models.BooleanField(default=False)
     flag = models.IntegerField(default=0, choices=PHOTO_FLAGS)
     class Meta:
         verbose_name = ('Photo')

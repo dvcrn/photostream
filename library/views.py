@@ -31,6 +31,37 @@ def library(request):
 	else:
 		return HttpResponseRedirect(reverse("account.views.custom_login"))
 
+def crossdomain(request):
+	if request.user.is_authenticated():
+		user = request.user
+
+		def switch_size(x):
+			return {
+				'full': "full",
+				'big': "1000w",
+				'thumb': "180w"
+			}.get(size, "full")    # 9 is default if x not found
+
+		size = switch_size(size)
+
+		photo = Photo.objects.get(owner=user, id=id, extension=extension)
+		path = photo.photo
+
+		if size == "full":
+			imagepath = "%sphotos/%d/%s.%s" % (settings.MEDIA_ROOT, user.id, photo.name, extension)
+		else:
+			imagepath = "%sphotos/%d/%s_%s.%s" % (settings.MEDIA_ROOT, user.id, photo.name, size, extension)
+
+		image = open(imagepath, "r")
+		mimetype = mimetypes.guess_type(imagepath)[0]
+		if not mimetype: mimetype = "application/octet-stream"
+
+		response = HttpResponse(image.read(), mimetype=mimetype)
+
+		return response
+	else:
+		return render_to_response("noaccess.html")
+
 def uploader(request):
 	sessionid = request.session.session_key
 	return render_to_response("uploader.html", {

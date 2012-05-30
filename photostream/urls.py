@@ -35,8 +35,8 @@ urlpatterns += patterns('library.views',
     url(r'^(?P<userid>\d+)/(?P<id>\d+)_(?P<size>\w+).(?P<extension>\w+)$', 'image'),
     url(r'^(?P<userid>\d+)/(?P<albumid>\d+)/(?P<id>\d+)_(?P<size>\w+).(?P<extension>\w+)$', 'album_image'),
 
-    url(r'^get/(?P<userid>\d+)/(?P<id>\d+)_(?P<size>\w+).(?P<extension>\w+)$', 'image_download'),
-    url(r'^get/(?P<userid>\d+)/(?P<albumid>\d+)/(?P<id>\d+)_(?P<size>\w+).(?P<extension>\w+)$', 'album_image_download'),
+    url(r'^get/(?P<userid>\d+)/(?P<id>\d+).(?P<extension>\w+)$', 'image_download'),
+    url(r'^get/(?P<userid>\d+)/(?P<albumid>\d+)/(?P<id>\d+).(?P<extension>\w+)$', 'album_image_download'),
 
     url(r'^(?P<userid>\d+)/album/(?P<albumid>\d+)/$', 'album_public'),
 

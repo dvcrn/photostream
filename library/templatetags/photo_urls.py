@@ -29,9 +29,9 @@ def photourl(photo, albumid=0):
 	media_url = settings.MEDIA_URL
 
 	if albumid == 0:
-		path = reverse("library.views.image_download", kwargs={'userid': int(owner), 'size': 'full', "id": int(photo.id), "extension": photo.extension})
+		path = reverse("library.views.image_download", kwargs={'userid': int(owner), "id": int(photo.id), "extension": photo.extension})
 	else:
-		path = reverse("library.views.album_image_download", kwargs={'userid': int(owner), 'albumid': int(albumid), 'size': 'full', "id": int(photo.id), "extension": photo.extension})
+		path = reverse("library.views.album_image_download", kwargs={'userid': int(owner), 'albumid': int(albumid), "id": int(photo.id), "extension": photo.extension})
 	
 	return "%s%s" % (settings.PHOTOSERVER_URL, path)
 

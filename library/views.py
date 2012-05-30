@@ -185,7 +185,7 @@ def album_public(request, userid, albumid):
 			'user': user
 		}, context_instance=RequestContext(request))
 
-def image_download(request, userid, size, id, extension):
+def image_download(request, userid, id, extension):
 	if request.user.is_authenticated():
 		user = request.user
 
@@ -205,17 +205,8 @@ def image_download(request, userid, size, id, extension):
 	else:
 		return render_to_response("noaccess.html")
 
-def album_image_download(request, albumid, userid, size, id, extension):
+def album_image_download(request, albumid, userid, id, extension):
 	user = request.user
-
-	def switch_size(x):
-		return {
-			'full': "full",
-			'big': "1000w",
-			'thumb': "180w"
-		}.get(size, "full")    # 9 is default if x not found
-
-	size = switch_size(size)
 
 	album = Album.objects.get(id=albumid)
 
@@ -225,10 +216,7 @@ def album_image_download(request, albumid, userid, size, id, extension):
 	photo = Photo.objects.get(owner=userid, id=id, extension=extension, album=album)
 	
 	path = photo.photo
-	if size == "full":
-		imagepath = "%sphotos/%d/%s.%s" % (settings.MEDIA_ROOT, int(userid), photo.name, extension)
-	else:
-		imagepath = "%sphotos/%d/%s_%s.%s" % (settings.MEDIA_ROOT, int(userid), photo.name, size, extension)
+	imagepath = "%sphotos/%d/%s.%s" % (settings.MEDIA_ROOT, int(userid), photo.name, extension)
 
 	image = open(imagepath, "r")
 	mimetype = mimetypes.guess_type(imagepath)[0]

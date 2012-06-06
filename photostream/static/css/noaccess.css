@@ -19,3 +19,8 @@ h1 {
 	margin-top: -10px;
 	font-size: 13px;
 }
+
+.error {
+	font-weight: bold;
+	color: red;
+}

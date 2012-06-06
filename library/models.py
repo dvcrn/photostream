@@ -10,6 +10,8 @@ class Album(models.Model):
     owner = models.ForeignKey(User)
     created = models.DateTimeField(default=datetime.now)
     is_public = models.BooleanField(default=False)
+    is_protected = models.BooleanField(default=False)
+    password = models.CharField(max_length=100)
     class Meta:
         verbose_name = ('Album')
         verbose_name_plural = ('Albums')

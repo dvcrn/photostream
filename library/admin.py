@@ -11,7 +11,7 @@ class PhotoAdmin(admin.ModelAdmin):
 
 class AlbumAdmin(admin.ModelAdmin):
 	list_filter = ('created', )
-	list_display = ('name', 'is_public', 'owner', 'created')
+	list_display = ('name', 'is_public', 'is_protected', 'password', 'owner', 'created')
 	search_fields = ['name']
 
 

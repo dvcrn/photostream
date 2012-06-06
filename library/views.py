@@ -174,10 +174,21 @@ def album_public(request, userid, albumid):
 	user = User.objects.get(id=userid)
 	album = Album.objects.get(id=albumid, owner=user)
 
-	if album.is_public:
-		photos = Photo.objects.filter(album=album, processed=1, flag=0)
-	else:
+	if not album.is_public:
 		return render_to_response("noaccess.html")
+
+	if album.is_protected:
+		password = request.GET.get("password")
+		if password == album.password:
+			photos = Photo.objects.filter(album=album, processed=1, flag=0)
+		else:
+			if password:
+				return render_to_response("noaccess_password.html", {"url": reverse("library.views.album_public", kwargs={'userid': user.id, 'albumid': album.id }), "wrongpw": True})			
+			else:
+				return render_to_response("noaccess_password.html", {"url": reverse("library.views.album_public", kwargs={'userid': user.id, 'albumid': album.id }), "wrongpw": False})			
+
+	else:
+		photos = Photo.objects.filter(album=album, processed=1, flag=0)
 
 	return render_to_response("public/album.html", {
 			'photos': photos,

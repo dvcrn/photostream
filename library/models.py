@@ -8,7 +8,7 @@ import os
 class Album(models.Model):
     name = models.CharField(max_length=50)
     owner = models.ForeignKey(User)
-    created = models.DateTimeField(default=datetime.now())
+    created = models.DateTimeField(default=datetime.now)
     is_public = models.BooleanField(default=False)
     class Meta:
         verbose_name = ('Album')
@@ -32,7 +32,7 @@ class Photo(models.Model):
     owner = models.ForeignKey(User)
     photo = models.FileField(upload_to="photos")
     album = models.ManyToManyField(Album, blank=True)
-    created = models.DateTimeField(default=datetime.now())
+    created = models.DateTimeField(default=datetime.now)
     processed = models.BooleanField(default=False)
     flag = models.IntegerField(default=0, choices=PHOTO_FLAGS)
     class Meta:

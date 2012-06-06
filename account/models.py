@@ -24,7 +24,7 @@ class ExtendedUser(models.Model):
 
 	# Add some more fields
 	accounttype = models.ForeignKey(AccountType, default=0)
-	upgraded_on = models.DateField(default=datetime.now())
+	upgraded_on = models.DateField(default=datetime.now)
 
 	class Meta:
 		verbose_name = 'User Account'

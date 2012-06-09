@@ -1,4 +1,4 @@
-<div class="usermenu">
+{% load gravatar %}<div class="usermenu">
 	<ul id="" class="">
 		<li><a href="" title="">My Profile</a></li>
 		<li><a href="" title="">Settings</a></li>
@@ -8,6 +8,6 @@
 </div>
 
 <div class="userbox">
-	<img class="avatar" src="http://127.0.0.1:8000/image/thumb/3893.jpg" alt="">
+	<img class="avatar" src="{{ user.email|gravatarUrl }}" alt="">
 	<span class="name">{{ user.first_name }} {{ user.last_name }}</span>
 </div>

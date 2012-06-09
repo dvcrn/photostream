@@ -166,3 +166,5 @@ API_RESIZER = "/Users/David/Developer/photostream/scripts/fileparser.py"
 PHOTOSERVER_URL = "http://localhost:8080"
 
 USER_DEFAULTUPGRADE = 0
+
+SESSION_COOKIE_DOMAIN = ".photolicious.im"

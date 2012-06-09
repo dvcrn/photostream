@@ -9,8 +9,10 @@ import zipfile
 import sys
 import shutil
 
-sys.path.append("/Users/David/Developer/photostream")
-#sys.path.append("/var/www/photostream/")
+os.environ["DJANGO_SETTINGS_MODULE"] = "photostream.settings"
+
+#sys.path.append("/Users/David/Developer/photostream")
+sys.path.append("/var/www/photostream/")
 import photostream.settings as settings
 from library.models import Photo
 

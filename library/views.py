@@ -209,8 +209,11 @@ def image_download(request, userid, id, extension):
 		mimetype = mimetypes.guess_type(imagepath)[0]
 		if not mimetype: mimetype = "application/octet-stream"
 
+		filesize = os.fstat(image.fileno()).st_size
+
 		response = HttpResponse(image.read(), mimetype=mimetype)
 		response["Content-Disposition"]= "attachment; filename=%s" % photo.raw_name
+		response["Content-Length"] = filesize
 
 		return response
 	else:
@@ -233,8 +236,11 @@ def album_image_download(request, albumid, userid, id, extension):
 	mimetype = mimetypes.guess_type(imagepath)[0]
 	if not mimetype: mimetype = "application/octet-stream"
 
+	filesize = os.fstat(image.fileno()).st_size
+
 	response = HttpResponse(image.read(), mimetype=mimetype)
 	response["Content-Disposition"]= "attachment; filename=%s" % photo.raw_name
+	response["Content-Length"] = filesize
 
 	return response
 

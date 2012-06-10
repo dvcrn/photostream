@@ -5,6 +5,9 @@
 	<div class="photowrapper">
 		<div class="photo" id="{{ photo.id }}" big="{{ photo|bigurl:album.id }}" download="{{ photo|downloadurl:album.id }}" caption="{{ photo.caption }}">
 			<img class="thumb" id="{{ photo.id }}" big="{{ photo|bigurl:album.id }}" download="{{ photo|downloadurl:album.id }}" src="{{ photo|thumburl:album.id }}" alt="" />
+			<div class="options">
+				<a class="option-gallery option-icon option-middle" href="#" title=""><img src="{% static "img/magnifier.png" %}" alt=""></a>
+			</div>
 		</div>
 	</div>
 {% endfor %}

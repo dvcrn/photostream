@@ -43,4 +43,33 @@ var initQtip = function() {
 	});
 }
 
+var openGallery = function(image) {
+	var api_images = [];
+	var api_captions = [];
+	var api_description = [];
+
+	var current = image.attr("big");
+	var i = 0;
+
+	// Create a api photo url list for prettyPhoto
+	$(".photo").each(function(index) {
+		var url = $(this).attr("big");
+		var caption = $(this).attr("caption");
+		var downloadurl = $(this).attr("download");
+		var description = "<a class='downloadlink' target='_blank' href='"+downloadurl+"'>Download photo</a>";
+
+		api_images.push(url);
+		api_captions.push(caption);
+		api_description.push(description);
+
+		if (current == url) {
+			i = index;
+		}
+	});
+
+	// Open it
+	$.prettyPhoto.open(api_images, api_captions, api_description);
+	$.prettyPhoto.changePage(i);
+}
+
 initQtip();

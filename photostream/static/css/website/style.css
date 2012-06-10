@@ -11,7 +11,7 @@ body {
 }
 
 #header {
-	min-height: 50px;
+	min-height: 15px;
 	position: relative;
 	margin: 10px 0;
 }
@@ -49,7 +49,7 @@ img {
 	border-radius: 0.5em;
 }
 
-.content-home {
+#content {
 	text-align: center;
 }
 
@@ -103,4 +103,19 @@ img {
 	text-align: center;
 	font-size: 12px;
 	color: grey;
+}
+
+#innercontent {
+	margin-top: 40px;
+	border: solid 1px grey;
+	border-radius: 0.3em;
+	padding-bottom: 10px;
+}
+
+.content-headline {
+	text-align: left;
+	font-size: 14px;
+	margin: 10px;
+	padding: 0;
+	color: #A14545;
 }

@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="{% static "css/website/style.css" %}">
 	<script src="{% static 'js/jquery-1.7.1.min.js' %}" type="text/javascript"></script>
 	<script src="{% static 'js/website/script.js' %}" type="text/javascript"></script>
+	{% block addHead %}{% endblock %}
 </head>
 <body>
 	<div id="wrapper">
@@ -27,8 +28,13 @@
 			</ul>
 		</div>
 		<div id="content" class="{% block contentclass %}{% endblock %}">
-			{% block content %}
-			{% endblock %}
+			<img src="{% static "img/website/photolicious-banner.png" %}" alt="">
+			<h3>All your photos. Always. Everywhere. <span class="red">Coming soon.</span></h3>
+			<p class="caption">Because if you need them, you just need them!</p>
+			<div id="innercontent">
+				{% block content %}
+				{% endblock %}
+			</div>
 		</div>
 		<div id="footer">
 			&copy; 2012 - photolicious.im

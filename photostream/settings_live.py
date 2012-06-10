@@ -163,6 +163,8 @@ LOGGING = {
 API_SECRET = "s3xyr0xx"
 API_RESIZER = "/var/www/photostream/scripts/fileparser.py"
 
-PHOTOSERVER_URL = "http://ec2-50-16-179-40.compute-1.amazonaws.com"
+PHOTOSERVER_URL = "http://dll.photolicious.im"
 
 USER_DEFAULTUPGRADE = 0
+
+SESSION_COOKIE_DOMAIN = ".photolicious.im"

@@ -167,4 +167,4 @@ PHOTOSERVER_URL = "http://localhost:8080"
 
 USER_DEFAULTUPGRADE = 0
 
-SESSION_COOKIE_DOMAIN = ".photolicious.im"
+#SESSION_COOKIE_DOMAIN = ".photolicious.im"

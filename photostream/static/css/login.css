@@ -24,3 +24,13 @@ label {
 .logincontainer input {
 	width: 200px;
 }
+
+.note-closedbeta {
+	display: block;
+	text-align: left;
+	font-size: 11px;
+	padding-left: 20px;
+	padding-right: 20px;
+	position: relative;
+	top: 12px;
+}

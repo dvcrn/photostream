@@ -3,7 +3,7 @@
 
 {% for photo in photos %}
 	<div class="photowrapper">
-		<div class="photo" id="{{ photo.id }}" big="{{ photo|bigurl }}" download="{{ photo|downloadurl }}" caption="{{ photo.caption }}">
+		<div class="photo{% if forloop.last %} last-photo{% endif %}" id="{{ photo.id }}" big="{{ photo|bigurl }}" download="{{ photo|downloadurl }}" caption="{{ photo.caption }}">
 			<img class="thumb" id="{{ photo.id }}" big="{{ photo|bigurl }}" download="{{ photo|downloadurl }}" src="{{ photo|thumburl }}" alt="" />
 			<div class="options">
 				<a class="option-delete option-icon option-left" href="#" title=""><img src="{% static "img/bin.png" %}" alt=""></a>

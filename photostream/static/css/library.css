@@ -48,6 +48,7 @@ body {
 
 .photowrapper {
 	width: 175px;
+	min-height: 100px;
 	display: inline-block;
 	position: relative;
 	margin: 7px;

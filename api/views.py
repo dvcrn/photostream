@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.http import Http404
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from library.models import Photo, User, Album
 from api.models import Token
@@ -16,11 +17,32 @@ import time
 import datetime
 import os
 
+##### Remove later
+
+def createPagina(list, limit, page):
+    paginator = Paginator(list, limit)
+
+    try:
+        pagina = paginator.page(page)
+    except PageNotAnInteger:
+        pagina = paginator.page(1)
+    except EmptyPage:
+        images = paginator.page(paginator.num_pages)
+
+    return pagina
+
+##### Actual views
+
 # Get
 def photos_all(request):
 	if request.user.is_authenticated():
 		user = request.user
+		page = request.GET.get("page", 1)
+
 		photos = Photo.objects.filter(owner=user, processed=1, flag=0)
+		pagina = createPagina(photos, 50, page)
+
+		photos = pagina.object_list
 
 		html = render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request)).content
 		json = {"success": True, "html": html, "title": "Library"}

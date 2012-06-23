@@ -72,4 +72,29 @@ var openGallery = function(image) {
 	$.prettyPhoto.changePage(i);
 }
 
+var bindInfscroll = function() {
+    var opts = {
+        offset: '100%'
+    };
+
+    var page = 1;
+
+    $('.last-photo').waypoint(function() {
+        // Event von bisherigem Wegpunkt entfernen
+        $(this).waypoint('destroy');
+
+        page = page + 1;
+
+        // Id muss entfernt werden, damit sie nicht neu gebindet wird
+        $(this).removeClass("last-photo");
+
+        // Ajax Request an die API
+        //$.get('{{ apiuri }}'+page+'/', function(data) {
+        //    $('#wallpaper-listing ol').append(data);
+        //    bind_infscroll();
+        //});
+    	console.info("BOOOOOM");
+    }, opts);   
+}
+
 initQtip();

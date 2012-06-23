@@ -98,6 +98,7 @@ var loadModule = function(url, id, section) {
 			store.current = id;
 
       bindDragDrop();
+      bindInfscroll();
 		} else {
 			createPopup(json.msg);
 		}

@@ -73,11 +73,6 @@ var openGallery = function(image) {
 }
 
 var bindInfscroll = function() {
-    var opts = {
-        offset: '100%'
-    };
-
-    var page = 1;
 
     $('.last-photo').waypoint(function() {
         // Event von bisherigem Wegpunkt entfernen
@@ -89,12 +84,17 @@ var bindInfscroll = function() {
         $(this).removeClass("last-photo");
 
         // Ajax Request an die API
-        //$.get('{{ apiuri }}'+page+'/', function(data) {
+        ajaxCall(store.url + "?page=" + page, "", true, function(data) {
         //    $('#wallpaper-listing ol').append(data);
         //    bind_infscroll();
-        //});
-    	console.info("BOOOOOM");
-    }, opts);   
+        	//console.info(data);
+        	library.append(data.html);
+        	bindInfscroll();
+        	console.info(store.url + "?page=" + page);
+        });
+    }, {
+    	offset: '100%'
+	});   
 }
 
 initQtip();

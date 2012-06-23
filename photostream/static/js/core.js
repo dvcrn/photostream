@@ -96,9 +96,11 @@ var loadModule = function(url, id, section) {
 
 			store.section = section;
 			store.current = id;
+      store.url = url;
 
       bindDragDrop();
       bindInfscroll();
+      page = 1;
 		} else {
 			createPopup(json.msg);
 		}

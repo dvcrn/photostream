@@ -44,7 +44,7 @@ def photos_all(request):
 
 		photos = pagina.object_list
 
-		html = render_to_response("api/photos.html", {"photos": photos}, context_instance=RequestContext(request)).content
+		html = render_to_response("api/photos.html", {"photos": photos, "pagina": pagina}, context_instance=RequestContext(request)).content
 		json = {"success": True, "html": html, "title": "Library"}
 	else:
 		json = {"success": False, "msg": "Only logged in works at the moment."}

@@ -107,6 +107,39 @@ var loadModule = function(url, id, section) {
 	});
 }
 
+var loadPhotos = function(albumid) {
+  // http://127.0.0.1:8000/api/2/album/77.json
+  library.html("");
+  console.info("Your ID is :" + albumid);
+
+  ajaxCall("/api/2/album/" + albumid + ".json", {}, true, function(json) {
+    for (i = 0; i < json.count; i++) {
+      var photo = json.photos[i];
+      createPhoto(photo.id, photo.photourls.big, photo.photourls.download, photo.photourls.thumb, photo.caption);
+    }
+  });
+}
+
+var createPhoto = function(id, bigurl, downloadurl, thumburl, caption) {
+  var dummy = $("#photodummy").clone();
+  dummy.removeAttr("id");
+  var photo = dummy.find(".photo");
+
+  photo.attr("id", id);
+  photo.attr("big", bigurl);
+  photo.attr("download", downloadurl);
+  photo.attr("caption", caption);
+
+  var thumb = photo.find(".thumb");
+  thumb.attr("id", id);
+  thumb.attr("big", bigurl);
+  thumb.attr("download", downloadurl);
+  thumb.attr("caption", caption);
+  thumb.attr("src", thumburl);
+
+  library.append(dummy);
+}
+
 // Selection part....
 var selectPhoto = function(photo, deselect_others) {
   if (deselect_others === undefined) {

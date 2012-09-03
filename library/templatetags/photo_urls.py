@@ -1,7 +1,6 @@
 from django import template
 from photostream import settings
 from django.core.urlresolvers import reverse
-from photostream import settings
 
 register = template.Library()
 

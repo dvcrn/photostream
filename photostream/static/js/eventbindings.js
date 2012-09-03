@@ -211,7 +211,8 @@ $("#sidebar .album").live("click", function(e) {
 
 		if (store.section != "album" || store.current != id) 
 		{
-			loadModule(url, id, "album");
+			//loadModule(url, id, "album");
+			loadPhotos(id);
 		}
 	}
 

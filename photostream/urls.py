@@ -64,6 +64,10 @@ urlpatterns += patterns('api.views',
     url(r'^api/upload/$', 'upload'),    
 )
 
+urlpatterns += patterns('api.viewsv2',
+    url(r'^api/2/album/(?P<id>\d+).json$', 'album')
+)
+
 urlpatterns += staticfiles_urlpatterns()
 
 if settings.DEBUG:

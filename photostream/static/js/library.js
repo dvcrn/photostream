@@ -19,12 +19,7 @@ var delete_photo = function(id, callback) {
 }
 
 var initLibrary = function() {
-	var element = $("#library_photos");
-
-	var id = element.attr("id");
-	var url = element.find("a").attr("ajax");
-
-	loadModule(url, id, "library");
+	$("#library_photos").click();
 }
 
 var initQtip = function() {
@@ -71,7 +66,7 @@ var openGallery = function(image) {
 	$.prettyPhoto.open(api_images, api_captions, api_description);
 	$.prettyPhoto.changePage(i);
 }
-
+/*
 var bindInfscroll = function() {
 
     $('.last-photo').waypoint(function() {
@@ -96,5 +91,6 @@ var bindInfscroll = function() {
     	offset: '100%'
 	});   
 }
+*/
 
 initQtip();

@@ -44,7 +44,7 @@ $("#library .photo").live("click", function(ev) {
 		var position_start = 0;
 		var last_element = 0;
 
-		for (var tmp in store.selection) {
+		for (var tmp in store.getSelection()) {
 			last_element = tmp;
 		}
 
@@ -209,10 +209,12 @@ $("#sidebar .album").live("click", function(e) {
 		var id = $(this).attr("id");
 		var url = $(this).contents().filter("a").attr("ajax");
 
-		if (store.section != "album" || store.current != id) 
+		if (store.getSection() != "album" || store.getCurrent() != id) 
 		{
 			//loadModule(url, id, "album");
-			loadPhotos(id);
+			// Note: Make album load function here !!!
+			// album function will trigger loadphotos function
+			loadAlbum(id);
 		}
 	}
 
@@ -220,10 +222,7 @@ $("#sidebar .album").live("click", function(e) {
 
 
 $("#sidebar .library").click(function(e) {
-	e.preventDefault();
-	var id = $(this).attr("id");
-	var url = $(this).contents().filter("a").attr("ajax");
-	loadModule(url, id, "library");
+	loadPhotos();
 })
 
 // A little trick

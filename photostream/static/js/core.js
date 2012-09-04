@@ -2,14 +2,14 @@
 var toolbar = $("#toolbar");
 var main = $("#main");
 var sidebar = $("#sidebar");
-var library = $("#library");
-var titlebar = $("#main .title")
-var store = new Store();
-var overlay = $("#library-overlay");
+var titlebar = $("#main .title");
 
 var key_shift = false;
 var key_alt = false;
 var key_strg = false;
+
+var libraryObj = new LibraryObj();
+var store = new Store();
 
 // Zum adden des CSRF Tokens an ajax requests
 $('html').ajaxSend(function(event, xhr, settings) {
@@ -33,34 +33,15 @@ $('html').ajaxSend(function(event, xhr, settings) {
         xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
     }
 });
-
-// Resizing and calculating height for library, etc.
-var getLibraryHeight = function() {
-	return window.innerHeight - toolbar.height() - titlebar.height() - 10;
-}
-
-var getLibraryWidth = function() {
-	return window.innerWidth - sidebar.width();	
-}
-
 var getGlobalHeight = function() {
 	return window.innerHeight - toolbar.height();
 }
 
 var resize = function() {
-	library.css("height", getLibraryHeight() + "px");	
+  libraryObj.setHeight(libraryObj.getHeight());
+  libraryObj.setWidth(libraryObj.getWidth());
+
 	sidebar.css("height", getGlobalHeight() + "px");	
-
-  overlay.css("height", (window.innerHeight - toolbar.height()) + "px"); 
-  overlay.css("width", getLibraryWidth() + "px"); 
-}
-
-var showOverlay = function() {
-  overlay.show();
-}
-
-var hideOverlay = function() {
-  overlay.hide();
 }
 
 var createPopup = function(msg) {
@@ -73,51 +54,55 @@ var createConfirm = function(msg, callback) {
   }
 }
 
-var changeLibrarytitle = function(title) {
-	titlebar.html("<h1>"+title+"</h1>");
-}
-
-// Important one. For changing albums for example
-var loadModule = function(url, id, section) {
-  $("#sidebar .current").removeClass("current");
-  $("#"+id).addClass("current");
-  showOverlay();
-  deselectAll();
-
-	$.get(url, function(json){
-		var json = $.parseJSON(json);
-
-		if (json.success) {
-      hideOverlay();
-
-			library.html(json.html);
-			changeLibrarytitle(json.title);
-      changeTitle(json.title);
-
-			store.section = section;
-			store.current = id;
-      store.url = url;
-
-      bindDragDrop();
-      bindInfscroll();
-      page = 1;
-		} else {
-			createPopup(json.msg);
-		}
-	});
-}
-
-var loadPhotos = function(albumid) {
-  // http://127.0.0.1:8000/api/2/album/77.json
-  library.html("");
-  console.info("Your ID is :" + albumid);
-
+var loadAlbum = function(albumid) {
   ajaxCall("/api/2/album/" + albumid + ".json", {}, true, function(json) {
+    
+    console.info("Loading album " + json.name);
+
+    $("#sidebar .current").removeClass("current");
+    $("#"+json.id).addClass("current");
+    libraryObj.showOverlay();
+    libraryObj.clear();
+    libraryObj.setTitle(json.name);
+    
+
+    changeTitle(json.name);
+
+    store.deselectAll();
+    store.setSection("album");
+    store.setCurrent(json.id);
+
     for (i = 0; i < json.count; i++) {
       var photo = json.photos[i];
-      createPhoto(photo.id, photo.photourls.big, photo.photourls.download, photo.photourls.thumb, photo.caption);
+      var photo = createPhoto(photo.id, photo.photourls.big, photo.photourls.download, photo.photourls.thumb, photo.caption);
+      libraryObj.appendContent(photo);
+    }
+    bindDragDrop();
+    libraryObj.hideOverlay();
+  });
+}
+
+var loadPhotos = function() {
+  $("#sidebar .current").removeClass("current");
+  $("#library_photos").addClass("current");
+
+  libraryObj.showOverlay();
+  libraryObj.clear();
+  libraryObj.setTitle("Library");
+
+  store.deselectAll();
+  store.setSelection("library");
+  store.setCurrent("library_photos");
+
+  ajaxCall("/api/2/photos.json", {}, true, function(json) {
+    for (i = 0; i < json.count; i++) {
+      var photo = json.photos[i];
+      var photo = createPhoto(photo.id, photo.photourls.big, photo.photourls.download, photo.photourls.thumb, photo.caption);
+      libraryObj.appendContent(photo);
     }
   });
+  bindDragDrop();
+  libraryObj.hideOverlay();
 }
 
 var createPhoto = function(id, bigurl, downloadurl, thumburl, caption) {
@@ -136,42 +121,24 @@ var createPhoto = function(id, bigurl, downloadurl, thumburl, caption) {
   thumb.attr("download", downloadurl);
   thumb.attr("caption", caption);
   thumb.attr("src", thumburl);
-
-  library.append(dummy);
+  return dummy;
 }
 
 // Selection part....
 var selectPhoto = function(photo, deselect_others) {
-  if (deselect_others === undefined) {
-    deselect_others = false;
-  }
-
-  if (deselect_others) {
-    deselectAll();
-  }
-
-
-  var id = photo.attr("id");
-  if (store.selection[id] === undefined) {
-    store.selection[id] = photo;
-    photo.addClass("selected");
-    //console.info(store.selection);
-  }
+  store.selectPhoto(photo, deselect_others);
 }
 
 var deselectPhoto = function(photo) {
-  var id = photo.attr("id");
-  delete store.selection[id]; 
-  photo.removeClass("selected");
+  store.deselectPhoto(photo);
 }
 
 var getSelectedPhotos = function() {
-  return store.selection;
+  return store.getPhotos();
 }
 
 var deselectAll = function() {
-  store.selection = {};
-  $(".selected").removeClass("selected");
+  store.deselectAll();
 }
 // End selection
 
@@ -213,10 +180,6 @@ var changeStatusicon = function(element, icontype) {
   icon.addClass(iconclass);
 
   initQtip();
-}
-
-var copyToClipboard = function(text) {
-    window.prompt ("Copy to clipboard. Press Ctrl+C or rightclick and copy", text);     
 }
 
 var ajaxCall = function(url, params, async, callback) {

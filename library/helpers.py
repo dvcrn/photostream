@@ -7,7 +7,6 @@ def generate_photourl(photo, albumid=0, size=None):
 	extension = photo.extension
 
 	media_url = settings.MEDIA_URL
-
 	if size is None:
 		if albumid == 0:
 			path = reverse("library.views.image_download", kwargs={'userid': int(owner), "id": int(photo.id), "extension": photo.extension})
@@ -19,5 +18,4 @@ def generate_photourl(photo, albumid=0, size=None):
 		else:
 			path = reverse("library.views.album_image", kwargs={'userid': int(owner), 'albumid': int(albumid), 'size': size, "id": int(photo.id), "extension": photo.extension})
 	
-
 	return "%s%s" % (settings.PHOTOSERVER_URL, path)

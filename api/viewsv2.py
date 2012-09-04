@@ -53,6 +53,37 @@ def createJsonData(success = True, errorcode = 0, obj = {}):
 
 ##### Actual views
 @decorator_from_middleware(AuthCheckMiddleware)
+def photos(request):
+	user = request.user
+	requested_photos = Photo.objects.filter(owner=user)
+
+	photodata = []
+	for photo in requested_photos:
+		tmp = {
+			"id": photo.id,
+			"name": photo.name,
+			"raw_name": photo.raw_name,
+			"caption": photo.caption,
+			"created": time.mktime(photo.created.timetuple()),
+			"processed": photo.processed,
+			"flag": int(photo.flag),
+			"photourls": {
+				"download": generate_photourl(photo),
+				"thumb": generate_photourl(photo, size="thumb"),
+				"big": generate_photourl(photo, size="big"),
+			}
+		}
+
+		photodata.append(tmp)
+
+	json = {
+		"photos": photodata,
+		"count": len(photodata)
+	}
+
+	return createJsonData(obj=json)
+
+@decorator_from_middleware(AuthCheckMiddleware)
 def album(request, id):
 	try:
 		user = request.user
@@ -71,9 +102,9 @@ def album(request, id):
 				"processed": photo.processed,
 				"flag": int(photo.flag),
 				"photourls": {
-					"download": generate_photourl(photo, requested_album.id),
-					"thumb": generate_photourl(photo, requested_album.id, "thumb"),
-					"big": generate_photourl(photo, requested_album.id, "big"),
+					"download": generate_photourl(photo, albumid=requested_album.id),
+					"thumb": generate_photourl(photo, albumid=requested_album.id, size="thumb"),
+					"big": generate_photourl(photo, albumid=requested_album.id, size="big"),
 				}
 			}
 

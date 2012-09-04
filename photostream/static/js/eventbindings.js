@@ -81,7 +81,7 @@ $("#library .photo").live("click", function(ev) {
 
 			if (counter >= position_start && counter < position_end)
 			{
-				selectPhoto($(this));
+				store.selectPhoto($(this));
 			}
 			
 			counter = counter + 1;
@@ -95,16 +95,16 @@ $("#library .photo").live("click", function(ev) {
 		if (key_alt || key_strg) {
 			console.info("Muh");
 			if ($(this).hasClass("selected")) {
-				deselectPhoto($(this));
+				store.deselectPhoto($(this));
 				return;
 			}
 		}
 		else {
-			deselectAll();
+			store.deselectAll();
 		}
 	}
 
-	selectPhoto($(this));
+	store.selectPhoto($(this));
 
 });
 
@@ -116,7 +116,7 @@ $("#library .photo").live("dblclick", function() {
 // When no photo is clicked, only the library, deselect them all
 $("#library").live("click", function(ev) {
 	if (ev.target.id == "library") {
-		deselectAll();
+		store.deselectAll();
 	}
 });
 

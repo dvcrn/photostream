@@ -94,26 +94,18 @@ var loadAlbum = function(albumid) {
 }
 
 var loadPhotos = function() {
-  $("#sidebar .current").removeClass("current");
-  $("#library_photos").addClass("current");
-
   libraryObj.showOverlay();
-  libraryObj.clear();
-  libraryObj.setTitle("Library");
 
-  store.deselectAll();
-  store.setSection("library");
-  store.setCurrent("library_photos");
-
+  var photos = [];
   ajaxCall("/api/2/photos.json", {}, false, function(json) {
     for (i = 0; i < json.count; i++) {
       var photo = json.photos[i];
       var photo = createPhoto(photo.id, photo.photourls.big, photo.photourls.download, photo.photourls.thumb, photo.caption);
-      libraryObj.appendContent(photo);
+      photos.push(photo);
     }
   });
-  bindDragDrop();
-  libraryObj.hideOverlay();
+
+  testfx("library_photos", "library", "Library", photos);
 }
 
 var createPhoto = function(id, bigurl, downloadurl, thumburl, caption) {
@@ -133,23 +125,6 @@ var createPhoto = function(id, bigurl, downloadurl, thumburl, caption) {
   thumb.attr("caption", caption);
   thumb.attr("src", thumburl);
   return dummy;
-}
-
-// Selection part....
-var selectPhoto = function(photo, deselect_others) {
-  store.selectPhoto(photo, deselect_others);
-}
-
-var deselectPhoto = function(photo) {
-  store.deselectPhoto(photo);
-}
-
-var getSelectedPhotos = function() {
-  return store.getPhotos();
-}
-
-var deselectAll = function() {
-  store.deselectAll();
 }
 // End selection
 

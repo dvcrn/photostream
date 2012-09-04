@@ -54,31 +54,42 @@ var createConfirm = function(msg, callback) {
   }
 }
 
-var loadAlbum = function(albumid) {
-  ajaxCall("/api/2/album/" + albumid + ".json", {}, true, function(json) {
-    
-    console.info("Loading album " + json.name);
+var testfx = function(id, section, title, photos) {
 
     $("#sidebar .current").removeClass("current");
-    $("#"+json.id).addClass("current");
-    libraryObj.showOverlay();
-    libraryObj.clear();
-    libraryObj.setTitle(json.name);
+    $("#"+id).addClass("current");
     
-
-    changeTitle(json.name);
+    libraryObj.clear();
+    libraryObj.setTitle(title);
+    
+    changeTitle(title);
 
     store.deselectAll();
-    store.setSection("album");
-    store.setCurrent(json.id);
+    store.setSection(section);
+    store.setCurrent(id);
 
+    for ( i = 0; i < photos.length; i++) {
+      libraryObj.appendContent(photos[i]);
+    }
+
+    bindDragDrop();
+    libraryObj.hideOverlay();
+}
+
+var loadAlbum = function(albumid) {
+  ajaxCall("/api/2/album/" + albumid + ".json", {}, false, function(json) {
+
+    libraryObj.showOverlay();
+    console.info("Loading album " + json.name);
+
+    var photos = [];
     for (i = 0; i < json.count; i++) {
       var photo = json.photos[i];
       var photo = createPhoto(photo.id, photo.photourls.big, photo.photourls.download, photo.photourls.thumb, photo.caption);
-      libraryObj.appendContent(photo);
+      photos.push(photo);
     }
-    bindDragDrop();
-    libraryObj.hideOverlay();
+
+    testfx(json.id, "album", json.name, photos);
   });
 }
 
@@ -91,10 +102,10 @@ var loadPhotos = function() {
   libraryObj.setTitle("Library");
 
   store.deselectAll();
-  store.setSelection("library");
+  store.setSection("library");
   store.setCurrent("library_photos");
 
-  ajaxCall("/api/2/photos.json", {}, true, function(json) {
+  ajaxCall("/api/2/photos.json", {}, false, function(json) {
     for (i = 0; i < json.count; i++) {
       var photo = json.photos[i];
       var photo = createPhoto(photo.id, photo.photourls.big, photo.photourls.download, photo.photourls.thumb, photo.caption);

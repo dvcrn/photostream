@@ -55,7 +55,7 @@ def createJsonData(success = True, errorcode = 0, obj = {}):
 @decorator_from_middleware(AuthCheckMiddleware)
 def photos(request):
 	user = request.user
-	requested_photos = Photo.objects.filter(owner=user)
+	requested_photos = Photo.objects.filter(owner=user)[:30]
 
 	photodata = []
 	for photo in requested_photos:

@@ -29,7 +29,7 @@ var LibraryObj = function() {
 
   this.setHeight = function(height) {
   	$("#library").css("height", height + "px");	
-  	$("#library-overlay").css("height", height + "px"); 
+  	$("#library-overlay").css("height", height + $("#toolbar").height() + "px"); 
   }
 
   this.getHeight = function() {

@@ -151,7 +151,7 @@ def album_image(request, albumid, userid, size, id, extension):
 
 	album = Album.objects.get(id=albumid)
 
-	if not album.is_public:
+	if not album.is_public and album.owner != user:
 		return render_to_response("noaccess.html")
 
 	photo = Photo.objects.get(owner=userid, id=id, extension=extension, album=album)

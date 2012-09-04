@@ -1,5 +1,6 @@
 
 var bindDragDrop = function() {
+    console.info("MUHHHHHH");
 
     /*
      *  "Drop" the selection on photos to add them to selection
@@ -8,8 +9,11 @@ var bindDragDrop = function() {
     //console.info(multidrop);
     $("#library .photo").unbind("drop");
     $("#library .photo").unbind("drag");
+    
     $("#albums .album").unbind("drop");
-    $(library).unbind("drag");
+    $("#library").unbind("drag");
+
+    console.info($("#library .photo"));
 
     $("#library .photo")
         .drop("start",function(ev, dd){
@@ -17,7 +21,7 @@ var bindDragDrop = function() {
             {
                 if (!key_shift)
                 {
-                    deselectAll();
+                    store.deselectAll();
                 }
 
                 $( this ).addClass("selection-hover");
@@ -27,7 +31,7 @@ var bindDragDrop = function() {
         .drop(function( ev, dd ){
             if ($(dd.proxy).hasClass("selection")) 
             {
-                selectPhoto($(this));
+                store.selectPhoto($(this));
             }
         })
         .drop("end",function(){
@@ -51,7 +55,7 @@ var bindDragDrop = function() {
             // When a user tries to drag a photo which isn't selected, select it and deselect all others.
             if (!$(this).hasClass("selected")) 
             {
-                selectPhoto($(this), true);
+                store.selectPhoto($(this), true);
             }
 
             $(".selected").addClass("selection-action");
@@ -141,7 +145,7 @@ var bindDragDrop = function() {
     .drop(function(ev, dd) {
         if ($(dd.proxy).hasClass("photodrag"))
         {
-            var selection = getSelectedPhotos();
+            var selection = store.getPhotos();
             var ids = [];
             var aid = $(this).attr("id");
             var album = $(this);

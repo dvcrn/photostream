@@ -7,7 +7,7 @@
 		href="#" 
 		public="{% url library.views.album_public userid=user.id albumid=id %}"
 		title=""
-	>{{ name }}</a>
+	>{{ name }} <i>({{ id }})</i></a>
 	
 	<div class="statusicon {{ statusclass }}"></div>
 </li>

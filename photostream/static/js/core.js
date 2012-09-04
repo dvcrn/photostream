@@ -165,10 +165,9 @@ var changeStatusicon = function(element, icontype) {
 
   icon.addClass(iconclass);
 
-  initQtip();
 }
 
-var ajaxCall = function(url, params, async, callback) {
+var ajaxCall = function(url, params, async, callback, method) {
   if (async === undefined) {
     async = true;
   }
@@ -177,16 +176,20 @@ var ajaxCall = function(url, params, async, callback) {
     callback = function() {}
   }
 
+  if (method === undefined) {
+    method = "GET";
+  }
+
   $.ajax({
     url: url,
     async: async,
     dataType: "json",
-    type: "POST",
+    type: method,
     data: params,
     success: function(json) {
       if (!json.success) {
         // TODO: Fehlerhandler hier
-        createPopup("Something very bad happened...");
+        createPopup(json.error);
       } else {
         callback(json);
       }

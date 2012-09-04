@@ -66,6 +66,9 @@ urlpatterns += patterns('api.views',
 
 urlpatterns += patterns('api.viewsv2',
     url(r'^api/2/photos.json$', 'photos'),
+    url(r'^api/2/photo/(?P<id>\d+).json$', 'photo'),
+
+    url(r'^api/2/albums.json$', 'albums'),
     url(r'^api/2/album/(?P<id>\d+).json$', 'album')
 )
 

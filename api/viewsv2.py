@@ -42,7 +42,7 @@ def createJsonData(success = True, errorcode = 0, obj = {}):
 			return {
 				0: "Not specified error",
 				1: "Access denided: You don't have access to this album!",
-				2: "180w"
+				2: "Access denided: You don't have access to this photo!"
 			}.get(errorcode, 0)    
 
 		error = switch_errorcode(errorcode)
@@ -52,6 +52,32 @@ def createJsonData(success = True, errorcode = 0, obj = {}):
 	return render_to_response("api/json.html", {"json": simplejson.dumps(obj)})
 
 ##### Actual views
+@decorator_from_middleware(AuthCheckMiddleware)
+def photo(request, id):
+	try:
+		user = request.user
+		photo = Photo.objects.get(owner=user, id=id)
+
+		data = {
+			"id": photo.id,
+			"name": photo.name,
+			"raw_name": photo.raw_name,
+			"caption": photo.caption,
+			"created": time.mktime(photo.created.timetuple()),
+			"processed": photo.processed,
+			"flag": int(photo.flag),
+			"photourls": {
+				"download": generate_photourl(photo),
+				"thumb": generate_photourl(photo, size="thumb"),
+				"big": generate_photourl(photo, size="big"),
+			}
+		}
+
+		return createJsonData(obj=data)
+
+	except Photo.DoesNotExist, e:
+		return createJsonData(success=False, errorcode=2)
+
 @decorator_from_middleware(AuthCheckMiddleware)
 def photos(request):
 	user = request.user
@@ -124,3 +150,30 @@ def album(request, id):
 
 	except Album.DoesNotExist, e:
 		return createJsonData(success=False, errorcode=1)
+
+@decorator_from_middleware(AuthCheckMiddleware)
+def albums(request):
+	user = request.user
+	requested_albums = Album.objects.filter(owner=user)
+
+	albums = []
+	for requested_album in requested_albums:
+		album = {
+			"id": requested_album.id,
+			"name": requested_album.name,
+			"is_public": requested_album.is_public,
+			"has_password": requested_album.is_protected,
+			"created": time.mktime(requested_album.created.timetuple()),
+			"count": Photo.objects.filter(owner=user, album=requested_album).count(),
+		}
+
+		albums.append(album)
+
+	json = {
+		"albums": albums,
+		"count": len(albums)
+	}
+
+	return createJsonData(obj=json)
+
+

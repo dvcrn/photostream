@@ -1,0 +1,8 @@
+Django==1.4.2
+PIL==1.1.7
+South==0.7.6
+distribute==0.6.31
+dj-database-url==0.2.1
+psycopg2==2.4.5
+simplejson==2.6.2
+wsgiref==0.1.2

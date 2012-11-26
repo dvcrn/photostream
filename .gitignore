@@ -1,3 +1,4 @@
 photostream/media/*
 *.pyc
 run.sh
+venv
